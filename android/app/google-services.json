@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "16943275285",
+    "project_id": "alaqsa-association",
+    "storage_bucket": "alaqsa-association.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16943275285:android:58793fde6ddf2a86265d1c",
+        "android_client_info": {
+          "package_name": "com.averotech.alaqsa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16943275285-pugdq2iidka4mgd5sdtnsqr894k3kjeq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.averotech.alaqsa",
+            "certificate_hash": "a34538a410eb6dd60c0f0e6fee6e754d2fdfb31a"
+          }
+        },
+        {
+          "client_id": "16943275285-amqllb0occ035t01n5q61j8tml80kl3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEonMEGuj26RTdC7ymOrFvbFj75V6RwqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16943275285-amqllb0occ035t01n5q61j8tml80kl3d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "16943275285-s9uffr7aja2s10lbefrm2q5q29t1jb7i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.averotech.alaqsa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
