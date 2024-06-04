@@ -34,7 +34,6 @@ class UserProfileRepository {
       }
 
       var response = await http.get(Uri.parse(api+"?lang=${latLng.lat}&long=${latLng.lng}"),headers: {"Authorization":"Bearer "+token.toString(),"Accept":"application/json"});
-
       if(response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
         var data = jsonResponse["user"];

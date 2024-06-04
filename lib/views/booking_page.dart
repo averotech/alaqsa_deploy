@@ -251,23 +251,23 @@ class StateBookingPage extends State<BookingPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width-128,
-                                    child: CustomSectionComponent.Section(context: context,text: "قم باختيار الباص ",margin: EdgeInsets.only(left: 0,right: 0),seeMore: false,),
-                                  ),
-                                  Container(
-                                    child: TextButton(
-                                      style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.zero)),
-                                      child: Text("${selectedBus != null ?"تغيير" : "أختر"}",style:TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Theme.of(context).primaryColor,)),
-                                      onPressed: () async{
-                                        var bus = await CustomAlertDailog.ShowBusesModalBottomSheet(context: context,trip: trip);
-                                        if(bus != null) {
-                                          selectedBus = bus;
-                                          context.read<BookingPageBloc>()..add(BookingPageSelectedBusEvent(selectedBus));
-                                        }
-                                      },
-                                    ),
-                                  )
+                                  // Container(
+                                  //   width: MediaQuery.of(context).size.width-128,
+                                  //   child: CustomSectionComponent.Section(context: context,text: "قم باختيار الباص ",margin: EdgeInsets.only(left: 0,right: 0),seeMore: false,),
+                                  // ),
+                                  // Container(
+                                  //   child: TextButton(
+                                  //     style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.zero)),
+                                  //     child: Text("${selectedBus != null ?"تغيير" : "أختر"}",style:TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Theme.of(context).primaryColor,)),
+                                  //     onPressed: () async{
+                                  //       var bus = await CustomAlertDailog.ShowBusesModalBottomSheet(context: context,trip: trip);
+                                  //       if(bus != null) {
+                                  //         selectedBus = bus;
+                                  //         context.read<BookingPageBloc>()..add(BookingPageSelectedBusEvent(selectedBus));
+                                  //       }
+                                  //     },
+                                  //   ),
+                                  // )
                                 ],
                               ),
                             ),

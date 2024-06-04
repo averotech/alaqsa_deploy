@@ -171,7 +171,7 @@ class CustomAlertDailog {
                         Container(
                           margin: EdgeInsets.only(top: 19,bottom: 19),
                           alignment: Alignment.center,
-                          child: Text("$titelText",style: Theme.of(context).primaryTextTheme.bodyText1,textAlign: TextAlign.center,),
+                          child: Text("$titelText",style: Theme.of(context).primaryTextTheme.bodyMedium,textAlign: TextAlign.center,),
                         ),
                         Container(
 
@@ -295,7 +295,7 @@ class CustomAlertDailog {
                               ),
                               Container(
                                 alignment: Alignment.center,
-                                child: Text("$titelText",style: Theme.of(context).primaryTextTheme.bodyText1,textAlign: TextAlign.center,),
+                                child: Text("$titelText",style: Theme.of(context).primaryTextTheme.bodyMedium,textAlign: TextAlign.center,),
                               ),
                             ],
                           ),
@@ -421,7 +421,7 @@ class CustomAlertDailog {
                                       visible: visibleText,
                                       child: Container(
                                         margin: EdgeInsets.only(top: 5, bottom: 15),
-                                        child: Text('$message', style: Theme.of(context).textTheme.button,
+                                        child: Text('$message', style: Theme.of(context).textTheme.labelLarge,
                                           textAlign: TextAlign.center,),
                                       ),
                                     )
@@ -470,7 +470,7 @@ class CustomAlertDailog {
                                     visible: visibleText,
                                     child: Container(
                                       margin: EdgeInsets.only(top: 5, bottom: 16),
-                                      child: Text('$message', style: Theme.of(context).textTheme.button,
+                                      child: Text('$message', style: Theme.of(context).textTheme.labelLarge,
                                         textAlign: TextAlign.center,),
                                     ),
                                   )
@@ -517,7 +517,7 @@ class CustomAlertDailog {
                                   visible: visibleText,
                                   child: Container(
                                     margin: EdgeInsets.only(top: 5, bottom: 16),
-                                    child: Text('$message',style: Theme.of(context).textTheme.button,textAlign: TextAlign.center,),
+                                    child: Text('$message',style: Theme.of(context).textTheme.labelLarge,textAlign: TextAlign.center,),
                                   ),
                                 )
 

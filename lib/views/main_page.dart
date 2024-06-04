@@ -275,19 +275,18 @@ class StateMainPage extends State<MainPage> {
            child: BlocListener<MainPageBloc,MainPageState>(
              listener: (context,state){
 
-               if(state is MainPageLoaded) {
-                 user = state.user;
-                 isLogin = state.isLogin;
+               if (state is MainPageLoaded) {
+                 setState(() {
+                   user = state.user;
+                   isLogin = state.isLogin;
+                 });
+               } else if (state is MainPageError) {
+                 setState(() {
+                   isLogin = state.isLogin ?? false;
+                 });
                }
                if(state is MainPageSocialMediaLoaded) {
                  socialMedia = state.socialMedia;
-               }
-
-               if(state is MainPageError) {
-                 if(state.isLogin != null) {
-                   isLogin = state.isLogin;
-                 }
-
                }
              },
              child: BlocBuilder<MainPageBloc,MainPageState>(
@@ -558,10 +557,8 @@ class StateMainPage extends State<MainPage> {
                  CustomButton.buttonIconWithText(margin: EdgeInsets.only(left: 20,right: 20,bottom: 16),height: 30.0,icon: "assets/icons/contuct_us.svg",title: "تواصل معنا",onPressed: (){Navigator.of(context).pushNamed("ContuctUsPage");}),
                  CustomButton.buttonIconWithText(margin: EdgeInsets.only(left: 20,right: 20,bottom: 16),height: 30.0,icon: "assets/icons/support.svg",title: "ابلغ عن مشكلة",onPressed: (){Navigator.of(context).pushNamed("ReportProblemPage");}),
                  CustomButton.buttonIconWithText(margin: EdgeInsets.only(left: 20,right: 20,bottom: 16),height: 30.0,icon: "assets/icons/about_us.svg",title: "سياسة الخصوصية",onPressed: (){Navigator.of(context).pushNamed("PrivacyPolicyPage");}),
-
                  isLogin == true?CustomButton.buttonIconWithText(margin: EdgeInsets.only(left: 20,right: 20,bottom: 16),height: 30.0,icon: "assets/icons/logout.svg",title: "تسجيل الخروج",onPressed: () async{
                   CustomAlertDailog.CustomActionDialog(context: context,titelText: " هل تريد تسجيل الخروج؟",textButton1: "نعم",textButton2: "لا",onClick1: () async{
-
                      final prefs = await SharedPreferences.getInstance();
                      prefs.remove("token");
                      Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route) => false);

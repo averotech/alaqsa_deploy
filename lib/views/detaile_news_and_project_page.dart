@@ -53,18 +53,16 @@ class StateDetaileNewsAndProjectPage extends State<DetaileNewsAndProjectPage> {
       }
 
     });
-
-
   }
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: globalState.get("news") != null ? BlocProvider(
         create: (context) => NewsBloc()..add(DetailNewsEvent()),
         child: BlocBuilder<NewsBloc,NewsState>(
           builder: (context,state){
             if(state is DetailNewsState){
+              // print(state.news.newsImages.length);
               return Container(
                 child: Column(
                   children: [
@@ -135,6 +133,42 @@ class StateDetaileNewsAndProjectPage extends State<DetaileNewsAndProjectPage> {
                                         child: Text("${state.news.date}",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'SansArabicLight',color:Color(0xff8F9BB3),height: 1.5),),
                                       ),
                                       Container(
+                                        height: (MediaQuery.of(context).size.height/5).roundToDouble(),
+                                        width: MediaQuery.of(context).size.width,
+                                        margin: EdgeInsets.only(top: 10,bottom: 18),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(5.0),
+                                          child: Image.network("${Config.BaseUrl.toString()+"/storage/"+state.news.imageNews}",fit: BoxFit.cover,),
+                                        ),
+                                      ),
+                                      //I want it here
+                                      //I want it here
+                                      if (state.news.newsImages.isNotEmpty)
+                                        Container(
+                                          height: (MediaQuery.of(context).size.height / 5).roundToDouble(),
+                                          width: MediaQuery.of(context).size.width,
+                                          margin: EdgeInsets.only(top: 10, bottom: 18),
+                                          child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: state.news.newsImages.length,
+                                            itemBuilder: (context, index) {
+                                              return Container(
+                                                margin: EdgeInsets.only(right: 10),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(5.0),
+                                                  child: Image.network(
+                                                    "${Config.BaseUrl.toString() + state.news.newsImages[index]}",
+                                                    fit: BoxFit.cover,
+                                                    width: 150, // Adjust the width according to your needs
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+
+
+                                      Container(
                                           margin: EdgeInsets.only(top: 8),
                                           child: Html(data: '${state.news.content}',
                                             style: {
@@ -149,16 +183,9 @@ class StateDetaileNewsAndProjectPage extends State<DetaileNewsAndProjectPage> {
                                         // Text("ل لنص يمكن أن يستبدل في نفس المساحة الأخرى إضافة إلى زيادة .",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'SansArabicLight',color:Color(0xff101426),height: 1.5,),maxLines: 100,
                                         //   overflow: TextOverflow.ellipsis,textAlign: TextAlign.right,),
                                       ),
+                                      // I want to map on newsImages here and show them as mostly in the good way like grid
 
-                                      Container(
-                                        height: (MediaQuery.of(context).size.height/5).roundToDouble(),
-                                        width: MediaQuery.of(context).size.width,
-                                        margin: EdgeInsets.only(top: 10,bottom: 18),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(5.0),
-                                          child: Image.network("${Config.BaseUrl.toString()+"/storage/"+state.news.imageNews}",fit: BoxFit.cover,),
-                                        ),
-                                      ),
+
 
                                     ],
                                   ),
@@ -429,7 +456,6 @@ class StateDetaileNewsAndProjectPage extends State<DetaileNewsAndProjectPage> {
                                             child: state.project.news.imageNews.toString() != "null"?Image.network("${Config.BaseUrl.toString()+"/storage/"+state.project.news.imageNews}",fit: BoxFit.cover,):Image.asset("assets/images/image3.png",fit: BoxFit.cover,),
                                           ),
                                         ),
-
                                       ],
                                     ),
                                   )),

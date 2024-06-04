@@ -45,23 +45,17 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       }catch(e){
         emit(HomePageErroe(e));
       }
-
     });
-
     on<HomePageSearchCityEvent>((event, emit) async{
 
       if(event.search != "") {
         List autoComplete = await mainPageRepository.autoCompleteSearch(api: autoCompleteSearchTripApi,search: event.search);
         emit(HomePageAutoCompleteLoaded(autoComplete));
       }
-
-
     });
 
     on<UpdateTripEvent>((event, emit) async{
-
       event.trip.isBooking == false ? event.trip.isBooking = true:event.trip.isBooking = false;
-
       emit(UpdateTrips(event.trip));
 
     });

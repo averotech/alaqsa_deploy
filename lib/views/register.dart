@@ -154,7 +154,7 @@ class StateRegister extends State<Register> {
                                  child: Image.asset("assets/images/iconApp.png"),
                                ),
                                CustomTextField.TextFieldWithTitle(controller: name,title: "اسم المستخدم",hintText:"اسم المستخدم",obscureText: false ,borderColor: Colors.white,margin: EdgeInsets.only(top: 32)),
-                               CustomTextField.TextFieldWithTitle(controller: email,title: "البريد الالكتروني او رقم الجوال",hintText:"البريد الالكتروني او رقم الجوال",obscureText: false ,borderColor: Colors.white,margin: EdgeInsets.only(top: 14)),
+                               CustomTextField.TextFieldWithTitle(controller: email,title: "البريد الالكتروني ",hintText:"البريد الالكتروني او رقم الجوال",obscureText: false ,borderColor: Colors.white,margin: EdgeInsets.only(top: 14)),
                                CustomTextField.TextFieldWithTitle(controller: password,title: "كلمة المرور",hintText:"كلمة المرور" ,obscureText: true,borderColor: Colors.white,margin: EdgeInsets.only(top: 14)),
 
                                CustomButton.customButton1(context: context,visibleIcon: false,textButton: "تسجيل",iconButton:"",top: 24.0,bottom: 0.0,onPressed: (){

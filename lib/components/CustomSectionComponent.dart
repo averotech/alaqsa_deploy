@@ -1,17 +1,20 @@
+import 'package:alaqsa/helper/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 
 class CustomSectionComponent {
   static StartingEndingPoint({context,margin,title,location,clockIcon,time,distanceIcon,km,globalColor,iconColor,@required titleColor}){
+    DateTime dtf = DateTime.now(); // Define the current date
+
     return Container(
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
           Container(
-            child: Text("$title",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color: titleColor,height: 1.4)),
+            child: Text("$title",style:TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color: titleColor,height: 1.4)),
           ),
           Container(
             margin: EdgeInsets.only(top: 1),
@@ -24,33 +27,49 @@ class CustomSectionComponent {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  margin: EdgeInsets.only(left: 4),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset("$clockIcon",color: iconColor),
-                      Container(
-                        margin: EdgeInsets.only(right: 7),
-                        child: Text("$time",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:globalColor),),
-                      ),
+                if ( time != null)
+                  Container(
+                    margin: EdgeInsets.only(left: 4),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset("$clockIcon",color: iconColor),
+                        Container(
+                          margin: EdgeInsets.only(right: 7),
+                          child: Text("$time",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:globalColor),),
+                        ),
 
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 4),
-                  child: Row(
+                if(time== null && title !='مكان الوصول')
+                  Container(
+                    margin: EdgeInsets.only(left: 4),
+                    child: Row(
+                      children: [
+                        // SvgPicture.asset("$clockIcon",color: iconColor),
+                        Container(
+                          margin: EdgeInsets.only(right: 7),
+                          child: Text("اليوم:  ${Config.weekdayName[dtf.weekday] ?? "اليوم"}",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:globalColor),),
+                        ),
 
-                    children: [
-                      SvgPicture.asset("$distanceIcon",color: iconColor),
-                      Container(
-                        margin: EdgeInsets.only(right: 7),
-                        child: Text("$km",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:globalColor),),
-                      ),
-
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+                if (distanceIcon != null && km != null)
+                  Container(
+                    margin: EdgeInsets.only(right: 4),
+                    child: Row(
+
+                      children: [
+                        SvgPicture.asset("$distanceIcon",color: iconColor),
+                        Container(
+                          margin: EdgeInsets.only(right: 7),
+                          child: Text("$km",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:globalColor),),
+                        ),
+
+                      ],
+                    ),
+                  ),
 
 
               ],

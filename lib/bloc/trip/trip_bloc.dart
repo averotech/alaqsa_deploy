@@ -22,6 +22,7 @@ class TripBloc extends Bloc<TripEvent, TripState> {
     var api = Config.BaseUrl+Config.TripsAPI;
     var apiAuth = Config.BaseUrl+Config.TripsAuthAPI;
     on<LoadTripAPIEvent>((event, emit) async{
+
       try{
         emit(TripInitial(event.isRefresh));
         final prefs = await SharedPreferences.getInstance();

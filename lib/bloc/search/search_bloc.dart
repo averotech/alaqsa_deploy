@@ -33,16 +33,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         emit(SearchErroe(e));
       }
     });
-
     on<UpdateTripEvent>((event, emit) async{
-
       event.trip.isBooking == false ? event.trip.isBooking = true:event.trip.isBooking = false;
-
       emit(UpdateTrips(event.trip));
 
     });
-
-
 
   }
 }

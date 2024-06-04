@@ -25,7 +25,6 @@ class TripsRepository {
       }
       var response;
       if(token != "" && token.toString() != "null"){
-
         response = await http.get(Uri.parse(api+"?skip=${skip}&lat=${latLng.lat}&lng=${latLng.lng}"),headers: {"Authorization":"Bearer "+token.toString()});
       } else{
 

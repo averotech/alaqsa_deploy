@@ -7,13 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-
-class TextFiledSearch extends StatefulWidget{
+class TextFiledSearch extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return StateTextFiledSearch();
   }
-
 }
 
 class StateTextFiledSearch extends State<TextFiledSearch> {
@@ -21,122 +19,142 @@ class StateTextFiledSearch extends State<TextFiledSearch> {
   GlobalState globalState = GlobalState.instance;
   final LayerLink layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
-  var isShoing = false;
+  bool isShowing = false;
+  final FocusNode _focusNode = FocusNode();
+
   OverlayEntry overlayEntry() {
     RenderBox renderBox = context.findRenderObject() as RenderBox;
     var size = renderBox.size;
 
     return OverlayEntry(
-        builder: (context){
-          return Positioned(
-
-              width: size.width,
-              child: CompositedTransformFollower(
-                link: layerLink,
-                showWhenUnlinked: false,
-                offset: Offset(0,size.height+8),
-
-                child: BlocProvider(
-                  create: (context) => HomePageBloc()..add(HomePageSearchCityEvent(search.text)),
-                  child: BlocBuilder<HomePageBloc,HomePageState>(
-                    builder: (context,state){
-                      if(state is HomePageAutoCompleteLoaded) {
-                        return Container(
-                          height: state.autoComplete.length * 50,
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.only(left: 16,right: 16,top: 8),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.04),
-                                    offset: Offset(0,0),
-                                    blurRadius: 4
-                                ),
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.04),
-                                    offset: Offset(0,2),
-                                    blurRadius: 4
-                                ),
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.06),
-                                    offset: Offset(0,16),
-                                    blurRadius: 6
-                                )
-
-                              ]
+      builder: (context) {
+        return Positioned(
+          width: size.width,
+          child: CompositedTransformFollower(
+            link: layerLink,
+            showWhenUnlinked: false,
+            offset: Offset(0, size.height + 8),
+            child: BlocProvider(
+              create: (context) => HomePageBloc()..add(HomePageSearchCityEvent(search.text)),
+              child: BlocBuilder<HomePageBloc, HomePageState>(
+                builder: (context, state) {
+                  if (state is HomePageAutoCompleteLoaded) {
+                    return Container(
+                      height: state.autoComplete.length * 50,
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(left: 16, right: 16, top: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.04),
+                            offset: Offset(0, 0),
+                            blurRadius: 4,
                           ),
-                          child: ListView.builder(
-
-                              padding: EdgeInsets.zero,
-                              itemCount: state.autoComplete.length,
-                              itemBuilder: (context,index){
-                                return Container(
-                                  child: Column(
-                                    children: [
-                                      CustomButton.buttonIconWithText(margin: EdgeInsets.only(top: 0,bottom: 0,left: 8,right: 8),padding: EdgeInsets.only(left: 8,right: 8),icon: "assets/icons/location.svg",title: "${state.autoComplete[index].toString().length>35?state.autoComplete[index].toString().substring(0,35):state.autoComplete[index].toString()}",onPressed: (){
-                                        globalState.set("search",state.autoComplete[index]);
-                                        Navigator.of(context).pushNamed("SearchPage");
-                                      }),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 14,right: 14),
-                                        width: MediaQuery.of(context).size.width,
-                                        height: 0,
-                                        child: Divider(
-                                          color: Color(0xffE5E5E5),
-                                          thickness: 1,
-                                        ),
-                                      )
-
-                                    ],
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.04),
+                            offset: Offset(0, 2),
+                            blurRadius: 4,
+                          ),
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.06),
+                            offset: Offset(0, 16),
+                            blurRadius: 6,
+                          ),
+                        ],
+                      ),
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: state.autoComplete.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            child: Column(
+                              children: [
+                                CustomButton.buttonIconWithText(
+                                  margin: EdgeInsets.only(top: 0, bottom: 0, left: 8, right: 8),
+                                  padding: EdgeInsets.only(left: 8, right: 8),
+                                  icon: "assets/icons/location.svg",
+                                  title: "${state.autoComplete[index].toString().length > 35 ? state.autoComplete[index].toString().substring(0, 35) : state.autoComplete[index].toString()}",
+                                  onPressed: () {
+                                    globalState.set("search", state.autoComplete[index]);
+                                    Navigator.of(context).pushNamed("SearchPage").then((_) {
+                                      hideOverlay();
+                                    });
+                                  },
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 14, right: 14),
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 0,
+                                  child: Divider(
+                                    color: Color(0xffE5E5E5),
+                                    thickness: 1,
                                   ),
-                                );
-                              }
-                          ),
-                        );
-                      } else {
-                        return Container();
-                      }
-                    },
-                  ),
-                ),
-              )
-          );
-        }
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
-
   @override
   void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       search.addListener(() {
-        if(search.text.length>0){
+        if (search.text.length > 0) {
           context.read<HomePageBloc>().add(HomePageSearchCityEvent(search.text));
-          showOverloy();
+          showOverlay();
         } else {
-          if(_overlayEntry != null){
-            _overlayEntry!.remove();
-            isShoing = false;
-          }
-
+          hideOverlay();
         }
       });
     });
-
-
   }
 
-  showOverloy(){
+  void _onFocusChange() {
+    if (!_focusNode.hasFocus) {
+      hideOverlay();
+    }
+  }
 
-    if( isShoing == false){
+  void showOverlay() {
+    if (!isShowing) {
       OverlayState? overlayState = Overlay.of(context);
       _overlayEntry = overlayEntry();
       overlayState!.insert(_overlayEntry!);
-      isShoing = true;
+      isShowing = true;
     }
+  }
 
+  void hideOverlay() {
+    if (isShowing && _overlayEntry != null) {
+      _overlayEntry!.remove();
+      _overlayEntry = null;
+      isShowing = false;
+    }
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
+    search.dispose();
+    super.dispose();
   }
 
   @override
@@ -144,47 +162,57 @@ class StateTextFiledSearch extends State<TextFiledSearch> {
     return CompositedTransformTarget(
       link: layerLink,
       child: Container(
-        margin: EdgeInsets.only(top: 24,left: 16,right: 16),
+        margin: EdgeInsets.only(top: 24, left: 16, right: 16),
         height: 44,
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            boxShadow: [
-              BoxShadow(
-                  color: Color(0xffCBCBCB).withOpacity(0.25),
-                  offset: Offset(0,4),
-                  blurRadius: 10
-              )
-            ]
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xffCBCBCB).withOpacity(0.25),
+              offset: Offset(0, 4),
+              blurRadius: 10,
+            ),
+          ],
         ),
         child: TextField(
+          focusNode: _focusNode,
           controller: search,
-          style:  TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'SansArabicLight',color:Theme.of(context).primaryColor),
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'SansArabicLight',
+            color: Theme.of(context).primaryColor,
+          ),
           textAlign: TextAlign.start,
           decoration: InputDecoration(
-              hintText:"البحث حسب المنطقة"+"...",
-              hintStyle: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'SansArabicLight',color:Color(0xffB7B7B7)),
-              border: InputBorder.none,
-              disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5)
+            hintText: "البحث حسب المنطقة" + "...",
+            hintStyle: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'SansArabicLight',
+              color: Color(0xffB7B7B7),
+            ),
+            border: InputBorder.none,
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            contentPadding: EdgeInsets.only(left: 14, right: 14, bottom: 10, top: 10),
+            suffixIcon: Container(
+              width: 45,
+              height: 44,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(5),
               ),
-              contentPadding: EdgeInsets.only(left: 14,right: 14,bottom: 10,top: 10),
-              suffixIcon: Container(
-                width: 45,
-                height: 44,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(5)
-                ),
-                padding: EdgeInsets.all(10),
-                child: SvgPicture.asset("assets/icons/search.svg",),
-              )
-
-
+              padding: EdgeInsets.all(10),
+              child: SvgPicture.asset(
+                "assets/icons/search.svg",
+              ),
+            ),
           ),
         ),
       ),
     );
   }
-
 }

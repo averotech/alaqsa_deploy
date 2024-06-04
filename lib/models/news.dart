@@ -8,8 +8,15 @@ class News {
   var _imageNews;
   var _pictures;
   var _date;
+  List<String> _newsImages;
 
-  News(this._id, this._title, this._description, this._content, this._imageNews, this._pictures,this._date);
+  News(this._id, this._title, this._description, this._content, this._imageNews, this._pictures, this._date, this._newsImages);
+
+  List<String> get newsImages => _newsImages; // Getter for news_Images
+
+  set newsImages(List<String> value) {
+    _newsImages = value; // Setter for news_Images
+  }
 
   get pictures => _pictures;
 
@@ -62,6 +69,9 @@ class News {
       json["image"],
       json["pictures"],
       json["created_at"],
+    (json["news_pictures"] != null)
+        ? List<String>.from(json["news_pictures"])
+        : [],
   );
 
 
@@ -83,6 +93,9 @@ class News {
       json["report_image"],
       json["report_pictures"],
       createdAtDate.toString(),
+      (json["news_pictures"] != null)
+          ? List<String>.from(json["news_pictures"])
+          : [],
     );
   }
 

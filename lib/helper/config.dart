@@ -11,6 +11,7 @@ class Config {
   static var LoginAPI = "/api/login";
   static var RegisterLoginSocialAPI = "/api/register_login_social_media";
   static var RegisterAPI = "/api/register";
+  static var ResetPasswordApi = "api/reset_password_request";
   static var InformationUserAPI = "/api/getInformationUser";
   static var UserAPI = "/api/user";
   static var SocialMediaAPI = "/api/social_media";
@@ -31,15 +32,21 @@ class Config {
   static var ContactUsAPI = "/api/contact_us";
   static var AboutUsAPI = "/api/about_us";
   static var SendReportProblemAPI = "/api/report_problem";
-
-
   static var DonationAPI = "/api/donations-app";
   static var VoluntterAPI = "/api/volunteer_project";
   static var CancleVoluntterAPI = "/api/cancel_volunteering";
+  static var UpdateUser= "/user/update";
 
-  static const Map<int, String> weekdayName = {1: "السبت", 2: "الأحد", 3: "الأثنين", 4: "الثلاثاء", 5: "الأربعاء", 6: "الخميس", 7: "الجمعة"};
-
-
+  // static const Map<int, String> weekdayName = {1: "السبت", 2: "الأحد", 3: "الأثنين", 4: "الثلاثاء", 5: "الأربعاء", 6: "الخميس", 7: "الجمعة"};
+  static const Map<int, String> weekdayName = {
+    1: "الأثنين",
+    2: "الثلاثاء",
+    3: "الأربعاء",
+    4: "الخميس",
+    5: "الجمعة",
+    6: "السبت",
+    7: "الأحد"
+  };
   //Check Show Loading Dialog
  static var isShowingLoadingDialog = false;
 
@@ -84,7 +91,6 @@ class Config {
       print("Location permissions are permanently denied, we cannot request permissions.");
       // return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
-
     return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
   }
 

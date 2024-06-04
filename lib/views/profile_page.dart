@@ -281,7 +281,6 @@ class StateProfilePage extends State<ProfilePage> {
 
 
                                     itemBuilder: (context, index) {
-
                                       return Transform(
                                         transform: Matrix4.identity()
                                           ..rotateX(currentPageValue - index),

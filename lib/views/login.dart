@@ -210,20 +210,50 @@ class StateLogin extends State<Login> {
                                Container(
                                  width: MediaQuery.of(context).size.width,
                                  margin: EdgeInsets.only(bottom: 32),
-                                 child: Center(
-
-                                   child: TextButton(
-
-                                     child: Text("لا تمتلك حساب؟ أنشئء الان",style: TextStyle(color: Colors.white,fontSize: 16,fontFamily: "SansArabicLight",fontWeight: FontWeight.w600),),
-                                     onPressed: (){
-                                       Navigator.of(context).pushNamed("RegisterPage");
-                                     },
-                                   ),
+                                 child: Column(
+                                   mainAxisAlignment: MainAxisAlignment.center,
+                                   children: [
+                                     Center(
+                                       child: TextButton(
+                                         child: Text(
+                                           "لا تمتلك حساب؟ أنشئ الآن",
+                                           style: TextStyle(
+                                             color: Colors.white,
+                                             fontSize: 16,
+                                             fontFamily: "SansArabicLight",
+                                             fontWeight: FontWeight.w600,
+                                           ),
+                                         ),
+                                         onPressed: () {
+                                           Navigator.of(context).pushNamed("RegisterPage");
+                                         },
+                                       ),
+                                     ),
+                                     SizedBox(height: 10), // Add space between the buttons
+                                     Center(
+                                       child: TextButton(
+                                         child: Text(
+                                           "نسيت كلمة المرور؟",
+                                           style: TextStyle(
+                                             color: Colors.white,
+                                             fontSize: 16,
+                                             fontFamily: "SansArabicLight",
+                                             fontWeight: FontWeight.w600,
+                                           ),
+                                         ),
+                                         onPressed: () {
+                                           Navigator.of(context).pushNamed("ResetPassworedPage");
+                                         },
+                                       ),
+                                     ),
+                                   ],
                                  ),
-                               )
+                               ),
+
                              ],
                            )),
                      ),
+
                    ),
                    // Positioned(
                    //   bottom: 60,

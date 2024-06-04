@@ -35,7 +35,7 @@ class HomePage extends StatefulWidget{
  var isLoadedError = false;
   @override
   void initState() {
-    print("owaaaaaaaais");
+    print("it is Work!");
   }
 
   @override
@@ -53,7 +53,6 @@ class HomePage extends StatefulWidget{
            listeners: [
              BlocListener<HomePageBloc,HomePageState>(
                  listener: (context,state){
-
                    if(state is HomePageInitial) {
                       isLoaded = false;
                       isLoadedError = false;
