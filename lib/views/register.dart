@@ -28,6 +28,7 @@ class StateRegister extends State<Register> {
 
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
+  TextEditingController phone_number = TextEditingController();
   TextEditingController password = TextEditingController();
 
   @override
@@ -68,7 +69,24 @@ class StateRegister extends State<Register> {
                    }
                    if( Config.isShowingLoadingDialog == false) {
                      Config.isShowingLoadingDialog = true;
-                     CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message:"الايميل او كلمة السر غير صحيحات", type:3, height: 117.0);
+                     String errorMessage = state.error['general'] ?? "خطأ";
+
+                     String nameError = state.error['name'] ?? "";
+                     String emailError = state.error['email'] ?? "";
+                     String phoneError = state.error['phone_number'] ?? "";
+                     String passwordError = state.error['password'] ?? "";
+
+                     List<String> errorMessages = [];
+                     if (nameError.isNotEmpty) errorMessages.add(nameError);
+                     if (emailError.isNotEmpty) errorMessages.add(emailError);
+                     if (phoneError.isNotEmpty) errorMessages.add(phoneError);
+                     if (passwordError.isNotEmpty) errorMessages.add(passwordError);
+
+                     if (errorMessages.isNotEmpty) {
+                       errorMessage = errorMessages.join("\n");
+                     }
+
+                     CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message:errorMessage, type:3, height: 180.0);
                      Timer(Duration(seconds: 1),(){
                        if(Config.isShowingLoadingDialog == true) {
                          Config.isShowingLoadingDialog = false;
@@ -155,11 +173,12 @@ class StateRegister extends State<Register> {
                                ),
                                CustomTextField.TextFieldWithTitle(controller: name,title: "اسم المستخدم",hintText:"اسم المستخدم",obscureText: false ,borderColor: Colors.white,margin: EdgeInsets.only(top: 32)),
                                CustomTextField.TextFieldWithTitle(controller: email,title: "البريد الالكتروني ",hintText:"البريد الالكتروني او رقم الجوال",obscureText: false ,borderColor: Colors.white,margin: EdgeInsets.only(top: 14)),
+                               CustomTextField.TextFieldWithTitle(controller: phone_number,title: "رقم الهاتف",hintText:"رقم الهاتف" ,obscureText: false,borderColor: Colors.white,margin: EdgeInsets.only(top: 14)),
                                CustomTextField.TextFieldWithTitle(controller: password,title: "كلمة المرور",hintText:"كلمة المرور" ,obscureText: true,borderColor: Colors.white,margin: EdgeInsets.only(top: 14)),
 
                                CustomButton.customButton1(context: context,visibleIcon: false,textButton: "تسجيل",iconButton:"",top: 24.0,bottom: 0.0,onPressed: (){
 
-                                 context.read<RegisterBloc>()..add(RegisterApiEvent(name.text, email.text, password.text));
+                                 context.read<RegisterBloc>()..add(RegisterApiEvent(name.text, email.text,phone_number.text ,password.text));
                                  //Navigator.of(context).pushNamed("MainPage");
                                }),
 

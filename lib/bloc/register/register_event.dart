@@ -19,12 +19,14 @@ class RegisterInitialEvent extends RegisterEvent {
 class RegisterApiEvent extends RegisterEvent {
   var _name;
   var _email;
+  var _phone_number;
   var _password;
-  RegisterApiEvent(this._name,this._email,this._password);
+  RegisterApiEvent(this._name,this._email,this._phone_number,this._password);
 
   get name => _name;
   get password => _password;
   get email => _email;
+  get phone_number=>_phone_number;
 
 
   @override

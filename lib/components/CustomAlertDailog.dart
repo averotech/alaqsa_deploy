@@ -492,7 +492,7 @@ class CustomAlertDailog {
                   opacity: a1.value,
                   child: AlertDialog(
                     contentPadding: EdgeInsets.zero,
-                    insetPadding: EdgeInsets.only(left: 140,right: 140),
+                    insetPadding: EdgeInsets.only(left: 100,right: 100),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0)),
 
@@ -622,7 +622,7 @@ class CustomAlertDailog {
                           ),
                           Container(
                             margin: EdgeInsets.only(left: 16,right: 16),
-                            child: Text("بايبال",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Color(0xff101426)),),
+                            child: Text("PayPal",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Color(0xff101426)),),
                           )
                         ],
                       ),
@@ -630,39 +630,39 @@ class CustomAlertDailog {
                     Container(
                       margin: EdgeInsets.only(top: 16),
                       child:Row(
-                        children: [
-
-                          Container(
-                            margin: EdgeInsets.only(left: 16,right: 16),
-                            height: 20,
-                            width: 20,
-                            child: Transform.scale(
-                                scale: 1.20,
-
-                                child: Radio(
-                                    activeColor: Theme.of(context).primaryColor,
-                                    fillColor: MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
-                                    materialTapTargetSize: MaterialTapTargetSize.padded,
-                                    value: SingingCharacter.VisaCard,
-                                    groupValue: singingCharacter,
-                                    onChanged: (SingingCharacter? value) {
-                                      setState(() {
-                                        singingCharacter=value!;
-                                      });
-
-                                    }
-
-                                )),
-                          ),
-                          Container(
-
-                            child: SvgPicture.asset("assets/icons/visa.svg"),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 16,right: 16),
-                            child: Text("فيزا كارد",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Color(0xff101426)),),
-                          ),
-                        ],
+                        // children: [
+                        //
+                        //   Container(
+                        //     margin: EdgeInsets.only(left: 16,right: 16),
+                        //     height: 20,
+                        //     width: 20,
+                        //     child: Transform.scale(
+                        //         scale: 1.20,
+                        //
+                        //         child: Radio(
+                        //             activeColor: Theme.of(context).primaryColor,
+                        //             fillColor: MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
+                        //             materialTapTargetSize: MaterialTapTargetSize.padded,
+                        //             value: SingingCharacter.VisaCard,
+                        //             groupValue: singingCharacter,
+                        //             onChanged: (SingingCharacter? value) {
+                        //               setState(() {
+                        //                 singingCharacter=value!;
+                        //               });
+                        //
+                        //             }
+                        //
+                        //         )),
+                        //   ),
+                        //   Container(
+                        //
+                        //     child: SvgPicture.asset("assets/icons/visa.svg"),
+                        //   ),
+                        //   Container(
+                        //     margin: EdgeInsets.only(left: 16,right: 16),
+                        //     child: Text(" فيزا كارد",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Color(0xff101426)),),
+                        //   ),
+                        // ],
                       ),
                     ),
 

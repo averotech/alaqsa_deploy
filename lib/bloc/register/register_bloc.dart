@@ -19,7 +19,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterApiEvent>((event, emit) async{
       try{
         emit(RegisterInitial());
-        var dataAuthRepository = await authRepository.register(api: api,name: event.name,email: event.email,password: event.password,password_confirmation: event.password);
+        var dataAuthRepository = await authRepository.register(api: api,name: event.name,email: event.email,phone_number:event.phone_number,password: event.password,password_confirmation: event.password);
         if(dataAuthRepository[0] != null) {
           User user = dataAuthRepository[0];
           var token = dataAuthRepository[1];
@@ -27,12 +27,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           prefs.setString("token", token);
           emit(RegisterLoaded(user,token));
         } else {
-          emit(RegisterErroe("error"));
+          var errorMessage = dataAuthRepository[2];
+          emit(RegisterErroe(errorMessage));
         }
 
       } catch(e){
         print(e.toString());
-
         emit(RegisterErroe(e.toString()));
       }
 

@@ -15,12 +15,13 @@ class AuthRepository {
   GlobalState globalState = GlobalState.instance;
 
 
-  register({api,name,email,password,password_confirmation}) async{
+  register({api,name,email,phone_number,password,password_confirmation}) async{
 
     try {
       var response = await http.post(Uri.parse(api),body: {
         "name":name.toString(),
         "email":email.toString(),
+        "phone_number":phone_number.toString(),
         "password":password.toString(),
         "password_confirmation":password_confirmation.toString(),
         "user_role":"user"
@@ -34,13 +35,38 @@ class AuthRepository {
         return [user,userToken];
 
       } else {
-        return [null,""];
+        var errorResponse = jsonDecode(response.body);
+        var errorMessages = _parseErrorMessage(errorResponse);
+        return [null, "", errorMessages];
       }
 
     } catch(e) {
-      print(e.toString());
-      return [null,""];
+      return [null,"",e.toString()];
     }
+  }
+
+
+  Map<String, String> _parseErrorMessage(Map<String, dynamic> errorResponse) {
+    Map<String, String> errors = {};
+    if (errorResponse.containsKey("errors")) {
+      Map<String, dynamic> errorDetails = errorResponse["errors"];
+      errorDetails.forEach((key, value) {
+        if (key == "name") {
+          errors[key] = "اسم المستخدم: هذا الحقل مطلوب";
+        } else if (key == "email") {
+          errors[key] = "البريد الالكتروني: هذا الحقل مطلوب";
+        } else if (key == "phone_number") {
+          errors[key] = "رقم الجوال: هذا الحقل مطلوب";
+        } else if (key == "password") {
+          errors[key] = "كلمة السر: هذا الحقل مطلوب";
+        } else {
+          errors[key] = value.join(", ");
+        }
+      });
+    } else {
+      errors["general"] = errorResponse["message"] ?? "خطأ غير معروف";
+    }
+    return errors;
   }
 
   registerLoginSocail({api,email,name,socialMediaId}) async{

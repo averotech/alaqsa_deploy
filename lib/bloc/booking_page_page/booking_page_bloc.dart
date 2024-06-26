@@ -47,18 +47,30 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       }
     });
 
-    on<BookingTripEvent>((event, emit) async{
+    on<BookingTripEvent>((event, emit) async {
       try {
         emit(BookingPageInitial(true));
         final prefs = await SharedPreferences.getInstance();
         var token = prefs.getString("token");
-        var responseCode = await tripsRepository.bookingTrips(api:api, token:token,tripId: event.tripId,busId: event.busId,numberPerson: event.numberPerson,numberPhone: event.numberPhone);
-        emit(BookingTripLoaded(responseCode));
-      } catch(e){
+        var response = await tripsRepository.bookingTrips(
+          api: api,
+          token: token,
+          tripId: event.tripId,
+          busId: event.busId,
+          numberPerson: event.numberPerson,
+          numberPhone: event.numberPhone,
+        );
+
+        if (response['statusCode'] == 200) {
+          emit(BookingTripLoaded(response['statusCode']));
+        } else {
+          emit(BookingPageErroe(response['data']['data']['message']));
+        }
+      } catch (e) {
         emit(BookingPageErroe(e.toString()));
       }
-
     });
+
 
     on<BookingTripSuccessEvent>((event, emit) {
      var trip = globaleState.get("bookingTripSuccess");

@@ -58,12 +58,6 @@ class UserProfileRepository {
             length = tripCount;
           }
         }
-
-
-
-
-
-
         if(length > 0) {
           for(var i=0;i<length;i++){
 

@@ -34,7 +34,6 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         print(e.toString());
         emit(UserProfileError(e.toString()));
       }
-
     });
 
     on<RemoveAccountUserEvent>((event, emit) async{

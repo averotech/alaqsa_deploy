@@ -81,24 +81,25 @@ class StateBookingPage extends State<BookingPage> {
                 Config.isShowingLoadingDialog = false;
                 Navigator.of(context).pop();
               }
+              print('state.responseCode   ${state.responseCode}');
 
               if(state.responseCode == 200) {
                 globalState.set("bookingTripSuccess", trip);
                 Navigator.of(context).pushNamed("CompletedBookingPage");
               }
-              if(state.responseCode == 202) {
+              // if(state.responseCode == 202) {
+              //   if( Config.isShowingLoadingDialog == false) {
+              //     Config.isShowingLoadingDialog = true;
+              //     CustomAlertDailog.CustomLoadingDialog(context:context, color:Theme.of(context).primaryColor, size:35.0, message:"تم الحجز سابقا", type:2, height: 100.0);
+              //     Timer(Duration(seconds: 1),(){
+              //       if(Config.isShowingLoadingDialog == true) {
+              //         Config.isShowingLoadingDialog = false;
+              //         Navigator.of(context).pop();
+              //       }
+              //     });}
+              // }
 
-
-                if( Config.isShowingLoadingDialog == false) {
-                  Config.isShowingLoadingDialog = true;
-                  CustomAlertDailog.CustomLoadingDialog(context:context, color:Theme.of(context).primaryColor, size:35.0, message:"تم الحجز سابقا", type:2, height: 100.0);
-                  Timer(Duration(seconds: 1),(){
-                    if(Config.isShowingLoadingDialog == true) {
-                      Config.isShowingLoadingDialog = false;
-                      Navigator.of(context).pop();
-                    }
-                  });}
-              } else if(state.responseCode == 500 || state.responseCode == 404){
+              else if(state.responseCode == 500 || state.responseCode == 404){
 
                 if( Config.isShowingLoadingDialog == false) {
                   Config.isShowingLoadingDialog = true;
@@ -119,7 +120,7 @@ class StateBookingPage extends State<BookingPage> {
               }
               if( Config.isShowingLoadingDialog == false) {
                 Config.isShowingLoadingDialog = true;
-                CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message:"حدث خطأ", type:3, height: 100.0);
+                CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message: state.error, type:3, height: 100.0);
                 Timer(Duration(seconds: 1),(){
                   if(Config.isShowingLoadingDialog == true) {
                     Config.isShowingLoadingDialog = false;
@@ -174,7 +175,8 @@ class StateBookingPage extends State<BookingPage> {
                             CustomSectionComponent.Section(context: context,text: "البيانات الشخصية",margin: EdgeInsets.only(top: 18,left: 16,right: 16),seeMore: false,),
 
                             CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 24,left: 16,right: 16),icon: 'assets/icons/account.svg',text: user != null?user.name:"",onPressed: (){}),
-                            CustomTextField.TextFieldWithIcon(controller: numberPhone,hintText: numberPhone.text==""?"لا يتوفر رقم الهاتف":"",obscureText: false,margin: EdgeInsets.only(top: 16,left: 16,right: 16),icon: "assets/icons/iphone.svg",colorHintText: Color(0xffB7B7B7),textColor: Colors.black,fontSize: 16.0),
+                            CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 24,left: 16,right: 16),icon: 'assets/icons/account.svg',text: user != null&& user.phoen != null ?user.phoen:"",onPressed: (){}),
+                            // CustomTextField.TextFieldWithIcon(controller: numberPhone,hintText: numberPhone.text==""?"لا يتوفر رقم الهاتف":"",obscureText: false,margin: EdgeInsets.only(top: 16,left: 16,right: 16),icon: "assets/icons/iphone.svg",colorHintText: Color(0xffB7B7B7),textColor: Colors.black,fontSize: 16.0),
 
                             // CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 16,left: 16,right: 16),icon: 'assets/icons/iphone.svg',text: user != null?user.phoen != ""?user.phoen:"غير معروف":"",onPressed: (){}),
                             CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 16,bottom: 0,left: 16,right: 16),icon: 'assets/icons/location.svg',text: myLocation,onPressed: (){}),
