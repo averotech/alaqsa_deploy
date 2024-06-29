@@ -396,8 +396,9 @@ class StateProfilePage extends State<ProfilePage> {
         children: [
           CustomTextField.TextFieldWithIcon(controller: name,hintText: "",obscureText: false,margin: EdgeInsets.only(top: 6,left: 16,right: 16),icon: "assets/icons/account.svg"),
           CustomTextField.TextFieldWithIcon(controller: numberPhone,hintText: numberPhone.text==""?"لا يتوفر رقم الهاتف":"",obscureText: false,margin: EdgeInsets.only(top: 12,left: 16,right: 16),icon: "assets/icons/iphone.svg",colorHintText: Color(0xffB7B7B7)),
-          // CustomTextField.TextFieldWithIcon(controller: email,hintText: "",obscureText: false,margin: EdgeInsets.only(top: 12,left: 16,right: 16),icon: "assets/icons/mail.svg"),
-          CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 12,bottom: 0,left: 16,right: 16),icon: 'assets/icons/mail.svg',paddingIcon: 5.0,paddingButton: 6.0,text: user.email,textColor: Color(0xffB7B7B7),onPressed: (){}),
+          CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 12,bottom: 0,left: 16,right: 16),icon: 'assets/icons/mail.svg',paddingIcon: 5.0,paddingButton: 6.0,text: user.email,textColor: Color(0xffB7B7B7),onPressed: ()async{
+
+          }),
           CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 12,bottom: 0,left: 16,right: 16),icon: 'assets/icons/location.svg',paddingIcon: 5.0,paddingButton: 6.0,text: globalState.get("myAddress")??"غير معروف",textColor: Color(0xffB7B7B7),onPressed: (){}),
           Container(
 
