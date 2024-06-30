@@ -107,13 +107,12 @@ class StateProfilePage extends State<ProfilePage> {
              if(state is UserProfileLoaded){
                isLoaded = true;
                name.text=state.userProfile.user.name;
-               numberPhone.text= state.userProfile.user.phoen == ""? "":state.userProfile.user.phoen;
+               numberPhone.text= state.userProfile.user.phone == ""? "":state.userProfile.user.phone;
                email.text=state.userProfile.user.email;
                pageViewItem = [InformationAccountPages(state.userProfile.user),ProfileDonationsPage(state.userProfile.myDonationes),ProfileProjectsPage(state.userProfile.myVolunteers)];
                if(Config.isShowingLoadingDialog == true) {
                  Config.isShowingLoadingDialog = false;
                  Navigator.of(context).pop();
-
                }
              }
 

@@ -175,7 +175,7 @@ class StateBookingPage extends State<BookingPage> {
                             CustomSectionComponent.Section(context: context,text: "البيانات الشخصية",margin: EdgeInsets.only(top: 18,left: 16,right: 16),seeMore: false,),
 
                             CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 24,left: 16,right: 16),icon: 'assets/icons/account.svg',text: user != null?user.name:"",onPressed: (){}),
-                            CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 24,left: 16,right: 16),icon: 'assets/icons/account.svg',text: user != null&& user.phoen != null ?user.phoen:"",onPressed: (){}),
+                            CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 24,left: 16,right: 16),icon: 'assets/icons/account.svg',text: user != null&& user.phone != null ?user.phone:"",onPressed: (){}),
                             // CustomTextField.TextFieldWithIcon(controller: numberPhone,hintText: numberPhone.text==""?"لا يتوفر رقم الهاتف":"",obscureText: false,margin: EdgeInsets.only(top: 16,left: 16,right: 16),icon: "assets/icons/iphone.svg",colorHintText: Color(0xffB7B7B7),textColor: Colors.black,fontSize: 16.0),
 
                             // CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 16,left: 16,right: 16),icon: 'assets/icons/iphone.svg',text: user != null?user.phoen != ""?user.phoen:"غير معروف":"",onPressed: (){}),

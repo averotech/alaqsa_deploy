@@ -125,7 +125,7 @@ class StateVolunteerPage extends State<VolunteerPage> {
                           CustomSectionComponent.Section(context: context,text: "البيانات الشخصية",margin: EdgeInsets.only(top: 18,left: 16,right: 16),seeMore: false,),
 
                           CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 24,left: 16,right: 16),icon: 'assets/icons/account.svg',text: user != null?user.name:"غير معروف",onPressed: (){}),
-                          CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 16,left: 16,right: 16),icon: 'assets/icons/iphone.svg',text: user != null? user.phoen != "" ?user.phone:"غير معروف":"غير معروف",onPressed: (){}),
+                          CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 16,left: 16,right: 16),icon: 'assets/icons/iphone.svg',text: user != null? user.phone != "" ?user.phone:"غير معروف":"غير معروف",onPressed: (){}),
                           CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 16,bottom: 0,left: 16,right: 16),icon: 'assets/icons/location.svg',text: myAddress ??"غير معروف",onPressed: (){}),
                           CustomSectionComponent.Section(context: context,text: "البيانات الشخصية",margin: EdgeInsets.only(top: 24,left: 16,right: 16),seeMore: false,),
 

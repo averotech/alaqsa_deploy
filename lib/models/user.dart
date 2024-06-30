@@ -4,12 +4,12 @@ class User {
   var _id;
   var _name;
   var _email;
-  var _phoen;
+  var _phone;
   var _photo;
   var _fcmToken;
 
 
-  User(this._id, this._name, this._email, this._phoen, this._photo,
+  User(this._id, this._name, this._email, this._phone, this._photo,
       this._fcmToken);
 
 
@@ -27,10 +27,10 @@ class User {
     _photo = value;
   }
 
-  get phoen => _phoen;
+  get phone => _phone;
 
-  set phoen(value) {
-    _phoen = value;
+  set phone(value) {
+    _phone = value;
   }
 
   get email => _email;

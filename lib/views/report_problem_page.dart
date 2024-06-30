@@ -34,7 +34,7 @@ class StateReportProblemPage extends State<ReportProblemPage> {
 
             if(state is ReportProblemLoaded) {
               name.text=state.user.name;
-              numberPhone.text= state.user.phoen == ""? "":state.user.phoen;
+              numberPhone.text= state.user.phone == ""? "":state.user.phone;
             }
 
             if(state is SettingsInitial){
