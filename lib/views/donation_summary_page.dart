@@ -242,7 +242,7 @@ class StateDonationSummaryPage extends State<DonationSummaryPage> {
                                       ),
                                       child: Text("متابعة",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Colors.white,height: 1.4),),
                                       onPressed: (){
-                                        // CustomAlertDailog.CustomShowModalBottomSheetPaymentMethod(context: context);
+                                        CustomAlertDailog.CustomShowModalBottomSheetPaymentMethod(context: context);
                                         CustomAlertDailog.CustomShowModalBottomSheet(context: context,nameCard: nameCard,numberCard: numberCard,expiryDate: expiryDate,cvv: cvv,onPressedCompleated: (singingCharacter){
 
                                           if(singingCharacter == SingingCharacter.paybal){

@@ -73,20 +73,20 @@ class StateRegister extends State<Register> {
 
                      String nameError = state.error['name'] ?? "";
                      String emailError = state.error['email'] ?? "";
-                     String phoneError = state.error['phone_number'] ?? "";
+                     String phone = state.error['phone'] ?? "";
                      String passwordError = state.error['password'] ?? "";
 
                      List<String> errorMessages = [];
                      if (nameError.isNotEmpty) errorMessages.add(nameError);
                      if (emailError.isNotEmpty) errorMessages.add(emailError);
-                     if (phoneError.isNotEmpty) errorMessages.add(phoneError);
+                     if (phone.isNotEmpty) errorMessages.add(phone);
                      if (passwordError.isNotEmpty) errorMessages.add(passwordError);
 
                      if (errorMessages.isNotEmpty) {
                        errorMessage = errorMessages.join("\n");
                      }
 
-                     CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message:errorMessage, type:3, height: 180.0);
+                     CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message:errorMessage, type:3, height: 200.0);
                      Timer(Duration(seconds: 1),(){
                        if(Config.isShowingLoadingDialog == true) {
                          Config.isShowingLoadingDialog = false;

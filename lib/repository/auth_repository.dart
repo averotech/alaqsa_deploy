@@ -52,13 +52,13 @@ class AuthRepository {
       Map<String, dynamic> errorDetails = errorResponse["errors"];
       errorDetails.forEach((key, value) {
         if (key == "name") {
-          errors[key] = "اسم المستخدم: هذا الحقل مطلوب";
+          errors[key] =value[0];
         } else if (key == "email") {
-          errors[key] = "البريد الالكتروني: هذا الحقل مطلوب";
-        } else if (key == "phone_number") {
-          errors[key] = "رقم الجوال: هذا الحقل مطلوب";
+          errors[key] = value[0];
+        } else if (key == "phone") {
+          errors[key] = value[0];
         } else if (key == "password") {
-          errors[key] = "كلمة السر: هذا الحقل مطلوب";
+          errors[key] = value[0];
         } else {
           errors[key] = value.join(", ");
         }
