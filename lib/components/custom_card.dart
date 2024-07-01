@@ -245,44 +245,44 @@ class CustomCard {
                                 height: 1.5),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(top: 8),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset("assets/icons/location.svg"),
-                              Container(
-                                margin: EdgeInsets.only(left: 8, right: 8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        "مكان المشروع",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'SansArabicLight',
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            height: 1.5),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "${project.location != null && project.location != "" ? project.location : "غير محدد"}",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'SansArabicLight',
-                                            color: Color(0xff8F9BB3)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   margin: EdgeInsets.only(top: 8),
+                        //   child: Row(
+                        //     children: [
+                        //       SvgPicture.asset("assets/icons/location.svg"),
+                        //       Container(
+                        //         margin: EdgeInsets.only(left: 8, right: 8),
+                        //         child: Column(
+                        //           crossAxisAlignment: CrossAxisAlignment.start,
+                        //           children: [
+                        //             Container(
+                        //               child: Text(
+                        //                 "مكان المشروع",
+                        //                 style: TextStyle(
+                        //                     fontSize: 12,
+                        //                     fontWeight: FontWeight.w700,
+                        //                     fontFamily: 'SansArabicLight',
+                        //                     color:
+                        //                         Theme.of(context).primaryColor,
+                        //                     height: 1.5),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               child: Text(
+                        //                 "${project.location != null && project.location != "" ? project.location : "غير محدد"}",
+                        //                 style: TextStyle(
+                        //                     fontSize: 14,
+                        //                     fontWeight: FontWeight.w600,
+                        //                     fontFamily: 'SansArabicLight',
+                        //                     color: Color(0xff8F9BB3)),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           margin: EdgeInsets.only(top: 8),
                           child: Text(
@@ -505,46 +505,46 @@ class CustomCard {
                           height: 1.5),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 8),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          "assets/icons/location.svg",
-                          color: Colors.white,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 8, right: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Text(
-                                  "مكان المشروع",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'SansArabicLight',
-                                      color: Colors.white,
-                                      height: 1.5),
-                                ),
-                              ),
-                              Container(
-                                child: Text(
-                                  "فاولوس هشيشي 102، الناصرة",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'SansArabicLight',
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 8),
+                  //   child: Row(
+                  //     children: [
+                  //       SvgPicture.asset(
+                  //         "assets/icons/location.svg",
+                  //         color: Colors.white,
+                  //       ),
+                  //       Container(
+                  //         margin: EdgeInsets.only(left: 8, right: 8),
+                  //         child: Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             Container(
+                  //               child: Text(
+                  //                 "مكان المشروع",
+                  //                 style: TextStyle(
+                  //                     fontSize: 12,
+                  //                     fontWeight: FontWeight.w700,
+                  //                     fontFamily: 'SansArabicLight',
+                  //                     color: Colors.white,
+                  //                     height: 1.5),
+                  //               ),
+                  //             ),
+                  //             Container(
+                  //               child: Text(
+                  //                 "فاولوس هشيشي 102، الناصرة",
+                  //                 style: TextStyle(
+                  //                     fontSize: 14,
+                  //                     fontWeight: FontWeight.w600,
+                  //                     fontFamily: 'SansArabicLight',
+                  //                     color: Colors.white),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
                     margin: EdgeInsets.only(top: 8),
                     child: Text(
@@ -938,7 +938,7 @@ class CustomCard {
                     ],
                   )),
               Container(
-                  margin: EdgeInsets.only(left: 12, right: 12,bottom: 22),
+                  margin: EdgeInsets.only(left: 12, right: 12,bottom: 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

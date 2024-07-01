@@ -651,5 +651,5 @@ class StateDetaileNewsAndProjectPage extends State<DetaileNewsAndProjectPage> {
   }
 
 
-
+  
 }

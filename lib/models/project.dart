@@ -28,17 +28,20 @@ class Project {
       this._sector,
       this._startDate,
       this._endDate,
-      this._news,this._is_volunteer_user,this._location);
-
+      this._news,
+      this._is_volunteer_user,
+      this._location);
 
   Project.IsEmpty();
-  Project.fromProject(this._id,
-  this._nameProject,
-  this._descriptionProject,
-  this._is_volunteer,
-  this._is_donation,
-  this._startDate,
-  this._endDate,this._is_volunteer_user);
+  Project.fromProject(
+      this._id,
+      this._nameProject,
+      this._descriptionProject,
+      this._is_volunteer,
+      this._is_donation,
+      this._startDate,
+      this._endDate,
+      this._is_volunteer_user);
 
   News get news => _news;
 
@@ -100,23 +103,37 @@ class Project {
     _sector = value;
   }
 
-  factory Project.fromJson(Map<String,dynamic> data) {
+  factory Project.fromJson(Map<String, dynamic> data) {
     var startDate = "";
     var endDate = "";
 
     var outputFormat = DateFormat('yyyy-MM-dd');
-    if(data["start_date"] != null && data["start_date"] != "null") {
-
+    if (data["start_date"] != null && data["start_date"] != "null") {
       DateTime dtf = DateTime.parse(data["start_date"]);
-      startDate =  outputFormat.format(dtf);
-
+      startDate = outputFormat.format(dtf);
     }
 
-    if(data["end_date"] != null && data["end_date"] != "null") {
+    if (data["end_date"] != null && data["end_date"] != "null") {
       DateTime dtf = DateTime.parse(data["end_date"]);
-      endDate =  outputFormat.format(dtf);;
+      endDate = outputFormat.format(dtf);
+    } else {
+      endDate = "2050-07-10";
     }
-    return Project(data['id'], data['project_name'], data['project_describe'],  data['project_image'],  data['is_bus'].toString() == "1"? true:false, data['is_volunteer'].toString() == "1" ?true:false, data['is_donation'].toString() == "1"?true:false, data['report_status'].toString() == "1"?true:false,data['sector'],startDate,endDate, News.fromProjectJson(data),data['is_volunteer_user'].toString() =="1"?true:false,data["projectCities"].toString());
+    return Project(
+        data['id'],
+        data['project_name'],
+        data['project_describe'],
+        data['project_image'],
+        data['is_bus'].toString() == "1" ? true : false,
+        data['is_volunteer'].toString() == "1" ? true : false,
+        data['is_donation'].toString() == "1" ? true : false,
+        data['report_status'].toString() == "1" ? true : false,
+        data['sector'],
+        startDate,
+        endDate,
+        News.fromProjectJson(data),
+        data['is_volunteer_user'].toString() == "1" ? true : false,
+        data["projectCities"].toString());
   }
 
   get startDate => _startDate;
@@ -124,7 +141,6 @@ class Project {
   set startDate(value) {
     _startDate = value;
   }
-
 
   get endDate => _endDate;
 

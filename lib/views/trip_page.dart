@@ -54,7 +54,7 @@ class StateTripPage extends State<TripPage> {
          providers: [
            BlocProvider(create: (context) => TripBloc()..add(LoadTripAPIEvent(false))),
            BlocProvider(create: (context) => BookingPageBloc()),
-
+         
          ],
 
          child: MultiBlocListener(
@@ -126,7 +126,7 @@ class StateTripPage extends State<TripPage> {
                            }
                          });}
                      } else if(state.responseCode == 500 || state.responseCode == 404){
-
+                       
                        if( Config.isShowingLoadingDialog == false) {
                          Config.isShowingLoadingDialog = true;
                          CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message:"حدث خطأ", type:3, height: 100.0);
