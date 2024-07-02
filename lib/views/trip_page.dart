@@ -94,7 +94,7 @@ class StateTripPage extends State<TripPage> {
                        Navigator.of(context).pop();
                      }
                    }
-
+                   
                  }
              ),
              BlocListener<BookingPageBloc,BookingPageState>(

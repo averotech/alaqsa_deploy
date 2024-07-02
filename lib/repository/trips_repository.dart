@@ -31,7 +31,7 @@ class TripsRepository {
         response = await http.get(Uri.parse(
             api + "?skip=${skip}&lat=${latLng.lat}&lng=${latLng.lng}"));
       }
-
+      
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
 

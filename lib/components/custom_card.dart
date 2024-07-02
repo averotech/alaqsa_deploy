@@ -748,13 +748,11 @@ class CustomCard {
                         Container(
                           child: SvgPicture.asset("assets/icons/location.svg"),
                         ),
-
                         Container(
                           height: 51,
                           child: CustomPaint(
                               painter: LineDashedPainter(Color(0xffB7B7B7))),
                         ),
-
                         Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
@@ -857,116 +855,131 @@ class CustomCard {
     );
   }
 
-  static CardInformationTrip(
-      {context,
-      key,
-      required Trip trip,
-      index,
-      onPressedBookingAndCloseTrip,
-      isBooking}) {
+  static CardInformationTrip({
+    context,
+    key,
+    required Trip trip,
+    index,
+    onPressedBookingAndCloseTrip,
+    isBooking,
+  }) {
     return Container(
       padding: EdgeInsets.only(left: 8, right: 8),
       margin: EdgeInsets.only(top: 12, left: 16, right: 16),
       decoration: BoxDecoration(
-          color: isBooking ? Theme.of(context).primaryColor : Colors.white,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.04),
-                offset: Offset(0, 0),
-                blurRadius: 4),
-            BoxShadow(
-                color: Colors.black.withOpacity(0.04),
-                offset: Offset(0, 2),
-                blurRadius: 4),
-            BoxShadow(
-                color: Colors.black.withOpacity(0.06),
-                offset: Offset(0, 16),
-                blurRadius: 6)
-          ]),
-      child: Column(
+        color: isBooking ? Theme.of(context).primaryColor : Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              offset: Offset(0, 0),
+              blurRadius: 4
+          ),
+          BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              offset: Offset(0, 2),
+              blurRadius: 4
+          ),
+          BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              offset: Offset(0, 16),
+              blurRadius: 6
+          )
+        ],
+      ),
+      child: Stack(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Column(
             children: [
-              Container(
-                  height: MediaQuery.of(context).size.height / 3.3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: SvgPicture.asset(
-                          "assets/icons/location.svg",
-                          color: isBooking
-                              ? Colors.white
-                              : Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      Container(
-                        height: 51,
-                        child: CustomPaint(
-                            painter: LineDashedPainter(
-                                isBooking ? Colors.white : Color(0xffB7B7B7))),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            color: Color(0xffE4FFE5), shape: BoxShape.circle),
-                        child: SvgPicture.asset(
-                          "assets/icons/tour-bus.svg",
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      Container(
-                        height: 51,
-                        child: CustomPaint(
-                            painter: LineDashedPainter(
-                                isBooking ? Colors.white : Color(0xffB7B7B7))),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height / 3.3,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: SvgPicture.asset(
+                            "assets/icons/location.svg",
                             color: isBooking
                                 ? Colors.white
                                 : Theme.of(context).primaryColor,
-                            shape: BoxShape.circle),
-                        child:
-                            SvgPicture.asset("assets/icons/al-aqsa-mosque.svg"),
-                      )
-                    ],
-                  )),
-              Container(
-                  margin: EdgeInsets.only(left: 12, right: 12,bottom: 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomSectionComponent.StartingEndingPoint(
+                          ),
+                        ),
+                        Container(
+                          height: 51,
+                          child: CustomPaint(
+                            painter: LineDashedPainter(
+                                isBooking ? Colors.white : Color(0xffB7B7B7)
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              color: Color(0xffE4FFE5),
+                              shape: BoxShape.circle
+                          ),
+                          child: SvgPicture.asset(
+                            "assets/icons/tour-bus.svg",
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        Container(
+                          height: 51,
+                          child: CustomPaint(
+                            painter: LineDashedPainter(
+                                isBooking ? Colors.white : Color(0xffB7B7B7)
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              color: isBooking
+                                  ? Colors.white
+                                  : Theme.of(context).primaryColor,
+                              shape: BoxShape.circle
+                          ),
+                          child: SvgPicture.asset("assets/icons/al-aqsa-mosque.svg"),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 12, right: 12, bottom: 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomSectionComponent.StartingEndingPoint(
                           context: context,
                           margin: EdgeInsets.only(top: 22),
                           title: 'اسم القافلة:  ${trip.nameTrip}',
                           location:
-                              '${globalState.get("myAddress") != null ? globalState.get("myAddress") : "غير معروف"}',
+                          '${globalState.get("myAddress") != null ? globalState.get("myAddress") : "غير معروف"}',
                           clockIcon: 'assets/icons/clock.svg',
                           distanceIcon: 'assets/icons/distance.svg',
                           globalColor:
-                              isBooking ? Colors.white : Color(0xffB7B7B7),
+                          isBooking ? Colors.white : Color(0xffB7B7B7),
                           iconColor:
-                              isBooking ? Colors.white : Color(0xffB7B7B7),
+                          isBooking ? Colors.white : Color(0xffB7B7B7),
                           titleColor: isBooking
                               ? Colors.white
-                              : Theme.of(context).primaryColor),
-                      CustomSectionComponent.StartingEndingPoint(
+                              : Theme.of(context).primaryColor,
+                        ),
+                        CustomSectionComponent.StartingEndingPoint(
                           context: context,
                           margin: EdgeInsets.only(top: 16),
                           title: 'مكان الأنطلاق',
                           location: trip.tripFromLocation != null
                               ? trip.tripFromLocation.toString().length > 45
-                                  ? trip.tripFromLocation
-                                      .toString()
-                                      .substring(0, 45)
-                                  : trip.tripFromLocation.toString()
+                              ? trip.tripFromLocation
+                              .toString()
+                              .substring(0, 45)
+                              : trip.tripFromLocation.toString()
                               : "غير معروف",
                           clockIcon: 'assets/icons/clock.svg',
                           time: trip.startTime,
@@ -976,23 +989,24 @@ class CustomCard {
                                   ? trip.fromDistance.toString()
                                   : "0.0"),
                           globalColor:
-                              isBooking ? Colors.white : Color(0xff101426),
+                          isBooking ? Colors.white : Color(0xff101426),
                           iconColor: isBooking
                               ? Colors.white
                               : Theme.of(context).primaryColor,
                           titleColor: isBooking
                               ? Colors.white
-                              : Theme.of(context).primaryColor),
-                      CustomSectionComponent.StartingEndingPoint(
+                              : Theme.of(context).primaryColor,
+                        ),
+                        CustomSectionComponent.StartingEndingPoint(
                           context: context,
                           margin: EdgeInsets.only(top: 16),
                           title: 'مكان الوصول',
                           location: trip.to.addressLocation != null
                               ? trip.tripToLocation.toString().length > 45
-                                  ? trip.tripToLocation
-                                      .toString()
-                                      .substring(0, 45)
-                                  : trip.tripToLocation
+                              ? trip.tripToLocation
+                              .toString()
+                              .substring(0, 45)
+                              : trip.tripToLocation
                               : 'المسجد الأقصى',
                           clockIcon: 'assets/icons/clock.svg',
                           // time: trip.endTime,
@@ -1002,195 +1016,218 @@ class CustomCard {
                                   ? trip.toDistance.toString()
                                   : "0.0"),
                           globalColor:
-                              isBooking ? Colors.white : Color(0xff101426),
+                          isBooking ? Colors.white : Color(0xff101426),
                           iconColor: isBooking
                               ? Colors.white
                               : Theme.of(context).primaryColor,
                           titleColor: isBooking
                               ? Colors.white
-                              : Theme.of(context).primaryColor),
-                      Container(
-                        margin: EdgeInsets.only(top: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    child: Text("وقت العودة",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'SansArabicLight',
-                                            color: isBooking
-                                                ? Colors.white
-                                                : Theme.of(context)
-                                                    .primaryColor,
-                                            height: 1.2)),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 2),
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            "assets/icons/clock.svg",
-                                            color: isBooking
-                                                ? Colors.white
-                                                : Theme.of(context)
-                                                    .primaryColor),
-                                        Container(
-                                          margin: EdgeInsets.only(right: 2),
-                                          child: Text(
-                                            trip.endTime,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'SansArabicLight',
-                                                color: isBooking
-                                                    ? Colors.white
-                                                    : Color(0xff101426)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    child: Text("مكان العودة",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'SansArabicLight',
-                                            color: isBooking
-                                                ? Colors.white
-                                                : Theme.of(context)
-                                                    .primaryColor,
-                                            height: 1.2)),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 2),
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            "assets/icons/location.svg",
-                                            color: isBooking
-                                                ? Colors.white
-                                                : Theme.of(context)
-                                                    .primaryColor),
-                                        Container(
-                                          margin: EdgeInsets.only(right: 2),
-                                          child: Text(
-                                            "${trip.tripFromLocation != null ? trip.tripFromLocation.toString().length > 45 ? trip.tripFromLocation.toString().substring(0, 45) : trip.tripFromLocation.toString() : "غير معروف"}",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'SansArabicLight',
-                                                color: isBooking
-                                                    ? Colors.white
-                                                    : Color(0xff101426)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                              : Theme.of(context).primaryColor,
                         ),
-                      )
-                    ],
-                  )),
-            ],
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(top: 20, bottom: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: (MediaQuery.of(context).size.width / 2) - 30,
-                  height: 42,
-                  decoration: BoxDecoration(
-                      color: isBooking
-                          ? Colors.white
-                          : Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(50)),
-                  child: MaterialButton(
-                    height: 42,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Text(
-                      "${trip.isBooking ? "الغاء الحجز" : "احجز الان"}",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'SansArabicLight',
-                          color: isBooking
-                              ? Theme.of(context).primaryColor
-                              : Colors.white,
-                          height: 1.4),
+                        Container(
+                          margin: EdgeInsets.only(top: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Text("وقت العودة",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'SansArabicLight',
+                                              color: isBooking
+                                                  ? Colors.white
+                                                  : Theme.of(context)
+                                                  .primaryColor,
+                                              height: 1.2)),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 2),
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                              "assets/icons/clock.svg",
+                                              color: isBooking
+                                                  ? Colors.white
+                                                  : Theme.of(context)
+                                                  .primaryColor),
+                                          Container(
+                                            margin: EdgeInsets.only(right: 2),
+                                            child: Text(
+                                              trip.endTime,
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'SansArabicLight',
+                                                  color: isBooking
+                                                      ? Colors.white
+                                                      : Color(0xff101426)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Text("مكان العودة",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'SansArabicLight',
+                                              color: isBooking
+                                                  ? Colors.white
+                                                  : Theme.of(context)
+                                                  .primaryColor,
+                                              height: 1.2)),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 2),
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                              "assets/icons/location.svg",
+                                              color: isBooking
+                                                  ? Colors.white
+                                                  : Theme.of(context)
+                                                  .primaryColor),
+                                          Container(
+                                            margin: EdgeInsets.only(right: 2),
+                                            child: Text(
+                                              "${trip.tripFromLocation != null ? trip.tripFromLocation.toString().length > 45 ? trip.tripFromLocation.toString().substring(0, 45) : trip.tripFromLocation.toString() : "غير معروف"}",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'SansArabicLight',
+                                                  color: isBooking
+                                                      ? Colors.white
+                                                      : Color(0xff101426)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      onPressedBookingAndCloseTrip(index);
-                    },
                   ),
-                ),
-                Container(
-                  height: 42,
-                  width: (MediaQuery.of(context).size.width / 2) - 30,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: isBooking
-                              ? Colors.white
-                              : Theme.of(context).primaryColor),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: MaterialButton(
-                    height: 42,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Text(
-                      "التبرعات",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'SansArabicLight',
+                ],
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(top: 20, bottom: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: (MediaQuery.of(context).size.width / 2) - 30,
+                      height: 42,
+                      decoration: BoxDecoration(
                           color: isBooking
                               ? Colors.white
                               : Theme.of(context).primaryColor,
-                          height: 1.4),
+                          borderRadius: BorderRadius.circular(50)),
+                      child: MaterialButton(
+                        height: 42,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Text(
+                          "${trip.isBooking ? "الغاء الحجز" : "احجز الان"}",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'SansArabicLight',
+                              color: isBooking
+                                  ? Theme.of(context).primaryColor
+                                  : Colors.white,
+                              height: 1.4),
+                        ),
+                        onPressed: () {
+                          onPressedBookingAndCloseTrip(index);
+                        },
+                      ),
                     ),
-                    onPressed: () async {
-                      if (await Config.checkLogin() == true) {
-                        globalState.set("donationTrip", trip);
-                        globalState.set("donationProject", null);
-                        Navigator.of(context).pushNamed("DonationSummaryPage");
-                      } else {
-                        Navigator.of(context).pushNamed("LoginPage");
-                      }
-                    },
-                  ),
+                    Container(
+                      height: 42,
+                      width: (MediaQuery.of(context).size.width / 2) - 30,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: isBooking
+                                  ? Colors.white
+                                  : Theme.of(context).primaryColor),
+                          borderRadius: BorderRadius.circular(50)),
+                      child: MaterialButton(
+                        height: 42,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Text(
+                          "التبرعات",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'SansArabicLight',
+                              color: isBooking
+                                  ? Colors.white
+                                  : Theme.of(context).primaryColor,
+                              height: 1.4),
+                        ),
+                        onPressed: () async {
+                          if (await Config.checkLogin() == true) {
+                            globalState.set("donationTrip", trip);
+                            globalState.set("donationProject", null);
+                            Navigator.of(context).pushNamed("DonationSummaryPage");
+                          } else {
+                            Navigator.of(context).pushNamed("LoginPage");
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              )
+            ],
+          ),
+          trip.isFull?  Positioned(
+            top: 10,
+            left: 10,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                "القافلة ممتلئة",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-          )
+          ):Container(),
         ],
       ),
     );
   }
+
 
   static cardStatistics(
       {context, margin, title1, value1, title2, value2, title3, value3}) {

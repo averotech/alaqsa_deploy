@@ -25,27 +25,29 @@ class Trip extends Project {
   bool _isBooking;
   var _tripToLocation;
   var _tripFromLocation;
-
+  bool _isFull;
   Trip(
-      this._id,
-      this._nameTrip,
-      this._descriptionTrip,
-      this._is_volunteer,
-      this._is_donation,
-      this._startDate,
-      this._endDate,
-      this._nameDate,
-      this._city,
-      this._litsBus,
-      this._from,
-      this._to,
-      this._fromDistance,
-      this._toDistance,
-      this.isOpen,
-      this._isBooking,
-      this._tripToLocation,
-      this._tripFromLocation,
-      ) : super.fromProject(_id, _nameTrip, _descriptionTrip, _is_volunteer, _is_donation, _startDate, _endDate, false);
+    this._id,
+    this._nameTrip,
+    this._descriptionTrip,
+    this._is_volunteer,
+    this._is_donation,
+    this._startDate,
+    this._endDate,
+    this._nameDate,
+    this._city,
+    this._litsBus,
+    this._from,
+    this._to,
+    this._fromDistance,
+    this._toDistance,
+    this.isOpen,
+    this._isBooking,
+    this._tripToLocation,
+    this._tripFromLocation,
+    this._isFull,
+  ) : super.fromProject(_id, _nameTrip, _descriptionTrip, _is_volunteer,
+            _is_donation, _startDate, _endDate, false);
 
   MYLoaction get from => _from;
 
@@ -75,6 +77,12 @@ class Trip extends Project {
 
   set isBooking(bool value) {
     _isBooking = value;
+  }
+
+  bool get isFull => _isFull;
+
+  set isFull(bool value) {
+    _isFull = value;
   }
 
   List<Bus> get litsBus => _litsBus;
@@ -121,6 +129,7 @@ class Trip extends Project {
     var jsonTripFrom;
     var jsonTripTo;
     var city = "";
+    bool isFull = false;
     if (json["start_date"] != null && json["start_date"] != "null") {
       DateTime dtf = DateTime.parse(json["start_date"]);
 
@@ -171,14 +180,20 @@ class Trip extends Project {
       nameDate,
       city,
       listBus,
-      jsonTripFrom != null ? MYLoaction.fromJson(jsonTripFrom) : MYLoaction.IsEmpty(),
-      jsonTripTo != null ? MYLoaction.fromJson(jsonTripTo) : MYLoaction.IsEmpty(),
+      jsonTripFrom != null
+          ? MYLoaction.fromJson(jsonTripFrom)
+          : MYLoaction.IsEmpty(),
+      jsonTripTo != null
+          ? MYLoaction.fromJson(jsonTripTo)
+          : MYLoaction.IsEmpty(),
       json["from_distance"],
       json["to_distance"],
       false,
       json["isBooking"].toString() == "1" ? true : false,
       json["tripToLocation"],
       json["tripFromLocation"],
+        json['isFull'].toString() == "1" ? true : false,
+
     );
   }
 
@@ -194,9 +209,10 @@ class Trip extends Project {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd hh:mm:ss");
     DateTime dateTime = dateFormat.parse(_startDate);
 
-    var startTime = "${dateTime.hour > 9 ? dateTime.hour : "0" + dateTime.hour.toString()}" +
-        ":" +
-        "${dateTime.minute > 9 ? dateTime.minute : "0" + dateTime.minute.toString()}";
+    var startTime =
+        "${dateTime.hour > 9 ? dateTime.hour : "0" + dateTime.hour.toString()}" +
+            ":" +
+            "${dateTime.minute > 9 ? dateTime.minute : "0" + dateTime.minute.toString()}";
 
     return startTime;
   }
@@ -204,9 +220,10 @@ class Trip extends Project {
   get endTime {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd hh:mm:ss");
     DateTime dateTime = dateFormat.parse(_endDate);
-    var endTime = "${dateTime.hour > 9 ? dateTime.hour : "0" + dateTime.hour.toString()}" +
-        ":" +
-        "${dateTime.minute > 9 ? dateTime.minute : "0" + dateTime.minute.toString()}";
+    var endTime =
+        "${dateTime.hour > 9 ? dateTime.hour : "0" + dateTime.hour.toString()}" +
+            ":" +
+            "${dateTime.minute > 9 ? dateTime.minute : "0" + dateTime.minute.toString()}";
     return endTime;
   }
 
