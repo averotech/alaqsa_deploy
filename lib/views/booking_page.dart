@@ -304,7 +304,7 @@ class StateBookingPage extends State<BookingPage> {
                                         CustomAlertDailog.CustomActionDialog(context: context,titelText: " هل تريد تأكيد الحجز؟",textButton1: "نعم",textButton2: "لا",onClick1: (){
                                           if(trip != null){
                                             Navigator.of(context).pop();
-                                            context.read<BookingPageBloc>()..add(BookingTripEvent(trip.id, selectedBus, numberPerson, numberPhone.text));
+                                            context.read<BookingPageBloc>()..add(BookingTripEvent(trip.id, selectedBus, numberPerson, numberPhone));
                                           }
                                         },onClick2: (){
                                           Navigator.of(context).pop();

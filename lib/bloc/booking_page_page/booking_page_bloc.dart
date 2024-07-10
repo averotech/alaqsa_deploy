@@ -60,7 +60,7 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
           numberPerson: event.numberPerson,
           numberPhone: event.numberPhone,
         );
-
+        
         if (response['statusCode'] == 200) {
           emit(BookingTripLoaded(response['statusCode']));
         } else {
