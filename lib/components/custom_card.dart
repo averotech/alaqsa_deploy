@@ -1150,17 +1150,17 @@ class CustomCard {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         child: Text(
-                          "${trip.isBooking ? "الغاء الحجز" : "احجز الان"}",
+                          "${trip.isFull?'القافلة ممتلئة':trip.isBooking ? "الغاء الحجز" : "احجز الان"}",
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'SansArabicLight',
-                              color: isBooking
+                              color:trip.isFull?Theme.of(context).disabledColor: isBooking
                                   ? Theme.of(context).primaryColor
                                   : Colors.white,
                               height: 1.4),
                         ),
-                        onPressed: () {
+                        onPressed:trip.isFull?null: () {
                           onPressedBookingAndCloseTrip(index);
                         },
                       ),
@@ -1207,7 +1207,7 @@ class CustomCard {
           ),
           trip.isFull?  Positioned(
             top: 10,
-            left: 10,
+            left: 0,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
@@ -1215,7 +1215,7 @@ class CustomCard {
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Text(
-                "القافلة ممتلئة",
+                " ممتلئة",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

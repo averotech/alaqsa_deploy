@@ -155,32 +155,32 @@ class StateCompletedVolunteerPage extends State<CompletedVolunteerPage> {
                             Container(
                               margin: EdgeInsets.only(left: 16,right: 16,top: 8),
                               width: MediaQuery.of(context).size.width,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    child: SvgPicture.asset("assets/icons/location.svg",height: 16,width: 16,),
-                                  ),
-                                  Container(
-
-                                      margin: EdgeInsets.only(left: 5,right: 5),
-                                      child:Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            child: Text("مكان المشروع",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Theme.of(context).primaryColor)),
-                                          ),
-                                          Container(
-                                            child:Text("${project != null?(project.location.toString() != null && project.location != "" ? project.location : "غير محدد"):""}",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color: Color(0xff8F9BB3)),),
-                                          ),
-
-                                        ],
-                                      )),
-
-                                ],
-                              ),
+                              // child: Row(
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   mainAxisAlignment: MainAxisAlignment.start,
+                              //   children: [
+                                //   Container(
+                                //     child: SvgPicture.asset("assets/icons/location.svg",height: 16,width: 16,),
+                                //   ),
+                                //   Container(
+                                //
+                                //       margin: EdgeInsets.only(left: 5,right: 5),
+                                //       child:Column(
+                                //         crossAxisAlignment: CrossAxisAlignment.start,
+                                //         mainAxisAlignment: MainAxisAlignment.center,
+                                //         children: [
+                                //           Container(
+                                //             child: Text("مكان المشروع",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Theme.of(context).primaryColor)),
+                                //           ),
+                                //           Container(
+                                //             child:Text("${project != null?(project.location.toString() != null && project.location != "" ? project.location : "غير محدد"):""}",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color: Color(0xff8F9BB3)),),
+                                //           ),
+                                //
+                                //         ],
+                                //       )),
+                                //
+                              //   ],
+                              // ),
                             ),
 
                             Container(

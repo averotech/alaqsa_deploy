@@ -241,30 +241,30 @@ class StateProfilePage extends State<ProfilePage> {
                                       ),
                                     ),
 
-                                    Container(
-                                      width: (MediaQuery.of(context).size.width/3)-21,
-                                      height: 42,
-                                      decoration: BoxDecoration(
-                                          color: clickProjects?Theme.of(context).primaryColor:Colors.white,
-                                          borderRadius: BorderRadius.circular(50)
-                                      ),
-                                      child: MaterialButton(
-                                        height: 42,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(50)
-                                        ),
-                                        child: Text("المشاريع",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:clickProjects?Colors.white:Color(0xff101426),height: 1.4),),
-                                        onPressed: (){
-                                          this.controller.animateToPage(2,duration: Duration(milliseconds: 500), curve: Curves.ease);
-                                          setState((){
-                                            clickData = false;
-                                            clickDonations = false;
-                                            clickProjects = true;
-                                          });
-
-                                        },
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   width: (MediaQuery.of(context).size.width/3)-21,
+                                    //   height: 42,
+                                    //   decoration: BoxDecoration(
+                                    //       color: clickProjects?Theme.of(context).primaryColor:Colors.white,
+                                    //       borderRadius: BorderRadius.circular(50)
+                                    //   ),
+                                    //   child: MaterialButton(
+                                    //     height: 42,
+                                    //     shape: RoundedRectangleBorder(
+                                    //         borderRadius: BorderRadius.circular(50)
+                                    //     ),
+                                    //     child: Text("المشاريع",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:clickProjects?Colors.white:Color(0xff101426),height: 1.4),),
+                                    //     onPressed: (){
+                                    //       this.controller.animateToPage(2,duration: Duration(milliseconds: 500), curve: Curves.ease);
+                                    //       setState((){
+                                    //         clickData = false;
+                                    //         clickDonations = false;
+                                    //         clickProjects = true;
+                                    //       });
+                                    //
+                                    //     },
+                                    //   ),
+                                    // ),
 
                                   ],
                                 ),
