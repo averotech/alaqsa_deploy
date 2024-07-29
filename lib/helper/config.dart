@@ -36,6 +36,7 @@ class Config {
   static var VoluntterAPI = "/api/volunteer_project";
   static var CancleVoluntterAPI = "/api/cancel_volunteering";
   static var UpdateUser= "/user/update";
+  static var getCities="/api/get-cities";
 
   // static const Map<int, String> weekdayName = {1: "السبت", 2: "الأحد", 3: "الأثنين", 4: "الثلاثاء", 5: "الأربعاء", 6: "الخميس", 7: "الجمعة"};
   static const Map<int, String> weekdayName = {

@@ -41,7 +41,7 @@ class StateDonationsPage extends State<DonationsPage>{
            margin: EdgeInsets.only(top: 124,left: 16,right: 16),
            child: Column(
              children: [
-               CustomSectionComponent.Section(context: context,text: "التبرعات",margin: EdgeInsets.only(top: 0,left: 0,right: 0),seeMore: false),
+               CustomSectionComponent.Section(context: context,text: "تبرع الان",margin: EdgeInsets.only(top: 0,left: 0,right: 0),seeMore: false),
 
                Container(
                  margin: EdgeInsets.only(top: 8),

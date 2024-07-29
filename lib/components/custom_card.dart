@@ -1000,7 +1000,7 @@ class CustomCard {
                         CustomSectionComponent.StartingEndingPoint(
                           context: context,
                           margin: EdgeInsets.only(top: 16),
-                          title: 'مكان الوصول',
+                          title: 'مكان الوصول '  ,
                           location: trip.to.addressLocation != null
                               ? trip.tripToLocation.toString().length > 45
                               ? trip.tripToLocation
@@ -1150,17 +1150,17 @@ class CustomCard {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         child: Text(
-                          "${trip.isFull?'القافلة ممتلئة':trip.isBooking ? "الغاء الحجز" : "احجز الان"}",
+                          "${trip.isFull && !trip.isBooking?'القافلة ممتلئة':trip.isBooking ? "الغاء الحجز" : "احجز الان"}",
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'SansArabicLight',
-                              color:trip.isFull?Theme.of(context).disabledColor: isBooking
+                              color:trip.isFull && !trip.isBooking ? Theme.of(context).disabledColor: isBooking
                                   ? Theme.of(context).primaryColor
                                   : Colors.white,
                               height: 1.4),
                         ),
-                        onPressed:trip.isFull?null: () {
+                        onPressed:trip.isFull && !trip.isBooking ? null: () {
                           onPressedBookingAndCloseTrip(index);
                         },
                       ),
@@ -1179,7 +1179,7 @@ class CustomCard {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         child: Text(
-                          "التبرعات",
+                          "تبرع الان",
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,

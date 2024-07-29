@@ -43,3 +43,11 @@ class RegisterErroe extends RegisterState {
 }
 
 
+class CitiesLoaded extends RegisterState {
+  final List<String> cities;
+  CitiesLoaded(this.cities);
+
+  @override
+  List<Object?> get props => [cities];
+}
+

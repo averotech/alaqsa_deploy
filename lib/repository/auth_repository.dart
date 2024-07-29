@@ -15,7 +15,7 @@ class AuthRepository {
   GlobalState globalState = GlobalState.instance;
 
 
-  register({api,name,email,phone_number,password,password_confirmation}) async{
+  register({api,name,email,phone_number,password,password_confirmation,cities}) async{
 
     try {
       var response = await http.post(Uri.parse(api),body: {
@@ -24,8 +24,10 @@ class AuthRepository {
         "phone_number":phone_number.toString(),
         "password":password.toString(),
         "password_confirmation":password_confirmation.toString(),
-        "user_role":"user"
+        "user_role":"user",
+        "city":cities.toString()
       });
+
 
       if(response.statusCode == 201) {
         var jsonResponse = jsonDecode(response.body);
@@ -195,6 +197,16 @@ class AuthRepository {
       }
     } catch (error) {
       throw Exception('Failed to reset password: $error');
+    }
+  }
+
+   fetchCities() async {
+    final response = await http.get(Uri.parse(Config.BaseUrl + Config.getCities));
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return List<String>.from(data['cities']);
+    } else {
+      throw Exception('Failed to load cities');
     }
   }
 }

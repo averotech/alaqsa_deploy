@@ -228,7 +228,7 @@ class StateProfilePage extends State<ProfilePage> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(50)
                                         ),
-                                        child: Text("التبرعات",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:clickDonations?Colors.white:Color(0xff101426),height: 1.4),),
+                                        child: Text("تبرع الان",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:clickDonations?Colors.white:Color(0xff101426),height: 1.4),),
                                         onPressed: (){
                                           this.controller.animateToPage(1,duration: Duration(milliseconds: 500), curve: Curves.ease);
                                           setState((){

@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 enum SingingCharacter { paybal, VisaCard }
 class CustomAlertDailog {
@@ -549,176 +551,366 @@ class CustomAlertDailog {
 
     }
 
- static CustomShowModalBottomSheet({context,nameCard,numberCard,expiryDate,cvv,onPressedCompleated}){
-    return showModalBottomSheet<void>(
+  static  CustomShowModalBottomSheet({
+    required BuildContext context,
+    required Function(SingingCharacter) onPressedCompleated,
+    nameCard,numberCard,expiryDate,cvv
+  }) async {
+    await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(20),
+          topLeft: Radius.circular(20),
+        ),
       ),
       builder: (BuildContext context) {
         SingingCharacter singingCharacter = SingingCharacter.paybal;
         return StatefulBuilder(
-
-            builder: (context,setState){
-             return SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
+          builder: (context, setState) {
+            return SingleChildScrollView(
+              child: Container(
+                decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 18,left: 16,right: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width/2,
-                            child: CustomSectionComponent.Section(context: context,text: "أضف بياناتك لدفع",margin: EdgeInsets.only(top: 0,left: 0,right: 0),seeMore: false),
-                          ),
-                          Container(
-
-                            child: IconButton(
-                              icon: SvgPicture.asset("assets/icons/close.svg"),
-                              onPressed: (){
-                                Navigator.of(context).pop();
-                              },
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 18, left: 16, right: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2,
+                              child: CustomSectionComponent.Section(
+                                context: context,
+                                text: "أضف بياناتك لدفع",
+                                margin: EdgeInsets.zero,
+                                seeMore: false,
+                              ),
                             ),
-                          )
-                        ],
+                            Container(
+                              child: IconButton(
+                                icon: SvgPicture.asset("assets/icons/close.svg"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 24),
-                      child:Row(
-                        children: [
-
-                          Container(
-                            margin: EdgeInsets.only(left: 16,right: 16),
-                            height: 20,
-                            width: 20,
-                            child: Transform.scale(
+                      Container(
+                        margin: EdgeInsets.only(top: 24),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 16, right: 16),
+                              height: 20,
+                              width: 20,
+                              child: Transform.scale(
                                 scale: 1.25,
-                                child: Radio(
-                                    activeColor: Theme.of(context).primaryColor,
-                                    value: SingingCharacter.paybal,
-                                    groupValue: singingCharacter,
-                                    onChanged: (SingingCharacter? value) {
-                                      setState(() {
-                                        singingCharacter=value!;
-                                      });
-
-                                    }
-                                )),
-                          ),
-                          Container(
-
-                            child: SvgPicture.asset("assets/icons/PayPal.svg"),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 16,right: 16),
-                            child: Text("PayPal",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Color(0xff101426)),),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 16),
-                      child:Row(
-                        // children: [
-                        //
-                        //   Container(
-                        //     margin: EdgeInsets.only(left: 16,right: 16),
-                        //     height: 20,
-                        //     width: 20,
-                        //     child: Transform.scale(
-                        //         scale: 1.20,
-                        //
-                        //         child: Radio(
-                        //             activeColor: Theme.of(context).primaryColor,
-                        //             fillColor: MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
-                        //             materialTapTargetSize: MaterialTapTargetSize.padded,
-                        //             value: SingingCharacter.VisaCard,
-                        //             groupValue: singingCharacter,
-                        //             onChanged: (SingingCharacter? value) {
-                        //               setState(() {
-                        //                 singingCharacter=value!;
-                        //               });
-                        //
-                        //             }
-                        //
-                        //         )),
-                        //   ),
-                        //   Container(
-                        //
-                        //     child: SvgPicture.asset("assets/icons/visa.svg"),
-                        //   ),
-                        //   Container(
-                        //     margin: EdgeInsets.only(left: 16,right: 16),
-                        //     child: Text(" فيزا كارد",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Color(0xff101426)),),
-                        //   ),
-                        // ],
-                      ),
-                    ),
-
-                   if(singingCharacter == SingingCharacter.VisaCard) Column(
-                      children: [
-                        CustomTextField.TextFieldWithTitleAndBorder(width:MediaQuery.of(context).size.width,controller: nameCard,title: "Name on card",hintText: "Name on card",obscureText: false,margin: EdgeInsets.only(top:24,left: 16,right: 16)),
-                        CustomTextField.TextFieldWithTitleAndBorder(width:MediaQuery.of(context).size.width,controller: numberCard,title: "Card Number",hintText: "Card Number",obscureText: false,margin: EdgeInsets.only(top:20,left: 16,right: 16)),
-                        Container(
-
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width/2,
-                                child:  CustomTextField.TextFieldWithTitleAndBorder(width:MediaQuery.of(context).size.width,controller: cvv,title: "CVV",hintText: "CVV",obscureText: false,margin: EdgeInsets.only(top:20,left: 16,right: 16)),
+                                child: Radio<SingingCharacter>(
+                                  activeColor: Theme.of(context).primaryColor,
+                                  value: SingingCharacter.paybal,
+                                  groupValue: singingCharacter,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      singingCharacter = value!;
+                                    });
+                                  },
+                                ),
                               ),
-                              Container(
-                                width: MediaQuery.of(context).size.width/2,
-                                child:  CustomTextField.TextFieldWithTitleAndBorder(width:MediaQuery.of(context).size.width,controller: expiryDate,title: "Expiry date",hintText: "Expiry date",obscureText: false,margin: EdgeInsets.only(top:20,left: 16,right: 16)),
+                            ),
+                            Container(
+                              child: SvgPicture.asset("assets/icons/PayPal.svg"),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 16, right: 16),
+                              child: Text(
+                                "PayPal",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'SansArabicLight',
+                                  color: Color(0xff101426),
+                                ),
                               ),
-
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-
-                    Container(
-                      width: (MediaQuery.of(context).size.width),
-                      height: 42,
-                      margin: EdgeInsets.only(top: 24,bottom: 32,left: 16,right: 16),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(50)
                       ),
-                      child: MaterialButton(
+                      Container(
+                        margin: EdgeInsets.only(top: 16),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 16, right: 16),
+                              height: 20,
+                              width: 20,
+                              child: Transform.scale(
+                                scale: 1.20,
+                                child: Radio<SingingCharacter>(
+                                  activeColor: Theme.of(context).primaryColor,
+                                  fillColor: MaterialStateColor.resolveWith(
+                                          (states) => Theme.of(context).primaryColor),
+                                  materialTapTargetSize: MaterialTapTargetSize.padded,
+                                  value: SingingCharacter.VisaCard,
+                                  groupValue: singingCharacter,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      singingCharacter = value!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Container(
+                              child: SvgPicture.asset("assets/icons/visa.svg"),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 16, right: 16),
+                              child: Text(
+                                "Cardcom",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'SansArabicLight',
+                                  color: Color(0xff101426),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
                         height: 42,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50)
+                        margin: EdgeInsets.only(top: 24, bottom: 32, left: 16, right: 16),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(50),
                         ),
-                        child: Text("تأكيد",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Colors.white,height: 1.4),),
-                        onPressed: (){
-                          onPressedCompleated(singingCharacter);
-
-                        },
+                        child: MaterialButton(
+                          height: 42,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Text(
+                            "تأكيد",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'SansArabicLight',
+                              color: Colors.white,
+                              height: 1.4,
+                            ),
+                          ),
+                          onPressed: () async {
+                            if (singingCharacter == SingingCharacter.VisaCard) {
+                              Navigator.of(context).pop();
+                              const url = 'https://secure.cardcom.solutions/EA/EA5/yFblTOMUCrWWSWxRTs4g/Intro';
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            } else {
+                              Navigator.of(context).pop();
+                              onPressedCompleated(singingCharacter);
+                            }
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          },
+        );
       },
     );
-    }
+  }
+
+ // static CustomShowModalBottomSheet({context,nameCard,numberCard,expiryDate,cvv,onPressedCompleated}){
+ //    return showModalBottomSheet<void>(
+ //      context: context,
+ //      isScrollControlled: true,
+ //      shape: RoundedRectangleBorder(
+ //          borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
+ //      ),
+ //      builder: (BuildContext context) {
+ //        SingingCharacter singingCharacter = SingingCharacter.paybal;
+ //        return StatefulBuilder(
+ //
+ //            builder: (context,setState){
+ //             return SingleChildScrollView(
+ //            child: Container(
+ //              decoration: BoxDecoration(
+ //                  color: Colors.white,
+ //                  borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
+ //              ),
+ //              child: Center(
+ //                child: Column(
+ //                  mainAxisAlignment: MainAxisAlignment.start,
+ //                  mainAxisSize: MainAxisSize.max,
+ //                  children: <Widget>[
+ //                    Container(
+ //                      margin: EdgeInsets.only(top: 18,left: 16,right: 16),
+ //                      child: Row(
+ //                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+ //                        children: [
+ //                          Container(
+ //                            width: MediaQuery.of(context).size.width/2,
+ //                            child: CustomSectionComponent.Section(context: context,text: "أضف بياناتك لدفع",margin: EdgeInsets.only(top: 0,left: 0,right: 0),seeMore: false),
+ //                          ),
+ //                          Container(
+ //
+ //                            child: IconButton(
+ //                              icon: SvgPicture.asset("assets/icons/close.svg"),
+ //                              onPressed: (){
+ //                                Navigator.of(context).pop();
+ //                              },
+ //                            ),
+ //                          )
+ //                        ],
+ //                      ),
+ //                    ),
+ //                    Container(
+ //                      margin: EdgeInsets.only(top: 24),
+ //                      child:Row(
+ //                        children: [
+ //
+ //                          Container(
+ //                            margin: EdgeInsets.only(left: 16,right: 16),
+ //                            height: 20,
+ //                            width: 20,
+ //                            child: Transform.scale(
+ //                                scale: 1.25,
+ //                                child: Radio(
+ //                                    activeColor: Theme.of(context).primaryColor,
+ //                                    value: SingingCharacter.paybal,
+ //                                    groupValue: singingCharacter,
+ //                                    onChanged: (SingingCharacter? value) {
+ //                                      setState(() {
+ //                                        singingCharacter=value!;
+ //                                      });
+ //
+ //                                    }
+ //                                )),
+ //                          ),
+ //                          Container(
+ //
+ //                            child: SvgPicture.asset("assets/icons/PayPal.svg"),
+ //                          ),
+ //                          Container(
+ //                            margin: EdgeInsets.only(left: 16,right: 16),
+ //                            child: Text("PayPal",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Color(0xff101426)),),
+ //                          )
+ //                        ],
+ //                      ),
+ //                    ),
+ //                    Container(
+ //                      margin: EdgeInsets.only(top: 16),
+ //                      child:Row(
+ //                        children: [
+ //
+ //                          Container(
+ //                            margin: EdgeInsets.only(left: 16,right: 16),
+ //                            height: 20,
+ //                            width: 20,
+ //                            child: Transform.scale(
+ //                                scale: 1.20,
+ //
+ //                                child: Radio(
+ //                                    activeColor: Theme.of(context).primaryColor,
+ //                                    fillColor: MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
+ //                                    materialTapTargetSize: MaterialTapTargetSize.padded,
+ //                                    value: SingingCharacter.VisaCard,
+ //                                    groupValue: singingCharacter,
+ //                                    onChanged: (SingingCharacter? value) {
+ //                                      setState(() {
+ //                                        singingCharacter=value!;
+ //                                      });
+ //
+ //                                    }
+ //
+ //                                )),
+ //                          ),
+ //                          Container(
+ //
+ //                            child: SvgPicture.asset("assets/icons/visa.svg"),
+ //                          ),
+ //                          Container(
+ //                            margin: EdgeInsets.only(left: 16,right: 16),
+ //                            child: Text(" فيزا كارد",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Color(0xff101426)),),
+ //                          ),
+ //                        ],
+ //                      ),
+ //                    ),
+ //
+ //                   if(singingCharacter == SingingCharacter.VisaCard) Column(
+ //                      children: [
+ //                        CustomTextField.TextFieldWithTitleAndBorder(width:MediaQuery.of(context).size.width,controller: nameCard,title: "Name on card",hintText: "Name on card",obscureText: false,margin: EdgeInsets.only(top:24,left: 16,right: 16)),
+ //                        CustomTextField.TextFieldWithTitleAndBorder(width:MediaQuery.of(context).size.width,controller: numberCard,title: "Card Number",hintText: "Card Number",obscureText: false,margin: EdgeInsets.only(top:20,left: 16,right: 16)),
+ //                        Container(
+ //
+ //                          child: Row(
+ //                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+ //                            children: [
+ //                              Container(
+ //                                width: MediaQuery.of(context).size.width/2,
+ //                                child:  CustomTextField.TextFieldWithTitleAndBorder(width:MediaQuery.of(context).size.width,controller: cvv,title: "CVV",hintText: "CVV",obscureText: false,margin: EdgeInsets.only(top:20,left: 16,right: 16)),
+ //                              ),
+ //                              Container(
+ //                                width: MediaQuery.of(context).size.width/2,
+ //                                child:  CustomTextField.TextFieldWithTitleAndBorder(width:MediaQuery.of(context).size.width,controller: expiryDate,title: "Expiry date",hintText: "Expiry date",obscureText: false,margin: EdgeInsets.only(top:20,left: 16,right: 16)),
+ //                              ),
+ //
+ //                            ],
+ //                          ),
+ //                        ),
+ //                      ],
+ //                    ),
+ //
+ //                    Container(
+ //                      width: (MediaQuery.of(context).size.width),
+ //                      height: 42,
+ //                      margin: EdgeInsets.only(top: 24,bottom: 32,left: 16,right: 16),
+ //                      decoration: BoxDecoration(
+ //                          color: Theme.of(context).primaryColor,
+ //                          borderRadius: BorderRadius.circular(50)
+ //                      ),
+ //                      child: MaterialButton(
+ //                        height: 42,
+ //                        shape: RoundedRectangleBorder(
+ //                            borderRadius: BorderRadius.circular(50)
+ //                        ),
+ //                        child: Text("تأكيد",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Colors.white,height: 1.4),),
+ //                        onPressed: (){
+ //                          onPressedCompleated(singingCharacter);
+ //
+ //                        },
+ //                      ),
+ //                    ),
+ //                  ],
+ //                ),
+ //              ),
+ //            ),
+ //          );
+ //        });
+ //      },
+ //    );
+ //    }
 
  static PayPalShowModalBottomSheet({context,checkoutUrl,returnURL,cancelURL,action}){
     return showModalBottomSheet<void>(

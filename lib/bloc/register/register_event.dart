@@ -21,17 +21,23 @@ class RegisterApiEvent extends RegisterEvent {
   var _email;
   var _phone_number;
   var _password;
-  RegisterApiEvent(this._name,this._email,this._phone_number,this._password);
+  var _cities;
+  RegisterApiEvent(this._name,this._email,this._phone_number,this._password, this._cities);
 
   get name => _name;
   get password => _password;
   get email => _email;
   get phone_number=>_phone_number;
+  get cities=>_cities;
 
 
   @override
   // TODO: implement props
-  List<Object?> get props => [name,email,password];
+  List<Object?> get props => [name,email,password,phone_number, cities];
 
 }
+
+
+class RegisterFetchCitiesEvent extends RegisterEvent {}
+
 

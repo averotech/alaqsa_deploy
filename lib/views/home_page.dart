@@ -159,6 +159,7 @@ class HomePage extends StatefulWidget{
                                  if(await Config.checkLogin() == true){
                                    if(nearTrip.isBooking == false){
                                      globalState.set("trip", nearTrip);
+
                                      Navigator.of(context).pushNamed("BookingPage");
                                    } else {
 
