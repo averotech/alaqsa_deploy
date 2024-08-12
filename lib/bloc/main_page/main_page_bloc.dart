@@ -52,7 +52,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
         }
 
         
-          Position correntlocation = await Config.getLoction();
+          Position correntlocation = await Config.getLocation();
           LatLng latLng = LatLng(correntlocation.latitude, correntlocation.longitude);
           var myAddress = await Config.getInformastionLocation(latLng: latLng);
 

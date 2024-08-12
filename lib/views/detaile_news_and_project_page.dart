@@ -10,15 +10,13 @@ import 'package:alaqsa/bloc/volunteer_page/volunteer_page_bloc.dart';
 import 'package:alaqsa/bloc/volunteer_page/volunteer_page_event.dart';
 import 'package:alaqsa/bloc/volunteer_page/volunteer_page_state.dart';
 import 'package:alaqsa/components/CustomAlertDailog.dart';
-import 'package:alaqsa/components/CustomSectionComponent.dart';
-import 'package:alaqsa/components/custom_button.dart';
 import 'package:alaqsa/components/custom_nav_bar.dart';
 import 'package:alaqsa/helper/GlobalState.dart';
 import 'package:alaqsa/helper/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class DetaileNewsAndProjectPage extends StatefulWidget {
@@ -169,19 +167,23 @@ class StateDetaileNewsAndProjectPage extends State<DetaileNewsAndProjectPage> {
 
 
                                       Container(
-                                          margin: EdgeInsets.only(top: 8),
-                                          child: Html(data: '${state.news.content}',
-                                            style: {
-                                              "*":Style(
-                                                  fontSize: FontSize.medium,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: 'SansArabicLight',
-                                                  color: Color(0xff101426)
-                                              )
-                                            },
-                                          )
-                                        // Text("ل لنص يمكن أن يستبدل في نفس المساحة الأخرى إضافة إلى زيادة .",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'SansArabicLight',color:Color(0xff101426),height: 1.5,),maxLines: 100,
-                                        //   overflow: TextOverflow.ellipsis,textAlign: TextAlign.right,),
+                                        margin: EdgeInsets.only(top: 8),
+                                        child: Html(
+                                          data: '${state.news.content}',
+                                          style: {
+                                            "*": Style(
+                                              fontSize: FontSize.medium,
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily: 'SansArabicLight',
+                                              color: Color(0xff101426),
+                                            ),
+                                          },
+                                          onLinkTap: (String? url, Map<String, String> attributes, element) async {
+                                            if (url != null) {
+                                              launchUrl(Uri.parse(url));
+                                            }
+                                          },
+                                        ),
                                       ),
                                       // I want to map on newsImages here and show them as mostly in the good way like grid
 

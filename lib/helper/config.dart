@@ -1,5 +1,7 @@
 
 import 'package:alaqsa/models/LatLng.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -67,7 +69,7 @@ class Config {
   }
 
 
-  static getLoction() async {
+  static getLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
