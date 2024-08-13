@@ -20,7 +20,11 @@ class SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver 
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this); // Add observer
-    _startAppInitialization();
+
+    // Delay the start of the app initialization until after the first frame is drawn
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _startAppInitialization();
+    });
   }
 
   @override
@@ -29,13 +33,17 @@ class SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver 
     super.dispose();
   }
 
-  void _startAppInitialization() {
+  Future<void> _startAppInitialization() async {
+    var currentLocation = await getLocation(context);
+    if (currentLocation == null) {
+      // If location is not granted, show permission denied dialog
+      await _showPermissionDeniedDialog(context);
+      return;
+    }
+
     Timer(Duration(seconds: 1), () async {
       final prefs = await SharedPreferences.getInstance();
       var token = prefs.getString("token");
-
-      var currentLocation = await getLocation(context);
-      if (currentLocation == null) return; // Exit if location permission is not granted
 
       LatLng latLng = LatLng(currentLocation.latitude, currentLocation.longitude);
       var myAddress = await Config.getInformastionLocation(latLng: latLng);
@@ -43,13 +51,64 @@ class SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver 
       globalState.set("latlng", latLng);
       globalState.set("myAddress", myAddress);
 
-      if (token != null && token != "") {
+      if (token != null && token.isNotEmpty) {
         Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route) => false);
       } else {
         Navigator.of(context).pushNamedAndRemoveUntil("LoginPage", (route) => false);
       }
     });
   }
+
+  Future<void> _showPrePermissionDialog(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("تحديد الموقع مطلوب"),
+          content: Text("يحتاج هذا التطبيق إلى الوصول إلى موقعك لتقديم كافة الخدمات والعمل بشكل صحيح."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("موافق"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showPermissionDeniedDialog(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("تم رفض الوصول إلى الموقع"),
+          content: Text("للاستفادة من هذه الميزة بشكل صحيح، يجب تمكين الوصول إلى الموقع في إعدادات جهازك. بدون ذلك، قد لا تتمكن من رؤية الرحلات القريبة منك بدقة. يرجى تفعيل الموقع لضمان عمل التطبيق بشكل صحيح."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("اذهب إلى الإعدادات"),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Geolocator.openAppSettings(); // Open app settings
+              },
+            ),
+            TextButton(
+              child: Text("إلغاء"),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                // Navigate to a different screen
+                Navigator.of(context).pushNamedAndRemoveUntil("LoginPage", (route) => false);
+                // You can replace "HomePage" with the name of the screen you want to show after cancellation.
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -65,7 +124,7 @@ class SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver 
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      await _showSnackbarAndHandlePermissionDenied(context, "Location access is required to use this app. Please enable location services in your device settings to continue.");
+      await _showSnackbarAndHandlePermissionDenied(context, "مطلوب الوصول إلى الموقع لاستخدام هذا التطبيق. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
       return null;
     }
 
@@ -73,13 +132,13 @@ class SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver 
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        await _showSnackbarAndHandlePermissionDenied(context, "Location access is required to use this app. Please enable location services in your device settings to continue.");
+        await _showSnackbarAndHandlePermissionDenied(context, "مطلوب الوصول إلى الموقع لاستخدام هذا التطبيق. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
         return null;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      await _showSnackbarAndHandlePermissionDenied(context, "Location access is required to use app. Please enable location services in your device settings to continue.");
+      await _showSnackbarAndHandlePermissionDenied(context, "تم رفض الوصول إلى الموقع بشكل دائم. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
       return null;
     }
 
@@ -90,9 +149,6 @@ class SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
     );
-
-    await Future.delayed(Duration(seconds: 2));
-    Geolocator.openAppSettings();
   }
 
   @override

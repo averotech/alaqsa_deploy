@@ -957,7 +957,9 @@ class CustomCard {
                         CustomSectionComponent.StartingEndingPoint(
                           context: context,
                           margin: EdgeInsets.only(top: 22),
+                          // title: 'اسم القافلة:  ${trip.nameTrip.toString().length > 44 ? trip.nameTrip.toString().substring(0,20)+ '...':trip.nameTrip.toString()}',
                           title: 'اسم القافلة:  ${trip.nameTrip}',
+
                           location:
                           '${globalState.get("myAddress") != null ? globalState.get("myAddress") : "غير معروف"}',
                           clockIcon: 'assets/icons/clock.svg',
