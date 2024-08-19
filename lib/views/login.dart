@@ -9,69 +9,131 @@ import 'package:alaqsa/components/custom_text_field.dart';
 import 'package:alaqsa/helper/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
+import '../helper/GlobalState.dart';
+import '../models/LatLng.dart';
 
 class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return StateLogin();
   }
-
 }
 
-class StateLogin extends State<Login> {
+class StateLogin extends State<Login> with WidgetsBindingObserver {
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
 
-  GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
-  );
+  GlobalState globalState = GlobalState.instance;
 
-  handleSignInGoogle() async {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _initiateLocationCheck();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // App has resumed from background, check location permissions again
+      _initiateLocationCheck();
+    }
+  }
+
+  Future<void> _initiateLocationCheck() async {
     try {
-     var isSignin = await _googleSignIn.signIn();
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  logOutGoogle() async {
-   await _googleSignIn.signOut();
-  }
-
-  handelSingInFC() async{
-    try{
-      final LoginResult result = await FacebookAuth.instance.login(
-        permissions: ['public_profile', 'email'],
-      );
-
-      if (result.status == LoginStatus.success) {
-        final userData = await FacebookAuth.instance.getUserData();
-        print(userData["email"]);
-        print(userData["id"]);
-        print(userData["name"]);
-        print(userData);
-      } else {
-        print(result.status);
-        print(result.message);
+      var currentLocation = await getLocation(context);
+      if (currentLocation == null) {
+        await _showPermissionDeniedDialog(context);
+        return;
       }
-    } catch(e){
-      print(e);
+        final prefs = await SharedPreferences.getInstance();
+        var token = prefs.getString("token") ?? "";
+        LatLng latLng = LatLng(currentLocation.latitude, currentLocation.longitude);
+        var myAddress = await Config.getInformastionLocation(latLng: latLng);
+
+        globalState.set("currentLocation", currentLocation);
+        globalState.set("latlng", latLng);
+        globalState.set("myAddress", myAddress);
+
+    } catch (e) {
+
+      // Handle any exceptions
+      _handleMissingLocationData();
     }
+  }
+  Future<void> _showPermissionDeniedDialog(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("تم رفض الوصول إلى الموقع"),
+          content: Text("للاستفادة من هذه الميزة بشكل صحيح، يجب تمكين الوصول إلى الموقع في إعدادات جهازك. بدون ذلك، قد لا تتمكن من رؤية الرحلات القريبة منك بدقة. يرجى تفعيل الموقع لضمان عمل التطبيق بشكل صحيح."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("اذهب إلى الإعدادات"),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Geolocator.openAppSettings(); // Open app settings
+              },
+            ),
+            TextButton(
+              child: Text("إلغاء"),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  // static Future<Position?> getLocation(BuildContext context) async {
+     Future<Position?> getLocation(BuildContext context) async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+          await _showSnackbarAndHandlePermissionDenied(context, "مطلوب الوصول إلى الموقع لاستخدام هذا التطبيق. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
+          return null;
+        }
+        permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+          if (permission == LocationPermission.denied) {
+            await _showSnackbarAndHandlePermissionDenied(context, "مطلوب الوصول إلى الموقع لاستخدام هذا التطبيق. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
+            return null;
+          }
+        }
+      if (permission == LocationPermission.deniedForever) {
+        // await _showSnackbarAndHandlePermissionDenied(context, "تم رفض الوصول إلى الموقع بشكل دائم. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
+        return null;
+      }
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
 
   }
-  logOutFC() async {
-    await FacebookAuth.instance.logOut();
+  static Future<void> _showSnackbarAndHandlePermissionDenied(BuildContext context, String message) async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
-
+  void _handleMissingLocationData() {
+    print("Location data is missing. Proceeding with default settings.");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -193,20 +255,6 @@ class StateLogin extends State<Login> {
                                    ],
                                  ),
                                ),
-                               // CustomButton.customButton1(context: context,visibleIcon: true,textButton: "التسجيل عبر حساب ابل",iconButton:"assets/icons/apple-logo.svg",top: 16.0,bottom: 0.0,onPressed: (){
-                               //   Navigator.of(context).pushNamed("MainPage");
-                               // }),
-                               // Todo Modify Apple,google,Facebook code
-                               // CustomButton.customButton1(context: context,visibleIcon: true,textButton: "التسجيل عبر جوجل",iconButton:"assets/icons/google.svg",top: 19.0,bottom: 0.0,onPressed: (){
-                               //   context.read<LoginBloc>()..add(LoginGoogleEvent());
-                               //   // handleSignInGoogle();
-                               //
-                               //   // Navigator.of(context).pushNamed("MainPage");
-                               // }),
-                               // CustomButton.customButton1(context: context,visibleIcon: true,textButton: "التسجيل عبر فيسبوك",iconButton:"assets/icons/facebook-app-symbol.svg",top: 16.0,bottom: 24.0,onPressed: (){
-                               //   context.read<LoginBloc>()..add(LoginFacebookEvent());
-                               //   // Navigator.of(context).pushNamed("MainPage");
-                               // }),
                                Container(
                                  width: MediaQuery.of(context).size.width,
                                  margin: EdgeInsets.only(bottom: 32),
@@ -255,23 +303,6 @@ class StateLogin extends State<Login> {
                      ),
 
                    ),
-                   // Positioned(
-                   //   bottom: 60,
-                   //     child: Container(
-                   //       width: MediaQuery.of(context).size.width,
-                   //       child: Center(
-                   //
-                   //         child: TextButton(
-                   //
-                   //           child: Text("لا تمتلك حساب؟ أنشئء الان",style: TextStyle(color: Colors.white,fontSize: 16,fontFamily: "SansArabicLight",fontWeight: FontWeight.w600),),
-                   //           onPressed: (){
-                   //             print("owais");
-                   //           },
-                   //         ),
-                   //       ),
-                   //     )
-                   // )
-
                  ],
                );
              },

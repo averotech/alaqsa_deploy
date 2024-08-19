@@ -3,13 +3,8 @@ import 'package:alaqsa/bloc/main_page/main_page_bloc.dart';
 import 'package:alaqsa/bloc/main_page/main_page_event.dart';
 import 'package:alaqsa/bloc/main_page/main_page_state.dart';
 import 'package:alaqsa/components/CustomAlertDailog.dart';
-import 'package:alaqsa/components/CustomSectionComponent.dart';
-import 'package:alaqsa/components/LineDashedPainter.dart';
 import 'package:alaqsa/components/custom_button.dart';
-import 'package:alaqsa/components/custom_listview.dart';
-import 'package:alaqsa/components/text_field_search.dart';
 import 'package:alaqsa/helper/config.dart';
-import 'package:alaqsa/models/user.dart';
 import 'package:alaqsa/views/donations_page.dart';
 import 'package:alaqsa/views/home_page.dart';
 import 'package:alaqsa/views/news_page.dart';
@@ -307,23 +302,6 @@ class StateMainPage extends State<MainPage> {
                           :(indexPage == 3)?TripPage()
                           :(indexPage == 4)?DonationsPage():Container()
 
-                       // PageView.builder(
-                       //     pageSnapping: false,
-                       //     itemCount: pageViewItem.length,
-                       //     scrollDirection: Axis.horizontal,
-                       //     controller: controller,
-                       //     physics: const NeverScrollableScrollPhysics(),
-                       //
-                       //     itemBuilder: (context, index) {
-                       //
-                       //       return pageViewItem[index];
-                       //       // return Transform(
-                       //       //
-                       //       //   transform: Matrix4.identity()
-                       //       //     ..rotateX(currentPageValue - index),
-                       //       //   child: pageViewItem[index],
-                       //       // );
-                       //     }),
                      ),
                      // getPage(),
                      // End Content

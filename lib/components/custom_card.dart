@@ -896,7 +896,7 @@ class CustomCard {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height / 3.3,
+                    height: MediaQuery.of(context).size.height / 4.4,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -950,27 +950,25 @@ class CustomCard {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 12, right: 12, bottom: 0),
+                    margin: EdgeInsets.only(left: 12, right: 12, bottom: 0,top:24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomSectionComponent.StartingEndingPoint(
-                          context: context,
-                          margin: EdgeInsets.only(top: 22),
-                          // title: 'اسم القافلة:  ${trip.nameTrip.toString().length > 44 ? trip.nameTrip.toString().substring(0,20)+ '...':trip.nameTrip.toString()}',
-                          title: 'اسم القافلة:  ${trip.nameTrip}',
-
-                          location:
-                          '${globalState.get("myAddress") != null ? globalState.get("myAddress") : "غير معروف"}',
-                          clockIcon: 'assets/icons/clock.svg',
-                          distanceIcon: 'assets/icons/distance.svg',
-                          globalColor:
-                          isBooking ? Colors.white : Color(0xffB7B7B7),
-                          iconColor:
-                          isBooking ? Colors.white : Color(0xffB7B7B7),
-                          titleColor: isBooking
-                              ? Colors.white
-                              : Theme.of(context).primaryColor,
+                        Container(
+                          child: Text(
+                            "اسم القافلة:  ${trip.nameTrip.length > 44 ? trip.nameTrip.substring(0, 44) + '...' : trip.nameTrip}",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'SansArabicLight',
+                              height: 2,
+                              color: isBooking
+                                  ? Colors.white
+                                  : Theme.of(context).primaryColor,
+                            ),
+                            overflow: TextOverflow.visible, // This allows the text to overflow into multiple lines
+                            softWrap: true, // Enables text wrapping
+                          ),
                         ),
                         CustomSectionComponent.StartingEndingPoint(
                           context: context,

@@ -15,7 +15,7 @@ class CustomSectionComponent {
         children: [
           Container(
           // toString().length > 44
-            child: Text("$title",style:TextStyle(fontSize: title.toString().length > 44 ? 11 : 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color: titleColor,height: 1.3),overflow: TextOverflow.clip,),
+            child: Text("$title",style:TextStyle(fontSize: title.toString().length > 44 ? 13 : 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color: titleColor,height: 1.3),overflow: TextOverflow.clip,),
           ),
           Container(
             margin: EdgeInsets.only(top: 1),

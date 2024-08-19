@@ -16,7 +16,6 @@ import 'main_page_event.dart';
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
 
   GlobalState globalState = GlobalState.instance;
-
   MainPageBloc() : super(MainPageInitial()) {
     MainPageRepository mainPageRepository = MainPageRepository();
     AuthRepository authRepository = AuthRepository();
@@ -51,14 +50,16 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
           emit(MainPageError.isAuthError("Not Auth",false));
         }
 
-        
-          Position correntlocation = await Config.getLocation();
-          LatLng latLng = LatLng(correntlocation.latitude, correntlocation.longitude);
-          var myAddress = await Config.getInformastionLocation(latLng: latLng);
+          // LatLng latLng = LatLng(correntlocation.latitude, correntlocation.longitude);
+          // var myAddress = await Config.getInformastionLocation(latLng: latLng);
+          //
+          // globalState.set("latlng", latLng);
+          // globalState.set("myAddress", myAddress);
 
-          globalState.set("latlng", latLng);
-          globalState.set("myAddress", myAddress);
-          emit(MainPageCurrentLocationLoaded(correntlocation,myAddress));
+        var currentLocation=globalState.get("currentLocation");
+        var myAddress=globalState.get("myAddress");
+
+          emit(MainPageCurrentLocationLoaded(currentLocation,myAddress));
 
 
       } catch(e){

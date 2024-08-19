@@ -46,7 +46,7 @@ class MainPageRepository {
       if(globalState.get("latlng") != null) {
         latLng = globalState.get("latlng");
       } else {
-        latLng = LatLng(180, -180);
+        latLng = LatLng(32.130492742251334,34.97348856681219);
       }
       if(token.toString() != "" && token.toString() != "null"){
         response = await http.get(Uri.parse(api+"?lat=${latLng.lat}&lng=${latLng.lng}"),headers: {"Authorization":"Bearer "+token.toString(),"Accept":"application/json"});
