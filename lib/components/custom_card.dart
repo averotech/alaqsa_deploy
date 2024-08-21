@@ -896,7 +896,7 @@ class CustomCard {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height / 4.4,
+                    height: MediaQuery.of(context).size.height / 3.2,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -910,7 +910,7 @@ class CustomCard {
                           ),
                         ),
                         Container(
-                          height: 51,
+                          height: 60,
                           child: CustomPaint(
                             painter: LineDashedPainter(
                                 isBooking ? Colors.white : Color(0xffB7B7B7)
@@ -929,7 +929,7 @@ class CustomCard {
                           ),
                         ),
                         Container(
-                          height: 51,
+                          height: 60,
                           child: CustomPaint(
                             painter: LineDashedPainter(
                                 isBooking ? Colors.white : Color(0xffB7B7B7)
@@ -950,7 +950,7 @@ class CustomCard {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 12, right: 12, bottom: 0,top:24),
+                    margin: EdgeInsets.only(left: 12, right: 12, bottom: 0,top:16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -959,12 +959,28 @@ class CustomCard {
                             "اسم القافلة:  ${trip.nameTrip.length > 44 ? trip.nameTrip.substring(0, 44) + '...' : trip.nameTrip}",
                             style: TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                               fontFamily: 'SansArabicLight',
                               height: 2,
                               color: isBooking
                                   ? Colors.white
                                   : Theme.of(context).primaryColor,
+                            ),
+                            overflow: TextOverflow.visible, // This allows the text to overflow into multiple lines
+                            softWrap: true, // Enables text wrapping
+                          ),
+                        ),
+                        Container(
+                          child: Text(
+                            "تفاصيل الرحلة: ${trip.nameDate} - ${trip.startDate}  ",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'SansArabicLight',
+                              height: 2,
+                              color: isBooking
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                             overflow: TextOverflow.visible, // This allows the text to overflow into multiple lines
                             softWrap: true, // Enables text wrapping
@@ -983,6 +999,7 @@ class CustomCard {
                               : "غير معروف",
                           clockIcon: 'assets/icons/clock.svg',
                           time: trip.startTime,
+                          endDate:trip.endDate,
                           distanceIcon: 'assets/icons/distance.svg',
                           km: 'كم ' +
                               (trip.fromDistance != null
@@ -1017,6 +1034,7 @@ class CustomCard {
                                   : "0.0"),
                           globalColor:
                           isBooking ? Colors.white : Color(0xff101426),
+                            endDate:trip.endDate,
                           iconColor: isBooking
                               ? Colors.white
                               : Theme.of(context).primaryColor,

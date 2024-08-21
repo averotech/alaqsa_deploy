@@ -109,7 +109,9 @@ class StateProfilePage extends State<ProfilePage> {
                name.text=state.userProfile.user.name;
                numberPhone.text= state.userProfile.user.phone == ""? "":state.userProfile.user.phone;
                email.text=state.userProfile.user.email;
-               pageViewItem = [InformationAccountPages(state.userProfile.user),ProfileDonationsPage(state.userProfile.myDonationes),ProfileProjectsPage(state.userProfile.myVolunteers)];
+               pageViewItem = [InformationAccountPages(state.userProfile.user),ProfileDonationsPage(state.userProfile.myDonationes)
+                 // ,ProfileProjectsPage(state.userProfile.myVolunteers)
+                 ];
                if(Config.isShowingLoadingDialog == true) {
                  Config.isShowingLoadingDialog = false;
                  Navigator.of(context).pop();
@@ -393,8 +395,12 @@ class StateProfilePage extends State<ProfilePage> {
 
       child:Column(
         children: [
-          CustomTextField.TextFieldWithIcon(controller: name,hintText: "",obscureText: false,margin: EdgeInsets.only(top: 6,left: 16,right: 16),icon: "assets/icons/account.svg"),
-          CustomTextField.TextFieldWithIcon(controller: numberPhone,hintText: numberPhone.text==""?"لا يتوفر رقم الهاتف":"",obscureText: false,margin: EdgeInsets.only(top: 12,left: 16,right: 16),icon: "assets/icons/iphone.svg",colorHintText: Color(0xffB7B7B7)),
+          // CustomTextField.TextFieldWithIcon(controller: name,hintText: "",obscureText: false,margin: EdgeInsets.only(top: 6,left: 16,right: 16),icon: "assets/icons/account.svg"),
+          // CustomTextField.TextFieldWithIcon(controller: numberPhone,hintText: numberPhone.text==""?"لا يتوفر رقم الهاتف":"",obscureText: true,margin: EdgeInsets.only(top: 12,left: 16,right: 16),icon: "assets/icons/iphone.svg",colorHintText: Color(0xffB7B7B7)),
+          CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 12,bottom: 0,left: 16,right: 16),icon: 'assets/icons/iphone.svg',paddingIcon: 5.0,paddingButton: 6.0,text: user.name,textColor: Color(0xffB7B7B7),onPressed: ()async{   }),
+
+          CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 12,bottom: 0,left: 16,right: 16),icon: 'assets/icons/iphone.svg',paddingIcon: 5.0,paddingButton: 6.0,text: user.phone,textColor: Color(0xffB7B7B7),onPressed: ()async{   }),
+
           CustomButton.borderButtonIconWithText(height: 42.0,margin:EdgeInsets.only(top: 12,bottom: 0,left: 16,right: 16),icon: 'assets/icons/mail.svg',paddingIcon: 5.0,paddingButton: 6.0,text: user.email,textColor: Color(0xffB7B7B7),onPressed: ()async{
 
           }),
@@ -457,26 +463,26 @@ class StateProfilePage extends State<ProfilePage> {
   }
 
 
-  Widget ProfileProjectsPage(List<Volunteer>myVolunteers){
-    if(myVolunteers.isNotEmpty){
-      return CustomListView.ListProfileProjects(myVolunteers);
-    } else {
-      return Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(top: 16,left: 16,right: 16),
-          child: Column(
-            children: [
-              SvgPicture.asset("assets/icons/no_data.svg"),
-              Container(
-                margin: EdgeInsets.only(top: 14),
-                child:Text("لا يوجد تطوعات لعرضها",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Theme.of(context).primaryColor,height: 1.5),textAlign: TextAlign.center,),
-              )
-            ],
-          )
-      );
-    }
-
-  }
+  // Widget ProfileProjectsPage(List<Volunteer>myVolunteers){
+  //   if(myVolunteers.isNotEmpty){
+  //     return CustomListView.ListProfileProjects(myVolunteers);
+  //   } else {
+  //     return Container(
+  //         width: MediaQuery.of(context).size.width,
+  //         margin: EdgeInsets.only(top: 16,left: 16,right: 16),
+  //         child: Column(
+  //           children: [
+  //             SvgPicture.asset("assets/icons/no_data.svg"),
+  //             Container(
+  //               margin: EdgeInsets.only(top: 14),
+  //               child:Text("لا يوجد تطوعات لعرضها",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Theme.of(context).primaryColor,height: 1.5),textAlign: TextAlign.center,),
+  //             )
+  //           ],
+  //         )
+  //     );
+  //   }
+  //
+  // }
 
 
 }

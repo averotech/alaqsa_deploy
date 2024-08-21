@@ -55,8 +55,23 @@ class StateLogin extends State<Login> with WidgetsBindingObserver {
     try {
       var currentLocation = await getLocation(context);
       if (currentLocation == null) {
-        await _showPermissionDeniedDialog(context);
-        return;
+        // await _showPermissionDeniedDialog(context);
+        globalState.clear();
+        // Assign default values when location is not available
+        currentLocation = Position(
+          latitude: 32.130492742251334,   // Default latitude
+          longitude: 34.97348856681219, // Default longitude
+          timestamp: DateTime.now(), // Current timestamp
+          accuracy: 0.0,
+          altitude: 0.0,
+          heading: 0.0,
+          speed: 0.0,
+          speedAccuracy: 0.0,
+          altitudeAccuracy: 0.0,  // Default value for altitudeAccuracy
+          headingAccuracy: 0.0,   // Default value for headingAccuracy
+        );
+        // Provide a default address
+        var myAddress = 'אלנור 16, Kafr Bara, Israel'; // Default address
       }
         final prefs = await SharedPreferences.getInstance();
         var token = prefs.getString("token") ?? "";
@@ -68,68 +83,101 @@ class StateLogin extends State<Login> with WidgetsBindingObserver {
         globalState.set("myAddress", myAddress);
 
     } catch (e) {
-
+      globalState.clear();
       // Handle any exceptions
       _handleMissingLocationData();
     }
   }
-  Future<void> _showPermissionDeniedDialog(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("تم رفض الوصول إلى الموقع"),
-          content: Text("للاستفادة من هذه الميزة بشكل صحيح، يجب تمكين الوصول إلى الموقع في إعدادات جهازك. بدون ذلك، قد لا تتمكن من رؤية الرحلات القريبة منك بدقة. يرجى تفعيل الموقع لضمان عمل التطبيق بشكل صحيح."),
-          actions: <Widget>[
-            TextButton(
-              child: Text("اذهب إلى الإعدادات"),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                Geolocator.openAppSettings(); // Open app settings
-              },
-            ),
-            TextButton(
-              child: Text("إلغاء"),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // Future<void> _showPermissionDeniedDialog(BuildContext context) async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text("تم رفض الوصول إلى الموقع"),
+  //         content: Text("للاستفادة من هذه الميزة بشكل صحيح، يجب تمكين الوصول إلى الموقع في إعدادات جهازك. بدون ذلك، قد لا تتمكن من رؤية الرحلات القريبة منك بدقة. يرجى تفعيل الموقع لضمان عمل التطبيق بشكل صحيح."),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: Text("اذهب إلى الإعدادات"),
+  //             onPressed: () {
+  //               Navigator.of(context).pop(); // Close the dialog
+  //               Geolocator.openAppSettings(); // Open app settings
+  //             },
+  //           ),
+  //           TextButton(
+  //             child: Text("إلغاء"),
+  //             onPressed: () {
+  //               Navigator.of(context).pop(); // Close the dialog
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
   // static Future<Position?> getLocation(BuildContext context) async {
-     Future<Position?> getLocation(BuildContext context) async {
+  //    Future<Position?> getLocation(BuildContext context) async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+  //
+  //   // Check if location services are enabled
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //         await _showSnackbarAndHandlePermissionDenied(context, "مطلوب الوصول إلى الموقع لاستخدام هذا التطبيق. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
+  //         return null;
+  //       }
+  //       permission = await Geolocator.checkPermission();
+  //       if (permission == LocationPermission.denied) {
+  //         permission = await Geolocator.requestPermission();
+  //         if (permission == LocationPermission.denied) {
+  //           await _showSnackbarAndHandlePermissionDenied(context, "مطلوب الوصول إلى الموقع لاستخدام هذا التطبيق. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
+  //           return null;
+  //         }
+  //       }
+  //     if (permission == LocationPermission.deniedForever) {
+  //       // await _showSnackbarAndHandlePermissionDenied(context, "تم رفض الوصول إلى الموقع بشكل دائم. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
+  //       return null;
+  //     }
+  //   return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
+  //
+  // }
+  // static Future<void> _showSnackbarAndHandlePermissionDenied(BuildContext context, String message) async {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text(message)),
+  //   );
+  // }
+
+  Future<Position?> getLocation(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
 
     // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-          await _showSnackbarAndHandlePermissionDenied(context, "مطلوب الوصول إلى الموقع لاستخدام هذا التطبيق. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
-          return null;
-        }
-        permission = await Geolocator.checkPermission();
-        if (permission == LocationPermission.denied) {
-          permission = await Geolocator.requestPermission();
-          if (permission == LocationPermission.denied) {
-            await _showSnackbarAndHandlePermissionDenied(context, "مطلوب الوصول إلى الموقع لاستخدام هذا التطبيق. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
-            return null;
-          }
-        }
-      if (permission == LocationPermission.deniedForever) {
-        // await _showSnackbarAndHandlePermissionDenied(context, "تم رفض الوصول إلى الموقع بشكل دائم. يرجى تمكين خدمات الموقع في إعدادات جهازك.");
+      await _showSnackbar(context, "Location services are required for this feature. Please enable them in your device's settings.");
+      return null;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        await _showSnackbar(context, "Location access is required for this feature. Please enable it in your device's settings");
         return null;
       }
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
+    }
 
+    if (permission == LocationPermission.deniedForever) {
+      await _showSnackbar(context, "Location access is permanently denied. Please enable it in your device's settings");
+      return null;
+    }
+
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
   }
-  static Future<void> _showSnackbarAndHandlePermissionDenied(BuildContext context, String message) async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+
+  Future<void> _showSnackbar(BuildContext context, String message) async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message, textAlign: TextAlign.center,)));
   }
+
 
   void _handleMissingLocationData() {
     print("Location data is missing. Proceeding with default settings.");

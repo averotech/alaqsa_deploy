@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 
 class CustomSectionComponent {
-  static StartingEndingPoint({context,margin,title,location,clockIcon,time,distanceIcon,km,globalColor,iconColor,@required titleColor}){
+  static StartingEndingPoint({context,margin,title,location,clockIcon,time,distanceIcon,km,globalColor,endDate,iconColor,@required titleColor}){
     DateTime dtf = DateTime.now(); // Define the current date
 
     return Container(
@@ -18,11 +18,11 @@ class CustomSectionComponent {
             child: Text("$title",style:TextStyle(fontSize: title.toString().length > 44 ? 13 : 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color: titleColor,height: 1.3),overflow: TextOverflow.clip,),
           ),
           Container(
-            margin: EdgeInsets.only(top: 1),
+            margin: EdgeInsets.only(top: 7),
             child: Text("$location",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:globalColor,height: 1.4,),overflow: TextOverflow.ellipsis,),
           ),
           Container(
-            margin: EdgeInsets.only(top: 8),
+            margin: EdgeInsets.only(top: 7),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -44,13 +44,12 @@ class CustomSectionComponent {
                   ),
                 if(time== null && title !='مكان الوصول')
                   Container(
-                    margin: EdgeInsets.only(left: 4),
+                    margin: EdgeInsets.only(left: 0),
                     child: Row(
                       children: [
-                        // SvgPicture.asset("$clockIcon",color: iconColor),
                         Container(
-                          margin: EdgeInsets.only(right: 7),
-                          child: Text("اليوم:  ${Config.weekdayName[dtf.weekday] ?? "اليوم"}",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:globalColor),),
+                          margin: EdgeInsets.only(right: 0),
+                          // child: Text("تاريخ العودة:  ${endDate} ",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:globalColor),),
                         ),
 
                       ],

@@ -43,12 +43,16 @@ class MainPageRepository {
     var response;
     try {
       LatLng latLng;
-      if(globalState.get("latlng") != null) {
-        latLng = globalState.get("latlng");
-      } else {
-        latLng = LatLng(32.130492742251334,34.97348856681219);
-      }
+      latLng = globalState.get("latlng");
+      // if(globalState.get("latlng") != null) {
+      //   latLng = globalState.get("latlng");
+      // }
+      // else {
+      //   latLng = LatLng(32.130492742251334,34.97348856681219);
+      // }
+
       if(token.toString() != "" && token.toString() != "null"){
+
         response = await http.get(Uri.parse(api+"?lat=${latLng.lat}&lng=${latLng.lng}"),headers: {"Authorization":"Bearer "+token.toString(),"Accept":"application/json"});
       } else {
         response = await http.get(Uri.parse(api+"?lat=${latLng.lat}&lng=${latLng.lng}"));
@@ -56,7 +60,9 @@ class MainPageRepository {
 
       if(response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
+        print('xxxxx${token.toString()} lat:${latLng.lat},,,,, lan:${latLng.lng}, apii:${Uri.parse(api+"?lat=${latLng.lat}&lng=${latLng.lng}")}');
         var data = jsonResponse["data"];
+
         Trip trip = Trip.fromJson(data);
         return trip;
       } else {

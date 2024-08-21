@@ -274,10 +274,12 @@ class StateMainPage extends State<MainPage> {
                  setState(() {
                    user = state.user;
                    isLogin = state.isLogin;
+                   print('MainPageLoaded: User: ${user.name}, isLogin: $isLogin');
                  });
-               } else if (state is MainPageError) {
+               }else if (state is MainPageError) {
                  setState(() {
                    isLogin = state.isLogin ?? false;
+                   print('MainPageError: isLogin: $isLogin ,,, $state.isLogin');
                  });
                }
                if(state is MainPageSocialMediaLoaded) {
@@ -509,7 +511,7 @@ class StateMainPage extends State<MainPage> {
                    height: 20,
                    width: MediaQuery.of(context).size.width,
                    alignment: Alignment.centerLeft,
-                   margin: EdgeInsets.only(left: 16),
+                   margin: EdgeInsets.only(left: 16,top: 16),
                    child: IconButton(
                      padding: EdgeInsets.all(1),
                      icon: SvgPicture.asset("assets/icons/close.svg",height: 20,width: 20,),

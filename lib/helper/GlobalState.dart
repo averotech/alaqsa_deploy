@@ -11,4 +11,7 @@ class GlobalState {
   get(dynamic key){
     return _data[key];
   }
+  void clear() {
+    _data.clear();
+  }
 }

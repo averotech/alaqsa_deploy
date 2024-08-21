@@ -196,7 +196,35 @@ class StateCompletedBookingPage extends State<CompletedBookingPage> {
                                         child:Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            CustomSectionComponent.StartingEndingPoint(context: context,margin: EdgeInsets.only(top: 16),title: 'مكانك الحالي',location: '${myAddress != "" ? myAddress:"غير معروف"}',clockIcon: 'assets/icons/clock.svg',time: null,distanceIcon: 'assets/icons/distance.svg',km:'كم ' + (trip.fromDistance != null?trip.fromDistance.toString():"0.0"),globalColor: Color(0xffB7B7B7),iconColor:Color(0xffB7B7B7),titleColor: Theme.of(context).primaryColor),
+                                            // CustomSectionComponent.StartingEndingPoint(context: context,margin: EdgeInsets.only(top: 16),title: 'مكانك الحالي',location: '${myAddress != "" ? myAddress:"غير معروف"}',clockIcon: 'assets/icons/clock.svg',time: null,distanceIcon: 'assets/icons/distance.svg',km:'كم ' + (trip.fromDistance != null?trip.fromDistance.toString():"0.0"),globalColor: Color(0xffB7B7B7),iconColor:Color(0xffB7B7B7),titleColor: Theme.of(context).primaryColor),
+                                            Container(
+                                              child: Text(
+                                                "اسم القافلة:  ${trip.nameTrip.length > 44 ? trip.nameTrip.substring(0, 44) + '...' : trip.nameTrip}",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: 'SansArabicLight',
+                                                  height: 2,
+                                                  color:Colors.black
+                                                ),
+                                                overflow: TextOverflow.visible, // This allows the text to overflow into multiple lines
+                                                softWrap: true, // Enables text wrapping
+                                              ),
+                                            ),
+                                            Container(
+                                              child: Text(
+                                                "تفاصيل الرحلة: ${trip.nameDate} - ${trip.startDate}  ",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'SansArabicLight',
+                                                  height: 2,
+                                                  color: Colors.black,
+                                                ),
+                                                overflow: TextOverflow.visible, // This allows the text to overflow into multiple lines
+                                                softWrap: true, // Enables text wrapping
+                                              ),
+                                            ),
                                             CustomSectionComponent.StartingEndingPoint(context: context,margin: EdgeInsets.only(top: 16),title: 'مكان الأنطلاق',location: trip.from.addressLocation != null ? trip.tripFromLocation .toString().length>30? trip.tripFromLocation.toString().substring(0,30):trip.tripFromLocation.toString():"غير معروف" ,clockIcon: 'assets/icons/clock.svg',time: trip.startTime.toString(),distanceIcon: 'assets/icons/distance.svg',km: 'كم ' +  (trip.fromDistance != null?trip.fromDistance.toString():"0.0"),globalColor: Color(0xff101426),iconColor:Theme.of(context).primaryColor,titleColor: Theme.of(context).primaryColor),
                                             CustomSectionComponent.StartingEndingPoint(context: context,margin: EdgeInsets.only(top: 16),title: 'مكان الوصول',location: trip.to.addressLocation  != null ? trip.tripToLocation.toString().length>30? trip.tripToLocation.toString().substring(0,30):trip.tripToLocation.toString():'المسجد الأقصى',clockIcon: 'assets/icons/clock.svg',time: null,distanceIcon: 'assets/icons/distance.svg',km: 'كم ' +  (trip.fromDistance != null?trip.toDistance.toString():"0.0"),globalColor: Color(0xff101426),iconColor:Theme.of(context).primaryColor,titleColor: Theme.of(context).primaryColor),
 

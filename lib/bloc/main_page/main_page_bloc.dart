@@ -59,6 +59,8 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
         var currentLocation=globalState.get("currentLocation");
         var myAddress=globalState.get("myAddress");
 
+        print('currentLocation :$currentLocation, .... myAddress:$myAddress');
+
           emit(MainPageCurrentLocationLoaded(currentLocation,myAddress));
 
 
