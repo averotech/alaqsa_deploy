@@ -15,12 +15,9 @@ class TripsRepository {
   getTrips(api, skip, token) async {
     List<Trip> tripsList = <Trip>[];
     try {
-      LatLng latLng;
-      if (globalState.get("latlng") != null) {
-        latLng = globalState.get("latlng");
-      } else {
-        latLng = LatLng(180, -180);
-      }
+      LatLng? latLng = globalState.get("latlng") as LatLng?;
+      latLng ??= LatLng(32.130492742251334, 34.97348856681219);
+      print(latLng.lng);
       var response;
       if (token != "" && token.toString() != "null") {
         response = await http.get(
