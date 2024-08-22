@@ -74,6 +74,9 @@ class StateLogin extends State<Login> with WidgetsBindingObserver {
         // Provide a default address
         var myAddress = 'אלנור 16, Kafr Bara, Israel'; // Default address
         globalState.set("myAddress", myAddress);
+        globalState.set("currentLocation", currentLocation);
+        LatLng latLng = LatLng(currentLocation.latitude, currentLocation.longitude);
+
       } else {
         final prefs = await SharedPreferences.getInstance();
         var token = prefs.getString("token") ?? "";
