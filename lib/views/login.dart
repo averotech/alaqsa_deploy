@@ -55,13 +55,13 @@ class StateLogin extends State<Login> with WidgetsBindingObserver {
     try {
       var currentLocation = await getLocation(context);
       if (currentLocation == null) {
-        // await _showPermissionDeniedDialog(context);
         globalState.clear();
+
         // Assign default values when location is not available
         currentLocation = Position(
           latitude: 32.130492742251334,   // Default latitude
           longitude: 34.97348856681219, // Default longitude
-          timestamp: DateTime.now(), // Current timestamp
+          timestamp: DateTime.now(),
           accuracy: 0.0,
           altitude: 0.0,
           heading: 0.0,
@@ -70,9 +70,11 @@ class StateLogin extends State<Login> with WidgetsBindingObserver {
           altitudeAccuracy: 0.0,  // Default value for altitudeAccuracy
           headingAccuracy: 0.0,   // Default value for headingAccuracy
         );
+
         // Provide a default address
         var myAddress = 'אלנור 16, Kafr Bara, Israel'; // Default address
-      }
+        globalState.set("myAddress", myAddress);
+      } else {
         final prefs = await SharedPreferences.getInstance();
         var token = prefs.getString("token") ?? "";
         LatLng latLng = LatLng(currentLocation.latitude, currentLocation.longitude);
@@ -81,13 +83,13 @@ class StateLogin extends State<Login> with WidgetsBindingObserver {
         globalState.set("currentLocation", currentLocation);
         globalState.set("latlng", latLng);
         globalState.set("myAddress", myAddress);
-
+      }
     } catch (e) {
       globalState.clear();
-      // Handle any exceptions
       _handleMissingLocationData();
     }
   }
+
   // Future<void> _showPermissionDeniedDialog(BuildContext context) async {
   //   showDialog(
   //     context: context,
