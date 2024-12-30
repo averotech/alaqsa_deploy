@@ -26,27 +26,36 @@ class Trip extends Project {
   var _tripToLocation;
   var _tripFromLocation;
   bool _isFull;
+  int? _largestRemainingSeats; // Property for largest_remaining_seats
+  int? _seatsBookedByUser;
+  var _busName;
+
+
+
   Trip(
-    this._id,
-    this._nameTrip,
-    this._descriptionTrip,
-    this._is_volunteer,
-    this._is_donation,
-    this._startDate,
-    this._endDate,
-    this._nameDate,
-    this._city,
-    this._litsBus,
-    this._from,
-    this._to,
-    this._fromDistance,
-    this._toDistance,
-    this.isOpen,
-    this._isBooking,
-    this._tripToLocation,
-    this._tripFromLocation,
-    this._isFull,
-  ) : super.fromProject(_id, _nameTrip, _descriptionTrip, _is_volunteer,
+      this._id,
+      this._nameTrip,
+      this._descriptionTrip,
+      this._is_volunteer,
+      this._is_donation,
+      this._startDate,
+      this._endDate,
+      this._nameDate,
+      this._city,
+      this._litsBus,
+      this._from,
+      this._to,
+      this._fromDistance,
+      this._toDistance,
+      this.isOpen,
+      this._isBooking,
+      this._tripToLocation,
+      this._tripFromLocation,
+      this._isFull,
+      this._largestRemainingSeats,
+      this._seatsBookedByUser,
+      this._busName)
+      : super.fromProject(_id, _nameTrip, _descriptionTrip, _is_volunteer,
             _is_donation, _startDate, _endDate, false);
 
   MYLoaction get from => _from;
@@ -101,6 +110,25 @@ class Trip extends Project {
 
   set fromDistance(value) {
     _fromDistance = value;
+  }
+
+  int? get largestRemainingSeats => _largestRemainingSeats;
+
+  set largestRemainingSeats(int? value) {
+    _largestRemainingSeats = value;
+  }
+
+  get seatsBookedByUser => _seatsBookedByUser;
+
+  set seatsBookedByUser(value) {
+    _seatsBookedByUser = value;
+  }
+
+
+  get busName => _busName;
+
+  set busName(value) {
+    _busName = value;
   }
 
   MYLoaction get to => _to;
@@ -168,7 +196,9 @@ class Trip extends Project {
         }
       }
     }
-
+    int? largestRemainingSeats = json["largest_remaining_seats"];
+    var seatsBookedByUser = json["seatsBookedByUser"];
+    var busName = json["BusName"];
     return Trip(
       json['id'],
       json['project_name'],
@@ -192,11 +222,12 @@ class Trip extends Project {
       json["isBooking"].toString() == "1" ? true : false,
       json["tripToLocation"],
       json["tripFromLocation"],
-        json['isFull'].toString() == "1" ? true : false,
-
+      json['isFull'].toString() == "1" ? true : false,
+      largestRemainingSeats, // Include in Trip instance
+      seatsBookedByUser,
+        busName
     );
   }
-
   @override
   get startDate {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");

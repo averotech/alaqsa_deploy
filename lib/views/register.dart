@@ -21,7 +21,6 @@ class Register extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return StateRegister();
-
   }
 }
 
@@ -33,6 +32,11 @@ class StateRegister extends State<Register> {
 
   List<String> items = [];
   String? _selectedItem;
+  String nameError = '';
+  String emailError = '';
+  String phoneError = '';
+  String passwordError = '';
+  bool showDialog = false;
 
   @override
   void initState() {
@@ -43,7 +47,6 @@ class StateRegister extends State<Register> {
   List<Map<String, dynamic>> cities = [];
   int? _selectedCityId;
 
-
   Future<void> _fetchCities() async {
     var api = '${Config.BaseUrl}${Config.getCities}';
     final response = await http.get(Uri.parse(api));
@@ -53,10 +56,9 @@ class StateRegister extends State<Register> {
       if (data.containsKey('cities')) {
         final List<dynamic> fetchedCities = data['cities'];
         setState(() {
-          cities = fetchedCities.map((city) => {
-            'id': city['id'],
-            'name': city['name']
-          }).toList();
+          cities = fetchedCities
+              .map((city) => {'id': city['id'], 'name': city['name']})
+              .toList();
           items = cities.map((city) => city['name'] as String).toList();
         });
       } else {
@@ -68,7 +70,6 @@ class StateRegister extends State<Register> {
       print('Failed to load cities');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -108,10 +109,16 @@ class StateRegister extends State<Register> {
                     Config.isShowingLoadingDialog = false;
                     Navigator.of(context).pop();
                   }
+                  setState(() {
+                    nameError = state.error['name'] ?? '';
+                    emailError = state.error['email'] ?? '';
+                    phoneError = state.error['phone'] ?? '';
+                    passwordError = state.error['password'] ?? '';
+                  });
+
                   if (!Config.isShowingLoadingDialog) {
                     Config.isShowingLoadingDialog = true;
                     String errorMessage = state.error['general'] ?? "خطأ";
-
                     String nameError = state.error['name'] ?? "";
                     String emailError = state.error['email'] ?? "";
                     String phone = state.error['phone'] ?? "";
@@ -128,20 +135,30 @@ class StateRegister extends State<Register> {
                       errorMessage = errorMessages.join("\n");
                     }
 
-                    CustomAlertDailog.CustomLoadingDialog(
-                      context: context,
-                      color: Colors.red,
-                      size: 35.0,
-                      message: errorMessage,
-                      type: 3,
-                      height: 200.0,
-                    );
-                    Timer(Duration(seconds: 1), () {
-                      if (Config.isShowingLoadingDialog) {
+                    // Only show the dialog if showDialog is true
+                    if (!showDialog) {
+                      if (errorMessages.isNotEmpty) {
+                        Config.isShowingLoadingDialog = false;
+                      } else {
                         Config.isShowingLoadingDialog = false;
                         Navigator.of(context).pop();
                       }
-                    });
+                      // TODO: I stopped that and make the error with custom_text_feild
+                      // CustomAlertDailog.CustomLoadingDialog(
+                      //   context: context,
+                      //   color: Colors.red,
+                      //   size: 35.0,
+                      //   message: errorMessage,
+                      //   type: 3,
+                      //   height: 200.0,
+                      // );
+                      // Timer(Duration(seconds: 1), () {
+                      //   if (Config.isShowingLoadingDialog) {
+                      //     Config.isShowingLoadingDialog = false;
+                      //     Navigator.of(context).pop();
+                      //   }
+                      // });
+                    }
                   }
                 }
                 if (state is CitiesLoaded) {
@@ -251,20 +268,21 @@ class StateRegister extends State<Register> {
                               child: Image.asset("assets/images/iconApp.png"),
                             ),
                             CustomTextField.TextFieldWithTitle(
-                              controller: name,
-                              title: "اسم المستخدم",
-                              hintText: "اسم المستخدم",
-                              obscureText: false,
-                              borderColor: Colors.white,
-                              margin: EdgeInsets.only(top: 32),
-                            ),
+                                controller: name,
+                                title: "اسم المستخدم",
+                                hintText: "اسم المستخدم",
+                                obscureText: false,
+                                borderColor: Colors.white,
+                                margin: EdgeInsets.only(top: 32),
+                                errorText: nameError),
                             CustomTextField.TextFieldWithTitle(
                               controller: email,
                               title: "البريد الالكتروني",
-                              hintText: "البريد الالكتروني او رقم الجوال",
+                              hintText: "البريد الالكتروني ",
                               obscureText: false,
                               borderColor: Colors.white,
                               margin: EdgeInsets.only(top: 14),
+                              errorText: emailError,
                             ),
                             CustomTextField.TextFieldWithTitle(
                               controller: phone_number,
@@ -273,11 +291,13 @@ class StateRegister extends State<Register> {
                               obscureText: false,
                               borderColor: Colors.white,
                               margin: EdgeInsets.only(top: 14),
+                              errorText: phoneError,
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 14),
                               child: DropdownSearch<String>(
-                                items: items,
+                                items:
+                                    items.isNotEmpty ? items : ['Loading...'],
                                 selectedItem: _selectedItem,
                                 dropdownDecoratorProps: DropDownDecoratorProps(
                                   dropdownSearchDecoration: InputDecoration(
@@ -285,45 +305,53 @@ class StateRegister extends State<Register> {
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide(color: Colors.white, width: 1.5),
+                                      borderSide: BorderSide(
+                                          color: Colors.white, width: 1.5),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide(color: Colors.white, width: 1.5),
+                                      borderSide: BorderSide(
+                                          color: Colors.white, width: 1.5),
                                     ),
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 14),
                                     hintText: "ابحث عن البلد",
                                     labelText: "البلد",
-                                    labelStyle: TextStyle(color: Colors.white, fontSize: 12),
-                                    suffixIcon: null, // Remove the default suffix icon (arrow)
+                                    labelStyle: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                    suffixIcon:
+                                        null, // Remove the default suffix icon (arrow)
                                   ),
                                 ),
                                 popupProps: PopupProps.menu(
                                   showSearchBox: true,
                                   searchFieldProps: TextFieldProps(
-
                                     decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 14),
                                       hintText: "بحث",
                                       hintStyle: TextStyle(color: Colors.white),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide(color: Colors.white, width: 1.5),
+                                        borderSide: BorderSide(
+                                            color: Colors.white, width: 1.5),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide(color: Colors.white, width: 1.5),
+                                        borderSide: BorderSide(
+                                            color: Colors.white, width: 1.5),
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide(color: Colors.white, width: 1.5),
+                                        borderSide: BorderSide(
+                                            color: Colors.white, width: 1.5),
                                       ),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   menuProps: MenuProps(
-                                    backgroundColor: Colors.green.withOpacity(0.98),
+                                    backgroundColor:
+                                        Colors.green.withOpacity(0.98),
                                   ),
                                   itemBuilder: (context, item, isSelected) {
                                     // Check if items list is empty
@@ -337,17 +365,23 @@ class StateRegister extends State<Register> {
                                     }
                                     // Regular item builder
                                     return Container(
-                                      margin: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 2, horizontal: 10),
                                       decoration: BoxDecoration(
-                                        color: isSelected ? Colors.white : Colors.transparent,
+                                        color: isSelected
+                                            ? Colors.white
+                                            : Colors.transparent,
                                         borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(color: Colors.white, width: 1.5),
+                                        border: Border.all(
+                                            color: Colors.white, width: 1.5),
                                       ),
                                       child: ListTile(
                                         title: Text(
                                           item,
                                           style: TextStyle(
-                                            color: isSelected ? Colors.black : Colors.white,
+                                            color: isSelected
+                                                ? Colors.black
+                                                : Colors.white,
                                           ),
                                         ),
                                       ),
@@ -356,15 +390,19 @@ class StateRegister extends State<Register> {
                                 ),
                                 dropdownBuilder: (context, selectedItem) {
                                   return Container(
-                                    width: double.infinity, // Make the container full width
-                                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+                                    width: double
+                                        .infinity, // Make the container full width
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 14),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(color: Colors.white, width: 1),
+                                      border: Border.all(
+                                          color: Colors.white, width: 1),
                                     ),
                                     child: Text(
                                       selectedItem ?? "ابحث عن البلد",
-                                      style: TextStyle(color: Colors.white, fontSize: 12),
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12),
                                     ),
                                   );
                                 },
@@ -373,15 +411,19 @@ class StateRegister extends State<Register> {
                                     _selectedItem = selectedItem;
                                     // Ensure the selected city name is matched to the city ID
                                     final selectedCity = cities.firstWhere(
-                                          (city) => city['name'] == selectedItem,
-                                      orElse: () => {'id': 0, 'name': ''}, // Provide a default value if not found
+                                      (city) => city['name'] == selectedItem,
+                                      orElse: () => {
+                                        'id': 0,
+                                        'name': ''
+                                      }, // Provide a default value if not found
                                     );
-                                    _selectedCityId = int.tryParse(selectedCity['id'].toString()) ?? 0; // Use int type
+                                    _selectedCityId = int.tryParse(
+                                            selectedCity['id'].toString()) ??
+                                        0; // Use int type
                                   });
                                 },
                               ),
                             ),
-
                             CustomTextField.TextFieldWithTitle(
                               controller: password,
                               title: "كلمة المرور",
@@ -389,6 +431,7 @@ class StateRegister extends State<Register> {
                               obscureText: true,
                               borderColor: Colors.white,
                               margin: EdgeInsets.only(top: 14),
+                              errorText: passwordError,
                             ),
                             CustomButton.customButton1(
                               context: context,
@@ -399,8 +442,12 @@ class StateRegister extends State<Register> {
                               bottom: 0.0,
                               onPressed: () {
                                 context.read<RegisterBloc>()
-                                  ..add(RegisterApiEvent(name.text, email.text,
-                                      phone_number.text, password.text,_selectedCityId));
+                                  ..add(RegisterApiEvent(
+                                      name.text,
+                                      email.text,
+                                      phone_number.text,
+                                      password.text,
+                                      _selectedCityId));
                               },
                             ),
                             Container(
