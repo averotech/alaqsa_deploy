@@ -121,7 +121,7 @@ class StateBookingPage extends State<BookingPage> {
               if( Config.isShowingLoadingDialog == false) {
                 Config.isShowingLoadingDialog = true;
                 CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message: state.error, type:3, height: 100.0);
-                Timer(Duration(seconds: 1),(){
+                Timer(Duration(seconds: 3),(){
                   if(Config.isShowingLoadingDialog == true) {
                     Config.isShowingLoadingDialog = false;
                     Navigator.of(context).pop();

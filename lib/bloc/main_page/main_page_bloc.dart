@@ -54,12 +54,12 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
           // var myAddress = await Config.getInformastionLocation(latLng: latLng);
           //
           // globalState.set("latlng", latLng);
-          // globalState.set("myAddress", myAddress);
+          // globalState.set("myAddress", ÏmyAddress);
 
         var currentLocation=globalState.get("currentLocation");
         var myAddress=globalState.get("myAddress");
 
-        print('currentLocation :$currentLocation, .... myAddress:$myAddress');
+        // print('currentLocation :$currentLocation, .... myAddress:$myAddress');
 
           emit(MainPageCurrentLocationLoaded(currentLocation,myAddress));
 
@@ -77,7 +77,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
       if(token != null && token.toString() != ""){
        await authRepository.updateCmFirebaseToken(updateCmApi, event.cmFirebaseToken,token);
       } else {
-        print("owais");
+        // print("owais");
       }
 
     });

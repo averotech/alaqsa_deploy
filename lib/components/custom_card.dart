@@ -674,11 +674,12 @@ class CustomCard {
                           ),
                         ),
                         Container(
+                          padding: EdgeInsets.only(top: 6),
                           child: Text(
                             trip.startDate,
                             style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'SansArabicLight',
                                 color: Color(0xff8F9BB3),
                                 height: 1),
@@ -686,6 +687,36 @@ class CustomCard {
                         ),
                       ],
                     ),
+                  ),
+                  Container(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(bottom: 4),
+                            child: Text(
+                              trip.tripFromLocation,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'SansArabicLight',
+                                  color: Color(0xff101426),
+                                  height: 1),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 6),
+                            child: Text(
+                              "عدد المقاعد المتبقية (${trip.largestRemainingSeats})",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'SansArabicLight',
+                                  color: Color(0xff8F9BB3),
+                                  height: 1),
+                            ),
+                          ),
+                        ]),
                   ),
                   AnimatedRotation(
                     duration: Duration(milliseconds: 300),
@@ -700,7 +731,7 @@ class CustomCard {
             ),
           ),
           AnimatedContainer(
-            height: trip.isOpen == false
+            height: trip.isOpen == true
                 ? (MediaQuery.of(context).size.height < 800
                     ? MediaQuery.of(context).size.height / 2.1
                     : MediaQuery.of(context).size.height / 2.15)
@@ -867,24 +898,21 @@ class CustomCard {
       padding: EdgeInsets.only(left: 8, right: 8),
       margin: EdgeInsets.only(top: 12, left: 16, right: 16),
       decoration: BoxDecoration(
-        color: isBooking ? Theme.of(context).primaryColor : Colors.white,
+        color: trip.isBooking ? Theme.of(context).primaryColor : Colors.white,
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
               color: Colors.black.withOpacity(0.04),
               offset: Offset(0, 0),
-              blurRadius: 4
-          ),
+              blurRadius: 4),
           BoxShadow(
               color: Colors.black.withOpacity(0.04),
               offset: Offset(0, 2),
-              blurRadius: 4
-          ),
+              blurRadius: 4),
           BoxShadow(
               color: Colors.black.withOpacity(0.06),
               offset: Offset(0, 16),
-              blurRadius: 6
-          )
+              blurRadius: 6)
         ],
       ),
       child: Stack(
@@ -896,7 +924,7 @@ class CustomCard {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height / 3.2,
+                    height: MediaQuery.of(context).size.height / 3.5,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -904,7 +932,7 @@ class CustomCard {
                         Container(
                           child: SvgPicture.asset(
                             "assets/icons/location.svg",
-                            color: isBooking
+                            color: trip.isBooking
                                 ? Colors.white
                                 : Theme.of(context).primaryColor,
                           ),
@@ -912,17 +940,15 @@ class CustomCard {
                         Container(
                           height: 60,
                           child: CustomPaint(
-                            painter: LineDashedPainter(
-                                isBooking ? Colors.white : Color(0xffB7B7B7)
-                            ),
+                            painter: LineDashedPainter(trip.isBooking
+                                ? Colors.white
+                                : Color(0xffB7B7B7)),
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                              color: Color(0xffE4FFE5),
-                              shape: BoxShape.circle
-                          ),
+                              color: Color(0xffE4FFE5), shape: BoxShape.circle),
                           child: SvgPicture.asset(
                             "assets/icons/tour-bus.svg",
                             color: Theme.of(context).primaryColor,
@@ -931,26 +957,31 @@ class CustomCard {
                         Container(
                           height: 60,
                           child: CustomPaint(
-                            painter: LineDashedPainter(
-                                isBooking ? Colors.white : Color(0xffB7B7B7)
-                            ),
+                            painter: LineDashedPainter(trip.isBooking
+                                ? Colors.white
+                                : Color(0xffB7B7B7)),
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                              color: isBooking
+                              color: trip.isBooking
                                   ? Colors.white
                                   : Theme.of(context).primaryColor,
-                              shape: BoxShape.circle
-                          ),
-                          child: SvgPicture.asset("assets/icons/al-aqsa-mosque.svg"),
+                              shape: BoxShape.circle),
+                          child: SvgPicture.asset(
+                              "assets/icons/al-aqsa-mosque.svg"),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 12, right: 12, bottom: 0,top:16),
+                    margin: EdgeInsets.only(
+                        left: 12,
+                        right: 12,
+                        bottom: 0,
+                        top: trip.isBooking ? 8 : 16),
+                    padding: EdgeInsets.only(top: trip.isBooking ? 0 : 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -962,11 +993,12 @@ class CustomCard {
                               fontWeight: FontWeight.w700,
                               fontFamily: 'SansArabicLight',
                               height: 2,
-                              color: isBooking
+                              color: trip.isBooking
                                   ? Colors.white
                                   : Theme.of(context).primaryColor,
                             ),
-                            overflow: TextOverflow.visible, // This allows the text to overflow into multiple lines
+                            overflow: TextOverflow
+                                .visible, // This allows the text to overflow into multiple lines
                             softWrap: true, // Enables text wrapping
                           ),
                         ),
@@ -978,11 +1010,11 @@ class CustomCard {
                               fontWeight: FontWeight.w600,
                               fontFamily: 'SansArabicLight',
                               height: 2,
-                              color: isBooking
-                                  ? Colors.white
-                                  : Colors.black,
+                              color:
+                                  trip.isBooking ? Colors.white : Colors.black,
                             ),
-                            overflow: TextOverflow.visible, // This allows the text to overflow into multiple lines
+                            overflow: TextOverflow
+                                .visible, // This allows the text to overflow into multiple lines
                             softWrap: true, // Enables text wrapping
                           ),
                         ),
@@ -992,38 +1024,38 @@ class CustomCard {
                           title: 'مكان الأنطلاق',
                           location: trip.tripFromLocation != null
                               ? trip.tripFromLocation.toString().length > 45
-                              ? trip.tripFromLocation
-                              .toString()
-                              .substring(0, 45)
-                              : trip.tripFromLocation.toString()
+                                  ? trip.tripFromLocation
+                                      .toString()
+                                      .substring(0, 45)
+                                  : trip.tripFromLocation.toString()
                               : "غير معروف",
                           clockIcon: 'assets/icons/clock.svg',
                           time: trip.startTime,
-                          endDate:trip.endDate,
+                          endDate: trip.endDate,
                           distanceIcon: 'assets/icons/distance.svg',
                           km: 'كم ' +
                               (trip.fromDistance != null
                                   ? trip.fromDistance.toString()
                                   : "0.0"),
                           globalColor:
-                          isBooking ? Colors.white : Color(0xff101426),
-                          iconColor: isBooking
+                              trip.isBooking ? Colors.white : Color(0xff101426),
+                          iconColor: trip.isBooking
                               ? Colors.white
                               : Theme.of(context).primaryColor,
-                          titleColor: isBooking
+                          titleColor: trip.isBooking
                               ? Colors.white
                               : Theme.of(context).primaryColor,
                         ),
                         CustomSectionComponent.StartingEndingPoint(
                           context: context,
                           margin: EdgeInsets.only(top: 16),
-                          title: 'مكان الوصول '  ,
+                          title: 'مكان الوصول ',
                           location: trip.to.addressLocation != null
                               ? trip.tripToLocation.toString().length > 45
-                              ? trip.tripToLocation
-                              .toString()
-                              .substring(0, 45)
-                              : trip.tripToLocation
+                                  ? trip.tripToLocation
+                                      .toString()
+                                      .substring(0, 45)
+                                  : trip.tripToLocation
                               : 'المسجد الأقصى',
                           clockIcon: 'assets/icons/clock.svg',
                           // time: trip.endTime,
@@ -1033,12 +1065,12 @@ class CustomCard {
                                   ? trip.toDistance.toString()
                                   : "0.0"),
                           globalColor:
-                          isBooking ? Colors.white : Color(0xff101426),
-                            endDate:trip.endDate,
-                          iconColor: isBooking
+                              trip.isBooking ? Colors.white : Color(0xff101426),
+                          endDate: trip.endDate,
+                          iconColor: trip.isBooking
                               ? Colors.white
                               : Theme.of(context).primaryColor,
-                          titleColor: isBooking
+                          titleColor: trip.isBooking
                               ? Colors.white
                               : Theme.of(context).primaryColor,
                         ),
@@ -1049,7 +1081,8 @@ class CustomCard {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(left: 20),
+                                margin: EdgeInsets.only(
+                                    left: trip.isBooking ? 15 : 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -1060,10 +1093,10 @@ class CustomCard {
                                               fontSize: 12,
                                               fontWeight: FontWeight.w600,
                                               fontFamily: 'SansArabicLight',
-                                              color: isBooking
+                                              color: trip.isBooking
                                                   ? Colors.white
                                                   : Theme.of(context)
-                                                  .primaryColor,
+                                                      .primaryColor,
                                               height: 1.2)),
                                     ),
                                     Container(
@@ -1072,10 +1105,10 @@ class CustomCard {
                                         children: [
                                           SvgPicture.asset(
                                               "assets/icons/clock.svg",
-                                              color: isBooking
+                                              color: trip.isBooking
                                                   ? Colors.white
                                                   : Theme.of(context)
-                                                  .primaryColor),
+                                                      .primaryColor),
                                           Container(
                                             margin: EdgeInsets.only(right: 2),
                                             child: Text(
@@ -1084,7 +1117,7 @@ class CustomCard {
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w600,
                                                   fontFamily: 'SansArabicLight',
-                                                  color: isBooking
+                                                  color: trip.isBooking
                                                       ? Colors.white
                                                       : Color(0xff101426)),
                                             ),
@@ -1106,10 +1139,10 @@ class CustomCard {
                                               fontSize: 12,
                                               fontWeight: FontWeight.w600,
                                               fontFamily: 'SansArabicLight',
-                                              color: isBooking
+                                              color: trip.isBooking
                                                   ? Colors.white
                                                   : Theme.of(context)
-                                                  .primaryColor,
+                                                      .primaryColor,
                                               height: 1.2)),
                                     ),
                                     Container(
@@ -1118,19 +1151,19 @@ class CustomCard {
                                         children: [
                                           SvgPicture.asset(
                                               "assets/icons/location.svg",
-                                              color: isBooking
+                                              color: trip.isBooking
                                                   ? Colors.white
                                                   : Theme.of(context)
-                                                  .primaryColor),
+                                                      .primaryColor),
                                           Container(
                                             margin: EdgeInsets.only(right: 2),
                                             child: Text(
                                               "${trip.tripFromLocation != null ? trip.tripFromLocation.toString().length > 45 ? trip.tripFromLocation.toString().substring(0, 45) : trip.tripFromLocation.toString() : "غير معروف"}",
                                               style: TextStyle(
-                                                  fontSize: 14,
+                                                  fontSize: 13,
                                                   fontWeight: FontWeight.w600,
                                                   fontFamily: 'SansArabicLight',
-                                                  color: isBooking
+                                                  color: trip.isBooking
                                                       ? Colors.white
                                                       : Color(0xff101426)),
                                             ),
@@ -1159,7 +1192,7 @@ class CustomCard {
                       width: (MediaQuery.of(context).size.width / 2) - 30,
                       height: 42,
                       decoration: BoxDecoration(
-                          color: isBooking
+                          color: trip.isBooking
                               ? Colors.white
                               : Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.circular(50)),
@@ -1168,19 +1201,23 @@ class CustomCard {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         child: Text(
-                          "${trip.isFull && !trip.isBooking?'القافلة ممتلئة':trip.isBooking ? "الغاء الحجز" : "احجز الان"}",
+                          "${trip.isFull && !trip.isBooking ? 'القافلة ممتلئة' : trip.isBooking ? "الغاء الحجز" : "احجز الان"} ",
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'SansArabicLight',
-                              color:trip.isFull && !trip.isBooking ? Theme.of(context).disabledColor: isBooking
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.white,
+                              color: trip.isFull && !trip.isBooking
+                                  ? Theme.of(context).disabledColor
+                                  : trip.isBooking
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.white,
                               height: 1.4),
                         ),
-                        onPressed:trip.isFull && !trip.isBooking ? null: () {
-                          onPressedBookingAndCloseTrip(index);
-                        },
+                        onPressed: trip.isFull && !trip.isBooking
+                            ? null
+                            : () {
+                                onPressedBookingAndCloseTrip(index);
+                              },
                       ),
                     ),
                     Container(
@@ -1188,7 +1225,7 @@ class CustomCard {
                       width: (MediaQuery.of(context).size.width / 2) - 30,
                       decoration: BoxDecoration(
                           border: Border.all(
-                              color: isBooking
+                              color: trip.isBooking
                                   ? Colors.white
                                   : Theme.of(context).primaryColor),
                           borderRadius: BorderRadius.circular(50)),
@@ -1202,7 +1239,7 @@ class CustomCard {
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'SansArabicLight',
-                              color: isBooking
+                              color: trip.isBooking
                                   ? Colors.white
                                   : Theme.of(context).primaryColor,
                               height: 1.4),
@@ -1211,7 +1248,8 @@ class CustomCard {
                           if (await Config.checkLogin() == true) {
                             globalState.set("donationTrip", trip);
                             globalState.set("donationProject", null);
-                            Navigator.of(context).pushNamed("DonationSummaryPage");
+                            Navigator.of(context)
+                                .pushNamed("DonationSummaryPage");
                           } else {
                             Navigator.of(context).pushNamed("LoginPage");
                           }
@@ -1220,32 +1258,121 @@ class CustomCard {
                     ),
                   ],
                 ),
-              )
+              ),
+              trip.isBooking
+                  ? Column(children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 14),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 12, bottom: 3),
+                              child: Container(
+                                margin: EdgeInsets.only(right: 2),
+                                child: Text(
+                                  "عدد المقاعد المحجوزه (${trip.seatsBookedByUser})",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'SansArabicLight',
+                                      color: trip.isBooking
+                                          ? Colors.white
+                                          : Color(0xff101426)),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              child: Row(children: [
+                                SvgPicture.asset("assets/icons/tour-bus.svg",
+                                    color: trip.isBooking
+                                        ? Colors.white
+                                        : Theme.of(context).primaryColor),
+                                Container(
+                                    padding: EdgeInsets.only(right: 4),
+                                    child: Text("رقم الباص (${trip.busName})",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'SansArabicLight',
+                                            color: trip.isBooking
+                                                ? Colors.white
+                                                : Theme.of(context)
+                                                    .primaryColor,
+                                            height: 1.2))),
+                              ]),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 14),
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Container(
+                          child: Container(
+                            margin: EdgeInsets.only(right: 2),
+                            child: Text(
+                              "في حال أردت تعديل العدد يمكنك الغاء الحجز السابق والحجز من جديد، يُرجى التواصل مع مندوب بلدك.  ",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'SansArabicLight',
+                                  color: trip.isBooking
+                                      ? Colors.white
+                                      : Color(0xff101426)),
+                            ),
+                          ),
+                        ),
+                      )
+                    ])
+                  : Container(),
             ],
           ),
-          trip.isFull?  Positioned(
-            top: 10,
-            left: 0,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Text(
-                " ممتلئة",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ):Container(),
+          trip.isFull
+              ? Positioned(
+                  top: 10,
+                  left: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      " ممتلئة",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                )
+              : !trip.isBooking
+                  ? Positioned(
+                      top: 10,
+                      left: 0,
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Text(
+                          " عدد المقاعد المتوفره (${trip.largestRemainingSeats})",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13),
+                        ),
+                      ),
+                    )
+                  : Container(),
         ],
       ),
     );
   }
-
 
   static cardStatistics(
       {context, margin, title1, value1, title2, value2, title3, value3}) {

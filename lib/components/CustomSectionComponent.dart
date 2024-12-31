@@ -7,14 +7,12 @@ import 'package:intl/intl.dart';
 class CustomSectionComponent {
   static StartingEndingPoint({context,margin,title,location,clockIcon,time,distanceIcon,km,globalColor,endDate,iconColor,@required titleColor}){
     DateTime dtf = DateTime.now(); // Define the current date
-
     return Container(
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-          // toString().length > 44
             child: Text("$title",style:TextStyle(fontSize: title.toString().length > 44 ? 13 : 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color: titleColor,height: 1.3),overflow: TextOverflow.clip,),
           ),
           Container(
@@ -23,8 +21,7 @@ class CustomSectionComponent {
           ),
           Container(
             margin: EdgeInsets.only(top: 7),
-
-            child: Row(
+             child:  Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -70,10 +67,8 @@ class CustomSectionComponent {
                       ],
                     ),
                   ),
-
-
               ],
-            ),
+            )
           )
         ],
       ),

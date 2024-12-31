@@ -61,12 +61,12 @@ Future<void> initialize() async {
 }
 
 
-Future<void> _firebaseMessagingBackgroundHandler(message) async {
+// Future<void> _firebaseMessagingBackgroundHandler(message) async {
 
-  await Firebase.initializeApp();
-  StateMainPage().showNotification(message);
+  // await Firebase.initializeApp();
+  // StateMainPage().showNotification(message);
   // print('A bg message just showed up :  ${message.messageId}');
-}
+// }
 
 
 class StateMainPage extends State<MainPage> {
@@ -184,49 +184,6 @@ class StateMainPage extends State<MainPage> {
 
   }
 
-  setupNotfication() async{
-
-    initialize();
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-      alert: false,
-      badge: true,
-      sound: true,
-    );
-
-    FirebaseMessaging.instance.subscribeToTopic("notify");
-
-
-    String? token = await FirebaseMessaging.instance.getToken();
-
-
-    if(token != null) {
-
-      mainPageBloc..add(UpdateCmFirbaseEvent(token));
-
-    }
-
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-
-      RemoteNotification? notification = message.notification;
-
-      if (notification != null) {
-        showNotification(message);
-      }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-
-      print('A new onMessageOpenedApp event was published!');
-      RemoteNotification? notification = message.notification;
-
-
-    });
-  }
-
-
-  //End Notifications
   @override
   void didChangeDependencies() {
 
@@ -253,7 +210,7 @@ class StateMainPage extends State<MainPage> {
     });
     WidgetsFlutterBinding.ensureInitialized();
 
-    setupNotfication();
+    // setupNotfication();
 
 
   }
@@ -274,12 +231,11 @@ class StateMainPage extends State<MainPage> {
                  setState(() {
                    user = state.user;
                    isLogin = state.isLogin;
-                   print('MainPageLoaded: User: ${user.name}, isLogin: $isLogin');
+                   // print('MainPageLoaded: User: ${user.name}, isLogin: $isLogin');
                  });
                }else if (state is MainPageError) {
                  setState(() {
                    isLogin = state.isLogin ?? false;
-                   print('MainPageError: isLogin: $isLogin ,,, $state.isLogin');
                  });
                }
                if(state is MainPageSocialMediaLoaded) {
@@ -291,10 +247,7 @@ class StateMainPage extends State<MainPage> {
                  return Stack(
 
                    children: [
-
-
                      // Content
-
                      Container(
                        height: MediaQuery.of(context).size.height,
                        width: MediaQuery.of(context).size.width,
@@ -341,7 +294,7 @@ class StateMainPage extends State<MainPage> {
                                            Container(
                                              child: Text("مرحبا",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,fontFamily: 'SansArabicLight',color:Theme.of(context).primaryColor)),
                                            ),
-                                           Visibility(visible: !isLogin,child:Container(
+                                           Visibility(visible: !isLogin ,child:Container(
                                              height: 24,
 
                                              child: MaterialButton(
@@ -533,7 +486,7 @@ class StateMainPage extends State<MainPage> {
                      thickness: 1,
                    ),
                  ),
-                 CustomButton.buttonIconWithText(margin: EdgeInsets.only(left: 20,right: 20,bottom: 16),height: 30.0,icon: "assets/icons/setting.svg",title: "الأعدادات",onPressed: (){Navigator.of(context).pushNamed("SettingPage");}),
+                 // CustomButton.buttonIconWithText(margin: EdgeInsets.only(left: 20,right: 20,bottom: 16),height: 30.0,icon: "assets/icons/setting.svg",title: "الأعدادات",onPressed: (){Navigator.of(context).pushNamed("SettingPage");}),
                  CustomButton.buttonIconWithText(margin: EdgeInsets.only(left: 20,right: 20,bottom: 16),height: 30.0,icon: "assets/icons/contuct_us.svg",title: "تواصل معنا",onPressed: (){Navigator.of(context).pushNamed("ContuctUsPage");}),
                  CustomButton.buttonIconWithText(margin: EdgeInsets.only(left: 20,right: 20,bottom: 16),height: 30.0,icon: "assets/icons/support.svg",title: "ابلغ عن مشكلة",onPressed: (){Navigator.of(context).pushNamed("ReportProblemPage");}),
                  CustomButton.buttonIconWithText(margin: EdgeInsets.only(left: 20,right: 20,bottom: 16),height: 30.0,icon: "assets/icons/about_us.svg",title: "سياسة الخصوصية",onPressed: (){Navigator.of(context).pushNamed("PrivacyPolicyPage");}),
@@ -573,7 +526,7 @@ class StateMainPage extends State<MainPage> {
                           }
 
                          }),
-                         CustomButton.buttonIcon(margin: EdgeInsets.only(left: 10),height: 22.0,width: 22.0,icon: "assets/icons/twitter.svg",onPressed: (){
+                         CustomButton.buttonIcon(margin: EdgeInsets.only(left: 10),height: 27.0,width: 27.0,icon: "assets/icons/twitter.svg",onPressed: (){
                            if(socialMedia.isNotEmpty) {
                              Config.launchURL(uri: Uri.parse(socialMedia[1]));
                            }

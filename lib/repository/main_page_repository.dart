@@ -53,7 +53,7 @@ class MainPageRepository {
 
       if(response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
-        print('xxxxx${token.toString()} lat:${latLng.lat},,,,, lan:${latLng.lng}, apii:${Uri.parse(api+"?lat=${latLng.lat}&lng=${latLng.lng}")}');
+        // print('xxxxx${token.toString()} lat:${latLng.lat},,,,, lan:${latLng.lng}, apii:${Uri.parse(api+"?lat=${latLng.lat}&lng=${latLng.lng}")}');
         var data = jsonResponse["data"];
 
         Trip trip = Trip.fromJson(data);

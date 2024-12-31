@@ -35,7 +35,6 @@ class DonationPageRequestApiEvent extends DonationPageEvent {
 
 
   DonationPageRequestApiEvent(this.projectId,this.projectType,this.busId,this.amount,this.donorName,this.numberOfPeople,this._nameCard,this._numberCard,this._expiryDate,this._cvv);
-
   get nameCard => _nameCard;
 
   @override
@@ -48,6 +47,7 @@ class DonationPageRequestApiEvent extends DonationPageEvent {
 
   get cvv => _cvv;
 }
+
 class DonationPageTextEditionTotalAmountEvent extends DonationPageEvent {
 
   var totalAmount;

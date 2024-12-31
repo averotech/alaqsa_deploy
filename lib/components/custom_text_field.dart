@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomTextField {
   static TextFieldWithTitle(
-      {controller, title, hintText, obscureText, borderColor, margin}) {
+      {controller, title, hintText, obscureText, borderColor, margin,errorText}) {
     return Container(
       margin: margin,
       child: Column(
@@ -45,7 +45,20 @@ class CustomTextField {
                 contentPadding: EdgeInsets.only(left: 16, right: 16),
               ),
             ),
-          )
+          ),
+          if (errorText != null && errorText.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: Text(
+                errorText,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'SansArabicLight',
+                  color: Colors.red, // Red color for error
+                ),
+              ),
+            ),
         ],
       ),
     );
