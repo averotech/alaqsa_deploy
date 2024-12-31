@@ -138,51 +138,51 @@ class StateMainPage extends State<MainPage> {
     );
   }
 
-  Future onSelectNotification(var payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: $payload');
-    }
-    await Navigator.push(
-      context,
-      MaterialPageRoute<void>(builder: (context) => HomePage()),
-    );
-  }
+  // Future onSelectNotification(var payload) async {
+  //   if (payload != null) {
+  //     debugPrint('notification payload: $payload');
+  //   }
+  //   await Navigator.push(
+  //     context,
+  //     MaterialPageRoute<void>(builder: (context) => HomePage()),
+  //   );
+  // }
 
-  showNotification(RemoteMessage message) async{
-
-    var data = message.data;
-
-    InboxStyleInformation inboxStyleInformation = InboxStyleInformation(
-      [message.notification!.body.toString()],
-      contentTitle: message.notification!.title.toString(),
-    );
-
-
-
-    AndroidNotificationDetails androidPlatformChannelSpecifics = new AndroidNotificationDetails(channel.id,channel.name,channelDescription:channel.description,
-      importance: Importance.max,
-      priority: Priority.max,
-      ticker: 'WSL',
-      channelShowBadge: true,
-      showWhen: true,
-      enableLights: true,
-      playSound: true,
-      icon: '@drawable/wslappnotify',
-      styleInformation: inboxStyleInformation,
-      groupKey: channel.id,
-      setAsGroupSummary: true,
-      sound: RawResourceAndroidNotificationSound("f_l_n_s"),
-    );
-
-
-
-
-    NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        message.notification.hashCode, message.notification!.title.toString(), message.notification!.body.toString(), platformChannelSpecifics,
-        payload: '');
-
-  }
+  // showNotification(RemoteMessage message) async{
+  //
+  //   var data = message.data;
+  //
+  //   InboxStyleInformation inboxStyleInformation = InboxStyleInformation(
+  //     [message.notification!.body.toString()],
+  //     contentTitle: message.notification!.title.toString(),
+  //   );
+  //
+  //
+  //
+  //   AndroidNotificationDetails androidPlatformChannelSpecifics = new AndroidNotificationDetails(channel.id,channel.name,channelDescription:channel.description,
+  //     importance: Importance.max,
+  //     priority: Priority.max,
+  //     ticker: 'WSL',
+  //     channelShowBadge: true,
+  //     showWhen: true,
+  //     enableLights: true,
+  //     playSound: true,
+  //     icon: '@drawable/wslappnotify',
+  //     styleInformation: inboxStyleInformation,
+  //     groupKey: channel.id,
+  //     setAsGroupSummary: true,
+  //     sound: RawResourceAndroidNotificationSound("f_l_n_s"),
+  //   );
+  //
+  //
+  //
+  //
+  //   NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+  //   await flutterLocalNotificationsPlugin.show(
+  //       message.notification.hashCode, message.notification!.title.toString(), message.notification!.body.toString(), platformChannelSpecifics,
+  //       payload: '');
+  //
+  // }
 
   @override
   void didChangeDependencies() {
@@ -231,7 +231,6 @@ class StateMainPage extends State<MainPage> {
                  setState(() {
                    user = state.user;
                    isLogin = state.isLogin;
-                   // print('MainPageLoaded: User: ${user.name}, isLogin: $isLogin');
                  });
                }else if (state is MainPageError) {
                  setState(() {

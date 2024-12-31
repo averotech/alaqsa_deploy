@@ -22,12 +22,14 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     var api = Config.BaseUrl+Config.UserAPI;
     var getSocialmediaApi = Config.BaseUrl+Config.SocialMediaAPI;
     var updateCmApi = Config.BaseUrl+Config.CM_FIREBASE_TOKENAPI;
+    var getApkSettingsApi = Config.BaseUrl+Config.getSettings;
     on<MainPageInitialEvent>((event, emit) async{
       try{
         emit(MainPageInitial());
         final prefs = await SharedPreferences.getInstance();
         var token = prefs.getString("token");
         var isLogin = false;
+
 
         if(token != null && token != "") {
           isLogin = true;
@@ -49,6 +51,8 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
           emit(MainPageSocialMediaLoaded(socialMedia));
           emit(MainPageError.isAuthError("Not Auth",false));
         }
+
+        var apkSettings = await mainPageRepository.getApkSettings(getApkSettingsApi);
 
           // LatLng latLng = LatLng(correntlocation.latitude, correntlocation.longitude);
           // var myAddress = await Config.getInformastionLocation(latLng: latLng);

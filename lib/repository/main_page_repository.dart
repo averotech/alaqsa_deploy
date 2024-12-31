@@ -38,6 +38,18 @@ class MainPageRepository {
     }
   }
 
+  getApkSettings(api) async{
+    try{
+      var response = await http.get(Uri.parse(api));
+      var apkSettings = jsonDecode(response.body);
+      globalState.set("apkSettings", apkSettings);
+      return apkSettings;
+    }catch(e){
+      print(e.toString());
+      return null;
+    }
+  }
+
 
   getNearTripAndBokkingTrip({api,token}) async{
     var response;

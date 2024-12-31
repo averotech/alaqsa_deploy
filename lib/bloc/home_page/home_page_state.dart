@@ -26,7 +26,8 @@ class HomePageLoaded extends HomePageState {
   var trip;
   List<News> listNews;
   var isRefresh;
-  HomePageLoaded(this.trip,this.listNews,this.isRefresh);
+  var apkSettings;
+  HomePageLoaded(this.trip,this.listNews,this.isRefresh, this.apkSettings);
 
   @override
   // TODO: implement props

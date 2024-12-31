@@ -39,32 +39,13 @@ class StateDonationSummaryPage extends State<DonationSummaryPage> {
   var trip;
   var project;
   var user;
-  String? minimumDonationAmount;
+  var apkSettings;
 
 
   @override
   void initState() {
     super.initState();
-    fetchDonationInformation();
   }
-
-  Future<void> fetchDonationInformation() async {
-    final url = Uri.parse('https://aqsana.org/api/get-donation-information');
-    try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final data = response.body;
-        setState(() {
-          minimumDonationAmount = data;
-        });
-      } else {
-        throw Exception("Failed to fetch donation information");
-      }
-    } catch (error) {
-      print("Error fetching donation information: $error");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,6 +70,7 @@ class StateDonationSummaryPage extends State<DonationSummaryPage> {
                 }
 
                 user = state.user;
+                 apkSettings = state.apkSettings;
               }
 
               if (state is DonationChangePrice) {
@@ -290,7 +272,7 @@ class StateDonationSummaryPage extends State<DonationSummaryPage> {
                             Container(
                               padding: EdgeInsets.only(right: 20, top: 12),
                               child: Text(
-                                "${minimumDonationAmount}",
+                                " ${apkSettings != null && apkSettings['donation'] != null ? apkSettings['donation'] : 'جار التحميل...'} ",
                                 // "الحد الادنى للتبرع ${minimumDonationAmount} شيكل للشخص",
                                 style: TextStyle(
                                     fontSize: 14,
