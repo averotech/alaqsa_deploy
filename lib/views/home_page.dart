@@ -19,6 +19,8 @@ import 'package:alaqsa/models/news.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../VersionCheckService.dart';
+
 
 class HomePage extends StatefulWidget{
   @override
@@ -30,13 +32,32 @@ class HomePage extends StatefulWidget{
  class StateHomePage extends State<HomePage> {
  List<News> listNews = <News>[];
  GlobalState globalState = GlobalState.instance;
+ final VersionCheckService versionCheckService = VersionCheckService();
  var nearTrip;
  var isLoaded = false;
  var isLoadedError = false;
+ var apkSettings;
   @override
   void initState() {
-    print("it is Work!");
   }
+
+ Future<void> checkAppVersionAndNavigate(BuildContext context) async {
+   if (apkSettings != null && apkSettings.containsKey('latestVersion')) {
+     bool isOutdated = await versionCheckService.isAppOutdated(apkSettings['latestVersion']);
+     if (isOutdated) {
+       if(Config.isShowingLoadingDialog == true){
+         Config.isShowingLoadingDialog=false;
+
+         Navigator.of(context).pushNamed("UpdateVersionPage", arguments: {
+           'latestVersion': apkSettings['latestVersion'],
+           'updateLink': apkSettings['updateLink'],
+           'isOutdated': isOutdated,
+         });
+       }
+     }
+   }
+ }
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +73,7 @@ class HomePage extends StatefulWidget{
          child: MultiBlocListener(
            listeners: [
              BlocListener<HomePageBloc,HomePageState>(
-                 listener: (context,state){
+                 listener: (context,state) async {
                    if(state is HomePageInitial) {
                       isLoaded = false;
                       isLoadedError = false;
@@ -62,7 +83,6 @@ class HomePage extends StatefulWidget{
                            CustomAlertDailog.CustomLoadingDialog(context: context,color: Theme.of(context).primaryColor,size: 35.0,message:"الرجاء الأنتظار",type: 1,height: 96.0);
                          }
                        }
-
                    }
 
 
@@ -70,6 +90,8 @@ class HomePage extends StatefulWidget{
                      listNews = state.listNews;
                      nearTrip = state.trip;
                      isLoaded = true;
+                     apkSettings = state.apkSettings;
+                     await checkAppVersionAndNavigate(context);
                      if(state.isRefresh == false) {
                        if( Config.isShowingLoadingDialog == true) {
                          Config.isShowingLoadingDialog = false;

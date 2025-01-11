@@ -20,6 +20,7 @@ import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/standalone.dart';
 
+import '../../helper/GlobalState.dart';
 import 'home_page_event.dart';
 
 
@@ -32,6 +33,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     var nearTripApi = Config.BaseUrl+Config.NearTripAPI;
     var nearTripAuthApi = Config.BaseUrl+Config.NearTripAuthAPI;
     var autoCompleteSearchTripApi = Config.BaseUrl+Config.AutoCompleteSearchTripAPI;
+    var getApkSettingsApi = Config.BaseUrl+Config.getSettings;
+
     on<HomePageInitialEvent>((event, emit) async{
 
       try{
@@ -41,7 +44,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         final prefs = await SharedPreferences.getInstance();
         var token = prefs.getString("token");
         var nearTrip = await mainPageRepository.getNearTripAndBokkingTrip(api: token.toString() != "" && token.toString() != "null"? nearTripAuthApi :nearTripApi,token: token);
-        emit(HomePageLoaded(nearTrip,newsList,event.isRefresh));
+        var apkSettings = await mainPageRepository.getApkSettings(getApkSettingsApi);
+        emit(HomePageLoaded(nearTrip,newsList,event.isRefresh,apkSettings));
       }catch(e){
         emit(HomePageErroe(e));
       }

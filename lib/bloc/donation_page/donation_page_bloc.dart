@@ -40,11 +40,12 @@ class DonationPageBloc extends Bloc<DonationPageEvent, DonationPageState> {
       var trip = globaleState.get("donationTrip");
       var project = globaleState.get("donationProject");
       var user = globaleState.get("user");
+      var apkSettings = globaleState.get("apkSettings");
       if(project != null){
-        emit(DonationPageLoaded.Project(project,user));
+        emit(DonationPageLoaded.Project(project,user,apkSettings));
       }
       if(trip != null) {
-        emit(DonationPageLoaded.Trip(trip,user));
+        emit(DonationPageLoaded.Trip(trip,user,apkSettings));
       }
 
     });

@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:alaqsa/helper/GlobalState.dart';
+import 'package:alaqsa/helper/config.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http; // Import HTTP package
+import '../VersionCheckService.dart';
 import 'location_service.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,8 +16,10 @@ class SplashScreen extends StatefulWidget {
   }
 }
 
-class SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver {
+class SplashScreenState extends State<SplashScreen>
+    with WidgetsBindingObserver {
   GlobalState globalState = GlobalState.instance;
+  final VersionCheckService versionCheckService = VersionCheckService();
 
   @override
   void initState() {
@@ -34,17 +39,29 @@ class SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver 
   }
 
   Future<void> _startAppInitialization() async {
-    // Check if the app is outdated
-    if (await _isAppOutdated()) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        "UpdateVersionPage",
-            (route) => false,
-        arguments: {
-          'latestVersion': '1.0.6',
-          'updateLink': 'https://www.google.com',
-        },
-      );
-      return; // Prevent further navigation
+    final String apiUrl = Config.BaseUrl+Config.getSettings;
+    final response = await http.get(Uri.parse(apiUrl));
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      final latestVersion = data['latestVersion'];
+      final updateLink=data['updateLink'];
+      bool isOutdated = await versionCheckService.isAppOutdated(latestVersion);
+      // Check if the app is outdated
+      if (isOutdated) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          "UpdateVersionPage",
+          (route) => false,
+          arguments: {
+            'latestVersion': latestVersion,
+            'updateLink': updateLink,
+            'isOutdated': isOutdated,
+
+          },
+        );
+        return; // Prevent further navigation
+      } } else {
+        throw Exception('Failed to load version information');
+
     }
     // Pass the current BuildContext to the location service method
     await LocationService.initiateLocationCheck(context); // Now passing context
@@ -55,19 +72,15 @@ class SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver 
 
     if (token != null && token.isNotEmpty) {
       // If token exists and is valid, navigate to MainPage
-      Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route) => false);
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil("MainPage", (route) => false);
     } else {
       // Otherwise, navigate to LoginPage
-      Navigator.of(context).pushNamedAndRemoveUntil("LoginPage", (route) => false);
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil("LoginPage", (route) => false);
     }
   }
-  Future<bool> _isAppOutdated() async {
-    // Replace with your API call or logic to fetch the latest version
-    const latestVersion = "1.0.6"; // Example latest version
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String currentVersion = packageInfo.version;
-    return currentVersion != latestVersion; // Check if versions mismatch
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

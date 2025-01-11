@@ -34,8 +34,9 @@ class DonationPageLoaded extends DonationPageState {
   var trip;
   var user;
   var project;
-  DonationPageLoaded.Project(this.project,this.user);
-  DonationPageLoaded.Trip(this.trip,this.user);
+  var apkSettings;
+  DonationPageLoaded.Project(this.project,this.user,this.apkSettings);
+  DonationPageLoaded.Trip(this.trip,this.user,this.apkSettings);
 
   @override
   // TODO: implement props
