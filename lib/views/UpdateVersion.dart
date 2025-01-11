@@ -66,7 +66,6 @@ class StateUpdateVersion extends State<UpdateVersion> {
                 ],
               ),
             )
-
           ],
         ),
       ),
