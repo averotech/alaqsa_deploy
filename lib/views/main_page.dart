@@ -11,11 +11,10 @@ import 'package:alaqsa/views/news_page.dart';
 import 'package:alaqsa/views/projects_page.dart';
 import 'package:alaqsa/views/trip_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,37 +27,37 @@ class MainPage extends StatefulWidget{
 
 }
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin  = new FlutterLocalNotificationsPlugin();
-var channel = AndroidNotificationChannel(
-  'WSL', // id
-  'WSL', // title
-  description:"WSL Notifications",
-  importance: Importance.max,
-  playSound: true,
-  showBadge: true,
-  sound: RawResourceAndroidNotificationSound("f_l_n_s"),
-);
+// FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin  = new FlutterLocalNotificationsPlugin();
+// var channel = AndroidNotificationChannel(
+//   'WSL', // id
+//   'WSL', // title
+//   description:"WSL Notifications",
+//   importance: Importance.max,
+//   playSound: true,
+//   showBadge: true,
+//   sound: RawResourceAndroidNotificationSound("f_l_n_s"),
+// );
 
+//
+// Future<void> initialize() async {
+//   var  initializationSettingsAndroid = new AndroidInitializationSettings('wslappnotify');
+//   var initializationSettingsIOS = new DarwinInitializationSettings(
+//       requestSoundPermission: true,
+//       requestBadgePermission: true,
+//       requestAlertPermission: true,
+//       onDidReceiveLocalNotification:StateMainPage().onDidReceiveLocalNotification);
+//
+//   flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
+//     alert: true,
+//     badge: true,
+//     sound: true,
+//   );
+//
+//   var initializationSettings = new InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+//   await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
+//   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-Future<void> initialize() async {
-  var  initializationSettingsAndroid = new AndroidInitializationSettings('wslappnotify');
-  var initializationSettingsIOS = new DarwinInitializationSettings(
-      requestSoundPermission: true,
-      requestBadgePermission: true,
-      requestAlertPermission: true,
-      onDidReceiveLocalNotification:StateMainPage().onDidReceiveLocalNotification);
-
-  flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-
-  var initializationSettings = new InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
-}
+// }
 
 
 // Future<void> _firebaseMessagingBackgroundHandler(message) async {
@@ -71,7 +70,7 @@ Future<void> initialize() async {
 
 class StateMainPage extends State<MainPage> {
   GlobalKey<ScaffoldState> mainScaffoldKey =  GlobalKey<ScaffoldState>();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+  // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
 
   var homePage = true;
   var newsPage = false;

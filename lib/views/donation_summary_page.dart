@@ -40,6 +40,7 @@ class StateDonationSummaryPage extends State<DonationSummaryPage> {
   var project;
   var user;
   var apkSettings;
+  var minimumDonationAmount;
 
 
   @override
