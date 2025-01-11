@@ -46,6 +46,24 @@ class StateDonationSummaryPage extends State<DonationSummaryPage> {
   void initState() {
     super.initState();
   }
+
+  Future<void> fetchDonationInformation() async {
+    final url = Uri.parse('https://aqsana.org/appsettings');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = response.body;
+        setState(() {
+          minimumDonationAmount = data;
+        });
+      } else {
+        throw Exception("Failed to fetch donation information");
+      }
+    } catch (error) {
+      print("Error fetching donation information: $error");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

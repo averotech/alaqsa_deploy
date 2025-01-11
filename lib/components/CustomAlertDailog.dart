@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:alaqsa/components/CustomSectionComponent.dart';
 import 'package:alaqsa/components/custom_card.dart';
@@ -30,9 +31,13 @@ class CustomAlertDailog {
                     borderSide: BorderSide.none),
                 content: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height < 800
-                      ? MediaQuery.of(context).size.height / 3.1
-                      : MediaQuery.of(context).size.height / 3.3,
+                  height: Platform.isAndroid?
+                  MediaQuery.of(context).size.height < 800
+                      ? MediaQuery.of(context).size.height / 3.0
+                      : MediaQuery.of(context).size.height / 3.0 :
+                  MediaQuery.of(context).size.height < 800?
+                  MediaQuery.of(context).size.height / 3.1:
+                  MediaQuery.of(context).size.height / 3.3,
                   margin: EdgeInsets.only(left: 30, right: 30),
                   decoration: BoxDecoration(
                       color: Theme.of(context).dialogBackgroundColor,
@@ -424,7 +429,7 @@ class CustomAlertDailog {
                 opacity: a1.value,
                 child: AlertDialog(
                     contentPadding: EdgeInsets.zero,
-                    insetPadding: EdgeInsets.only(left: 140, right: 140),
+                    insetPadding: EdgeInsets.only(left: Platform.isIOS? 140:120, right:Platform.isIOS? 140:120),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0)),
                     content: Builder(
@@ -467,14 +472,15 @@ class CustomAlertDailog {
                     )),
               ),
             );
-          } else if (type == 2) {
+          }
+          else if (type == 2) {
             return Transform.scale(
               scale: a1.value,
               child: Opacity(
                 opacity: a1.value,
                 child: AlertDialog(
                     contentPadding: EdgeInsets.zero,
-                    insetPadding: EdgeInsets.only(left: 140, right: 140),
+                    insetPadding: EdgeInsets.only(left:Platform.isIOS? 140:120, right:Platform.isIOS? 140:120),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0)),
                     content: Builder(

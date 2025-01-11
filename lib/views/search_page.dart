@@ -153,7 +153,7 @@ class StateSearchPage extends State<SearchPage> {
                         CustomAlertDailog.CustomLoadingDialog(
                             context: context,
                             color: Theme.of(context).primaryColor,
-                            size: 35.0,
+                            size: 50.0,
                             message: "تم الغاء الحجز",
                             type: 2,
                             height: 100.0);
@@ -164,7 +164,8 @@ class StateSearchPage extends State<SearchPage> {
                           }
                         });
                       }
-                    } else if (state.responseCode == 500 ||
+                    }
+                    else if (state.responseCode == 500 ||
                         state.responseCode == 404) {
                       if (Config.isShowingLoadingDialog == false) {
                         Config.isShowingLoadingDialog = true;
