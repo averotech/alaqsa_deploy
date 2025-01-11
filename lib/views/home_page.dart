@@ -64,7 +64,7 @@ class HomePage extends StatefulWidget{
 
 
      return Scaffold(
-       resizeToAvoidBottomInset: true,
+       resizeToAvoidBottomInset: false,
        body:  MultiBlocProvider(
          providers: [
            BlocProvider(create: (context) => HomePageBloc()..add(HomePageInitialEvent(false))),
@@ -126,6 +126,7 @@ class HomePage extends StatefulWidget{
                        Navigator.of(context).pop();
                      }
                      if(state.responseCode == 200) {
+                       print("xxx");
                        context.read<HomePageBloc>()..add(UpdateTripEvent(nearTrip));
                        if( Config.isShowingLoadingDialog == false) {
                          Config.isShowingLoadingDialog = true;

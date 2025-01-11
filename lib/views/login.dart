@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io'; // Import to check the platform
+
 
 import 'package:alaqsa/bloc/login/login_bloc.dart';
 import 'package:alaqsa/bloc/login/login_event.dart';
@@ -60,86 +62,6 @@ class StateLogin extends State<Login> with WidgetsBindingObserver {
     }
   }
 
-  // Future<void> _initiateLocationCheck() async {
-  //   try {
-  //     var currentLocation = await getLocation(context);
-  //     if (currentLocation == null) {
-  //       globalState.clear();
-  //
-  //       // Assign default values when location is not available
-  //       currentLocation = Position(
-  //         latitude: 32.130492742251334,   // Default latitude
-  //         longitude: 34.97348856681219, // Default longitude
-  //         timestamp: DateTime.now(),
-  //         accuracy: 0.0,
-  //         altitude: 0.0,
-  //         heading: 0.0,
-  //         speed: 0.0,
-  //         speedAccuracy: 0.0,
-  //         altitudeAccuracy: 0.0,  // Default value for altitudeAccuracy
-  //         headingAccuracy: 0.0,   // Default value for headingAccuracy
-  //       );
-  //
-  //       // Provide a default address
-  //       var myAddress = 'אלנור 16, Kafr Bara, Israel'; // Default address
-  //       globalState.set("myAddress", myAddress);
-  //       globalState.set("currentLocation", currentLocation);
-  //       LatLng latLng = LatLng(currentLocation.latitude, currentLocation.longitude);
-  //
-  //     } else {
-  //       final prefs = await SharedPreferences.getInstance();
-  //       var token = prefs.getString("token") ?? "";
-  //       LatLng latLng = LatLng(currentLocation.latitude, currentLocation.longitude);
-  //       var myAddress = await Config.getInformastionLocation(latLng: latLng);
-  //
-  //       globalState.set("currentLocation", currentLocation);
-  //       globalState.set("latlng", latLng);
-  //       globalState.set("myAddress", myAddress);
-  //     }
-  //   } catch (e) {
-  //     globalState.clear();
-  //     _handleMissingLocationData();
-  //   }
-  // }
-  //
-  //
-  // Future<Position?> getLocation(BuildContext context) async {
-  //   bool serviceEnabled;
-  //   LocationPermission permission;
-  //
-  //   // Check if location services are enabled
-  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  //   if (!serviceEnabled) {
-  //     await _showSnackbar(context, "Location services are required for this feature. Please enable them in your device's settings.");
-  //     return null;
-  //   }
-  //
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       await _showSnackbar(context, "Location access is required for this feature. Please enable it in your device's settings");
-  //       return null;
-  //     }
-  //   }
-  //
-  //   if (permission == LocationPermission.deniedForever) {
-  //     await _showSnackbar(context, "Location access is permanently denied. Please enable it in your device's settings");
-  //     return null;
-  //   }
-  //
-  //   return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
-  // }
-  //
-  // Future<void> _showSnackbar(BuildContext context, String message) async {
-  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message, textAlign: TextAlign.center,)));
-  // }
-  //
-  //
-  // void _handleMissingLocationData() {
-  //   print("Location data is missing. Proceeding with default settings.");
-  // }
-
   @override
   Widget build(BuildContext context) {
      return Scaffold(
@@ -168,17 +90,21 @@ class StateLogin extends State<Login> with WidgetsBindingObserver {
                }
                if( Config.isShowingLoadingDialog == false) {
                  Config.isShowingLoadingDialog = true;
-                 CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message:"البريد الالكتروني او رقم الهاتف او كلمة المرور غير صحيحات", type:3, height: 117.0);
-                 Timer(Duration(seconds: 4),(){
+                 // CustomAlertDailog.CustomLoadingDialog(context:context, color:Colors.red, size:35.0, message: "الرجاء الأنتظار", type:1, height:  Platform.isAndroid ? 150.0 : 117.0,);
+                 Timer(Duration(seconds: 2),(){
                    if(Config.isShowingLoadingDialog == true) {
                      Config.isShowingLoadingDialog = false;
-                     Navigator.of(context).pop();
+                     // Navigator.of(context).pop();
                    }
                  });}
              }
            },
            child: BlocBuilder<LoginBloc,LoginState>(
              builder: (context,state){
+               String passwordError = '';
+               if (state is LoginErroe) {
+                 passwordError = 'البريد الالكتروني او رقم الهاتف او كلمة المرور غير صحيحات';
+               }
                return Stack(
                  children: [
                    Positioned(
@@ -226,7 +152,18 @@ class StateLogin extends State<Login> with WidgetsBindingObserver {
 
                                CustomTextField.TextFieldWithTitle(controller: email,title: "البريد الالكتروني او رقم الهاتف",hintText:"البريد الالكتروني او رقم الهاتف" ,obscureText: false,borderColor: Colors.white,margin: EdgeInsets.only(top: 45)),
                                CustomTextField.TextFieldWithTitle(controller: password,title: "كلمة المرور",hintText:"كلمة المرور" ,obscureText: true,borderColor: Colors.white,margin: EdgeInsets.only(top: 14)),
-
+                               if (passwordError.isNotEmpty)
+                                 Container(
+                                   margin: EdgeInsets.only(top: 8),
+                                   child: Text(
+                                     passwordError,
+                                     style: TextStyle(
+                                       color: Colors.red,
+                                       fontSize: 13,
+                                       fontWeight: FontWeight.w600,
+                                     ),
+                                   ),
+                                 ),
                                CustomButton.customButton1(context: context,visibleIcon: false,textButton: "تسجيل دخول",iconButton:"",top: 24.0,bottom: 0.0,onPressed: (){
                                  context.read<LoginBloc>()..add(LoginApiEvent(email.text.toString(), password.text.toString()));
                                  // Navigator.of(context).pushNamed("MainPage");
